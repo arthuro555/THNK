@@ -1,0 +1,16 @@
+include "Transform.fbs";
+include "Variables.fbs";
+
+namespace THNK;
+
+/// GameObject represents all types of objects to avoid the cost of a union, so it has sone fields that are only for one type of object
+table GameObject {
+  /// Required
+  id: ushort;
+  /// Used to create the object
+  name: string;
+
+  transform: Transform;
+  variables: Variable;
+  packed_variables: [ubyte];
+}

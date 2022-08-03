@@ -1,0 +1,18 @@
+include "Camera.fbs";
+include "GameObject.fbs";
+include "Variables.fbs";
+
+namespace THNK;
+
+table CreatedObject {
+  id: ushort;
+  name: string (required);
+}
+
+table GameStateDiff {
+  camera: [Camera];
+  objects: [GameObject];
+  created_objects: [CreatedObject];
+  deleted_objects: [ushort];
+  variables: Variable;
+}

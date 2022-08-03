@@ -1,0 +1,18 @@
+namespace THNK;
+
+table Transform {    
+  x: float = null;
+  y: float = null;
+  height: float = null;
+  width: float = null;
+  angle: float = null;
+  scale: float = null;
+  z_order: ushort = null;
+  big_z_order: uint = null;
+
+  visible: bool = null;
+  opacity: ubyte = null;
+
+  animation: ubyte = null;
+  text: string;
+}

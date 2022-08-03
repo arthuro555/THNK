@@ -1,0 +1,4 @@
+include "ClientMessages/ClientMessage.fbs";
+include "ServerMessages/ServerMessage.fbs";
+
+namespace THNK;

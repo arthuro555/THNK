@@ -1,0 +1,11 @@
+include "../GameState/GameStateSnapshot.fbs";
+
+namespace THNK;
+
+/// Tells the client that its connection request has been accepted, with the information needed to start the session
+table ConnectionStartMessage {
+  /// The scene that server is on (for the client to switch to)
+  scene_name: string (required);
+  /// The data to start this scene with
+  scene_snapshot: GameStateSnapshot (required);
+}

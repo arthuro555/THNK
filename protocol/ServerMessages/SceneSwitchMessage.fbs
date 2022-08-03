@@ -1,0 +1,11 @@
+include "../GameState/GameStateSnapshot.fbs";
+
+namespace THNK;
+
+/// Tells the client to switch to another scene.
+table SceneSwitchMessage {
+  /// The scene we are switching to.
+  scene_name: string (required);
+  /// Whether or not the scene is expected to be played back at some point.
+  is_pause: bool = false;
+}

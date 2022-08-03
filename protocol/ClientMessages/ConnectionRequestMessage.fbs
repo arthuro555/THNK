@@ -1,0 +1,5 @@
+namespace THNK;
+
+table ConnectionRequestMessage {
+  token: string;
+}

@@ -1,0 +1,47 @@
+namespace THNK;
+
+/// Describes an operation that was done on a collection.
+enum CollectionOperationType: ubyte {
+  /// This should never happen
+  invalid,
+  /// Addition of or mutation to a member variable of a collection
+  set,
+  /// Removal of a member variable from a collection
+  remove,
+  /// The removal of all children of a collection
+  clear
+}
+
+/// Describes an operation that was done on a collection (with its parameters).
+table CollectionOperation {
+  /// The type of operation done on the collection.
+  operation: CollectionOperationType = invalid;
+  /// The name of the child variable affected by the operation. If empty, assume a structure and use the index.
+  name: string;
+  /// The index of the child variable affected by the operation if it is an array. Assume a structure by default.
+  index: ushort;
+  /// The new value of the variable.
+  val: Variable;
+}
+
+enum VariableTypes: ubyte {
+  invalid,
+  text,
+  number,
+  boolean,
+  structure,
+  array,
+}
+
+/// Descibes a variable of any type. Only one of the fields should be used at a time.
+table Variable {
+  type: VariableTypes = invalid;
+  /// The text of a string variable.
+  text: string;
+  /// The number of a numeric variable.
+  number: float;
+  /// The value of a boolean variable.
+  boolean: bool;
+  /// The list of changes that were done on a collection variable since the last snapshot.
+  operations: [CollectionOperation];
+}

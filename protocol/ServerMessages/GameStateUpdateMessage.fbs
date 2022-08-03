@@ -1,0 +1,8 @@
+include "../GameState/GameStateDiff.fbs";
+
+namespace THNK;
+
+/// Tells the client to update its game state
+table GameStateUpdateMessage {
+  new_state: GameStateDiff (required);
+}

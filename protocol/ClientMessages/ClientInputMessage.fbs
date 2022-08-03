@@ -1,0 +1,6 @@
+namespace THNK;
+
+table ClientInputMessage {
+  name: string (required);
+  content: [ubyte] (required);
+}

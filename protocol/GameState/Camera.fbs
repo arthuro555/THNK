@@ -1,0 +1,8 @@
+include "Transform.fbs";
+
+namespace THNK;
+
+table Camera {
+  layer: string (required);
+  transform: Transform (required);
+}

@@ -1,0 +1,11 @@
+include "../GameState/GameStateSnapshot.fbs";
+
+namespace THNK;
+
+/// Tells the client to switch back to the previous scene.
+table ResumePreviousSceneMessage {
+  /// A snapshot that is sent to users that joined before the scene was paused.
+  snapshot: GameStateSnapshot;
+  /// The name of the scene the snapshot is based on
+  name: string;
+}

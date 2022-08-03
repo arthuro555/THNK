@@ -1,0 +1,891 @@
+{
+  "author": "",
+  "category": "Network",
+  "description": "# The THNK Framework\n\nNote: This preview build is a Minimally Viable Prototype ( not a Mostly Viable prototype :P ), and is therefore highly unstable.\nThe API, protocol, concepts, everything, will probably be changed at some point, and may be full of bugs. Use at your own risk!\n\nThe THNK Framework is a framework for building authoritative multiplayer games in GDevelop.",
+  "extensionNamespace": "",
+  "fullName": "THNK framework - Preview",
+  "helpPath": "",
+  "iconUrl": "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAyMy4wLjMsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0iSWNvbnMiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4Ig0KCSB2aWV3Qm94PSIwIDAgMzIgMzIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDMyIDMyOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+DQo8c3R5bGUgdHlwZT0idGV4dC9jc3MiPg0KCS5zdDB7ZmlsbDpub25lO3N0cm9rZTojMDAwMDAwO3N0cm9rZS13aWR0aDoyO3N0cm9rZS1saW5lY2FwOnJvdW5kO3N0cm9rZS1saW5lam9pbjpyb3VuZDtzdHJva2UtbWl0ZXJsaW1pdDoxMDt9DQo8L3N0eWxlPg0KPGc+DQoJPHBhdGggZD0iTTI2LDE5Yy0xLjIsMC0yLjMsMC4zLTMuMywxaC00LjRjLTEtMC43LTIuMS0xLTMuMy0xYy0zLjMsMC02LDIuNy02LDZzMi43LDYsNiw2YzEuMiwwLDIuMy0wLjMsMy4zLTFoNC40DQoJCWMxLDAuNywyLjEsMSwzLjMsMWMzLjMsMCw2LTIuNyw2LTZTMjkuMywxOSwyNiwxOXogTTE3LDI2aC0xdjFjMCwwLjYtMC40LDEtMSwxcy0xLTAuNC0xLTF2LTFoLTFjLTAuNiwwLTEtMC40LTEtMXMwLjQtMSwxLTFoMXYtMQ0KCQljMC0wLjYsMC40LTEsMS0xczEsMC40LDEsMXYxaDFjMC42LDAsMSwwLjQsMSwxUzE3LjYsMjYsMTcsMjZ6IE0yNS45LDI2LjRjLTAuMSwwLjEtMC4xLDAuMi0wLjIsMC4zYy0wLjEsMC4xLTAuMiwwLjItMC4zLDAuMg0KCQlTMjUuMSwyNywyNSwyN2MtMC4xLDAtMC4zLDAtMC40LTAuMWMtMC4xLDAtMC4yLTAuMS0wLjMtMC4yYy0wLjEtMC4xLTAuMi0wLjItMC4yLTAuM0MyNCwyNi4zLDI0LDI2LjEsMjQsMjZzMC0wLjMsMC4xLTAuNA0KCQljMC4xLTAuMSwwLjEtMC4yLDAuMi0wLjNjMC4xLTAuMSwwLjItMC4yLDAuMy0wLjJjMC40LTAuMiwwLjgtMC4xLDEuMSwwLjJjMC4xLDAuMSwwLjIsMC4yLDAuMiwwLjNjMCwwLjEsMC4xLDAuMywwLjEsMC40DQoJCVMyNiwyNi4zLDI1LjksMjYuNHogTTI3LjksMjQuNGMtMC4xLDAuMS0wLjEsMC4yLTAuMiwwLjNjLTAuMSwwLjEtMC4yLDAuMi0wLjMsMC4yUzI3LjEsMjUsMjcsMjVjLTAuMSwwLTAuMywwLTAuNC0wLjENCgkJYy0wLjEsMC0wLjItMC4xLTAuMy0wLjJDMjYuMSwyNC41LDI2LDI0LjMsMjYsMjRjMC0wLjMsMC4xLTAuNSwwLjMtMC43YzAsMCwwLjEtMC4xLDAuMS0wLjFjMC4xLDAsMC4xLTAuMSwwLjItMC4xDQoJCWMwLjEsMCwwLjEsMCwwLjItMC4xYzAuMSwwLDAuMywwLDAuNCwwYzAuMSwwLDAuMSwwLDAuMiwwLjFjMC4xLDAsMC4xLDAsMC4yLDAuMWMwLDAsMC4xLDAuMSwwLjEsMC4xYzAuMiwwLjIsMC4zLDAuNSwwLjMsMC43DQoJCUMyOCwyNC4xLDI4LDI0LjMsMjcuOSwyNC40eiIvPg0KCTxwYXRoIGQ9Ik0xMy41LDE3LjJjMC4xLTAuNSwwLjEtMSwwLTEuNWMtMC4yLTEuMi0xLjEtMi4xLTIuMi0yLjVjLTAuNi0wLjItMS4zLTAuNC0yLjEtMC41Yy0yLjQtMC41LTUuMS0xLjEtNi4xLTMuMg0KCQlDMi43LDguNywyLjUsOCwyLjMsNy4zQzAuOSw5LjUsMCwxMi4yLDAsMTVjMCw1LjIsMi45LDkuOCw3LjEsMTIuMmMwLTAuMiwwLjEtMC4zLDAuMS0wLjVDNy4xLDI2LjEsNywyNS42LDcsMjUNCgkJQzcsMjEuMSw5LjgsMTcuOSwxMy41LDE3LjJ6Ii8+DQoJPHBhdGggZD0iTTkuNiwxMC43YzAuOCwwLjIsMS42LDAuNCwyLjMsMC42YzEuOCwwLjYsMy4yLDIuMSwzLjUsNGMwLjEsMC42LDAuMSwxLjIsMCwxLjhjMS4yLDAuMSwyLjMsMC40LDMuMywxaDIuOQ0KCQljMS0wLjcsMS44LTEuNiwyLjQtMi42YzEuNC0yLjEsMS43LTYsMS44LTcuN0MyMy41LDMuNywxOS4xLDEsMTQsMUMxMC4xLDEsNi42LDIuNiw0LDUuMmMwLDAuNSwwLjIsMS45LDAuOSwzLjMNCgkJQzUuNSw5LjgsNy43LDEwLjIsOS42LDEwLjd6Ii8+DQoJPHBhdGggZD0iTTI1LjUsMTdjMC4yLDAsMC4zLDAsMC41LDBjMC42LDAsMS4yLDAuMSwxLjgsMC4yYzAuMS0wLjcsMC4yLTEuNSwwLjItMi4yYzAtMS4yLTAuMi0yLjMtMC40LTMuNA0KCQljLTAuMywxLjctMC44LDMuNi0xLjcsNC45QzI1LjcsMTYuNywyNS42LDE2LjksMjUuNSwxN3oiLz4NCjwvZz4NCjwvc3ZnPg0K",
+  "name": "THNK",
+  "previewIconUrl": "https://resources.gdevelop-app.com/assets/Icons/Glyphster Pack/Master/SVG/Videogames/Videogames_online_gaming_games_joystick_connect_globe.svg",
+  "shortDescription": "A framework too build authoritative multiplayer games. This is a preview version of the THNK Framework.",
+  "version": "1.0.0-minimal-prototype",
+  "tags": [
+    "multiplayer",
+    "arthuro",
+    "thnk",
+    "thonk",
+    "think",
+    "server",
+    "client",
+    "authoritative",
+    "easy"
+  ],
+  "authorIds": [
+    "ZgrsWuRTAkXgeuPV9bo0zuEcA2w1"
+  ],
+  "dependencies": [],
+  "eventsFunctions": [
+    {
+      "description": "",
+      "fullName": "",
+      "functionType": "Action",
+      "group": "",
+      "name": "onFirstSceneLoaded",
+      "private": false,
+      "sentence": "",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::JsCode",
+          "inlineCode": "// Load THNK library (https://github.com/arthuro555/THNK)\n\"use strict\";window. THNK=(()=>{var xt=Object.defineProperty;var ze=Object.getOwnPropertyDescriptor;var He=Object.getOwnPropertyNames;var qe=Object.prototype.hasOwnProperty;var Ze=(t,e)=>{for(var r in e)xt(t,r,{get:e[r],enumerable:!0})},We=(t,e,r,s)=>{if(e&&typeof e==\"object\"||typeof e==\"function\")for(let i of He(e))!qe.call(t,i)&&i!==r&&xt(t,i,{get:()=>e[i],enumerable:!(s=ze(e,i))||s.enumerable});return t};var Ye=t=>We(xt({},\"__esModule\",{value:!0}),t);var qr={};Ze(qr,{ClientAdapter:()=>zr,ServerAdapter:()=>Hr,client:()=>De,players:()=>Ue,server:()=>_e,settings:()=>ke});var Qe=Object.defineProperty,kt=(t,e)=>{for(var r in e)Qe(t,r,{get:e[r],enumerable:!0})},_e={};kt(_e,{events:()=>Pr,startServer:()=>Tr});var it=new Int32Array(2),te=new Float32Array(it.buffer),ee=new Float64Array(it.buffer),It=new Uint16Array(new Uint8Array([1,0]).buffer)[0]===1,Et;(function(t){t[t.UTF8_BYTES=1]=\"UTF8_BYTES\",t[t.UTF16_STRING=2]=\"UTF16_STRING\"})(Et||(Et={}));var vt=class{constructor(t){this.bytes_=t,this.position_=0}static allocate(t){return new vt(new Uint8Array(t))}clear(){this.position_=0}bytes(){return this.bytes_}position(){return this.position_}setPosition(t){this.position_=t}capacity(){return this.bytes_.length}readInt8(t){return this.readUint8(t)<<24>>24}readUint8(t){return this.bytes_[t]}readInt16(t){return this.readUint16(t)<<16>>16}readUint16(t){return this.bytes_[t]|this.bytes_[t+1]<<8}readInt32(t){return this.bytes_[t]|this.bytes_[t+1]<<8|this.bytes_[t+2]<<16|this.bytes_[t+3]<<24}readUint32(t){return this.readInt32(t)>>>0}readInt64(t){return BigInt.asIntN(64,BigInt(this.readUint32(t))+(BigInt(this.readUint32(t+4))<<BigInt(32)))}readUint64(t){return BigInt.asUintN(64,BigInt(this.readUint32(t))+(BigInt(this.readUint32(t+4))<<BigInt(32)))}readFloat32(t){return it[0]=this.readInt32(t),te[0]}readFloat64(t){return it[It?0:1]=this.readInt32(t),it[It?1:0]=this.readInt32(t+4),ee[0]}writeInt8(t,e){this.bytes_[t]=e}writeUint8(t,e){this.bytes_[t]=e}writeInt16(t,e){this.bytes_[t]=e,this.bytes_[t+1]=e>>8}writeUint16(t,e){this.bytes_[t]=e,this.bytes_[t+1]=e>>8}writeInt32(t,e){this.bytes_[t]=e,this.bytes_[t+1]=e>>8,this.bytes_[t+2]=e>>16,this.bytes_[t+3]=e>>24}writeUint32(t,e){this.bytes_[t]=e,this.bytes_[t+1]=e>>8,this.bytes_[t+2]=e>>16,this.bytes_[t+3]=e>>24}writeInt64(t,e){this.writeInt32(t,Number(BigInt.asIntN(32,e))),this.writeInt32(t+4,Number(BigInt.asIntN(32,e>>BigInt(32))))}writeUint64(t,e){this.writeUint32(t,Number(BigInt.asUintN(32,e))),this.writeUint32(t+4,Number(BigInt.asUintN(32,e>>BigInt(32))))}writeFloat32(t,e){te[0]=e,this.writeInt32(t,it[0])}writeFloat64(t,e){ee[0]=e,this.writeInt32(t,it[It?0:1]),this.writeInt32(t+4,it[It?1:0])}getBufferIdentifier(){if(this.bytes_.length<this.position_+4+4)throw new Error(\"FlatBuffers: ByteBuffer is too short to contain an identifier.\");let t=\"\";for(let e=0;e<4;e++)t+=String.fromCharCode(this.readInt8(this.position_+4+e));return t}__offset(t,e){let r=t-this.readInt32(t);return e<this.readInt16(r)?this.readInt16(r+e):0}__union(t,e){return t.bb_pos=e+this.readInt32(e),t.bb=this,t}__string(t,e){t+=this.readInt32(t);let r=this.readInt32(t),s=\"\",i=0;if(t+=4,e===Et.UTF8_BYTES)return this.bytes_.subarray(t,t+r);for(;i<r;){let n,d=this.readUint8(t+i++);if(d<192)n=d;else{let b=this.readUint8(t+i++);if(d<224)n=(d&31)<<6|b&63;else{let g=this.readUint8(t+i++);if(d<240)n=(d&15)<<12|(b&63)<<6|g&63;else{let S=this.readUint8(t+i++);n=(d&7)<<18|(b&63)<<12|(g&63)<<6|S&63}}}n<65536?s+=String.fromCharCode(n):(n-=65536,s+=String.fromCharCode((n>>10)+55296,(n&(1<<10)-1)+56320))}return s}__union_with_string(t,e){return typeof t==\"string\"?this.__string(e):this.__union(t,e)}__indirect(t){return t+this.readInt32(t)}__vector(t){return t+this.readInt32(t)+4}__vector_len(t){return this.readInt32(t+this.readInt32(t))}__has_identifier(t){if(t.length!=4)throw new Error(\"FlatBuffers: file identifier must be length \"+4);for(let e=0;e<4;e++)if(t.charCodeAt(e)!=this.readInt8(this.position()+4+e))return!1;return!0}createScalarList(t,e){let r=[];for(let s=0;s<e;++s)t(s)!==null&&r.push(t(s));return r}createObjList(t,e){let r=[];for(let s=0;s<e;++s){let i=t(s);i!==null&&r.push(i.unpack())}return r}},ft=class{constructor(t){this.minalign=1,this.vtable=null,this.vtable_in_use=0,this.isNested=!1,this.object_start=0,this.vtables=[],this.vector_num_elems=0,this.force_defaults=!1,this.string_maps=null;let e;t?e=t:e=1024,this.bb=vt.allocate(e),this.space=e}clear(){this.bb.clear(),this.space=this.bb.capacity(),this.minalign=1,this.vtable=null,this.vtable_in_use=0,this.isNested=!1,this.object_start=0,this.vtables=[],this.vector_num_elems=0,this.force_defaults=!1,this.string_maps=null}forceDefaults(t){this.force_defaults=t}dataBuffer(){return this.bb}asUint8Array(){return this.bb.bytes().subarray(this.bb.position(),this.bb.position()+this.offset())}prep(t,e){t>this.minalign&&(this.minalign=t);let r=~(this.bb.capacity()-this.space+e)+1&t-1;for(;this.space<r+t+e;){let s=this.bb.capacity();this.bb=ft.growByteBuffer(this.bb),this.space+=this.bb.capacity()-s}this.pad(r)}pad(t){for(let e=0;e<t;e++)this.bb.writeInt8(--this.space,0)}writeInt8(t){this.bb.writeInt8(this.space-=1,t)}writeInt16(t){this.bb.writeInt16(this.space-=2,t)}writeInt32(t){this.bb.writeInt32(this.space-=4,t)}writeInt64(t){this.bb.writeInt64(this.space-=8,t)}writeFloat32(t){this.bb.writeFloat32(this.space-=4,t)}writeFloat64(t){this.bb.writeFloat64(this.space-=8,t)}addInt8(t){this.prep(1,0),this.writeInt8(t)}addInt16(t){this.prep(2,0),this.writeInt16(t)}addInt32(t){this.prep(4,0),this.writeInt32(t)}addInt64(t){this.prep(8,0),this.writeInt64(t)}addFloat32(t){this.prep(4,0),this.writeFloat32(t)}addFloat64(t){this.prep(8,0),this.writeFloat64(t)}addFieldInt8(t,e,r){(this.force_defaults||e!=r)&&(this.addInt8(e),this.slot(t))}addFieldInt16(t,e,r){(this.force_defaults||e!=r)&&(this.addInt16(e),this.slot(t))}addFieldInt32(t,e,r){(this.force_defaults||e!=r)&&(this.addInt32(e),this.slot(t))}addFieldInt64(t,e,r){(this.force_defaults||e!==r)&&(this.addInt64(e),this.slot(t))}addFieldFloat32(t,e,r){(this.force_defaults||e!=r)&&(this.addFloat32(e),this.slot(t))}addFieldFloat64(t,e,r){(this.force_defaults||e!=r)&&(this.addFloat64(e),this.slot(t))}addFieldOffset(t,e,r){(this.force_defaults||e!=r)&&(this.addOffset(e),this.slot(t))}addFieldStruct(t,e,r){e!=r&&(this.nested(e),this.slot(t))}nested(t){if(t!=this.offset())throw new Error(\"FlatBuffers: struct must be serialized inline.\")}notNested(){if(this.isNested)throw new Error(\"FlatBuffers: object serialization must not be nested.\")}slot(t){this.vtable!==null&&(this.vtable[t]=this.offset())}offset(){return this.bb.capacity()-this.space}static growByteBuffer(t){let e=t.capacity();if(e&3221225472)throw new Error(\"FlatBuffers: cannot grow buffer beyond 2 gigabytes.\");let r=e<<1,s=vt.allocate(r);return s.setPosition(r-e),s.bytes().set(t.bytes(),r-e),s}addOffset(t){this.prep(4,0),this.writeInt32(this.offset()-t+4)}startObject(t){this.notNested(),this.vtable==null&&(this.vtable=[]),this.vtable_in_use=t;for(let e=0;e<t;e++)this.vtable[e]=0;this.isNested=!0,this.object_start=this.offset()}endObject(){if(this.vtable==null||!this.isNested)throw new Error(\"FlatBuffers: endObject called without startObject\");this.addInt32(0);let t=this.offset(),e=this.vtable_in_use-1;for(;e>=0&&this.vtable[e]==0;e--);let r=e+1;for(;e>=0;e--)this.addInt16(this.vtable[e]!=0?t-this.vtable[e]:0);let s=2;this.addInt16(t-this.object_start);let i=(r+s)*2;this.addInt16(i);let n=0,d=this.space;t:for(e=0;e<this.vtables.length;e++){let b=this.bb.capacity()-this.vtables[e];if(i==this.bb.readInt16(b)){for(let g=2;g<i;g+=2)if(this.bb.readInt16(d+g)!=this.bb.readInt16(b+g))continue t;n=this.vtables[e];break}}return n?(this.space=this.bb.capacity()-t,this.bb.writeInt32(this.space,n-t)):(this.vtables.push(this.offset()),this.bb.writeInt32(this.bb.capacity()-t,this.offset()-t)),this.isNested=!1,t}finish(t,e,r){let s=r?4:0;if(e){let i=e;if(this.prep(this.minalign,4+4+s),i.length!=4)throw new Error(\"FlatBuffers: file identifier must be length \"+4);for(let n=4-1;n>=0;n--)this.writeInt8(i.charCodeAt(n))}this.prep(this.minalign,4+s),this.addOffset(t),s&&this.addInt32(this.bb.capacity()-this.space),this.bb.setPosition(this.space)}finishSizePrefixed(t,e){this.finish(t,e,!0)}requiredField(t,e){let r=this.bb.capacity()-t,s=r-this.bb.readInt32(r);if(this.bb.readInt16(s+e)==0)throw new Error(\"FlatBuffers: field \"+e+\" must be set\")}startVector(t,e,r){this.notNested(),this.vector_num_elems=e,this.prep(4,t*e),this.prep(r,t*e)}endVector(){return this.writeInt32(this.vector_num_elems),this.offset()}createSharedString(t){if(!t)return 0;if(this.string_maps||(this.string_maps=new Map),this.string_maps.has(t))return this.string_maps.get(t);let e=this.createString(t);return this.string_maps.set(t,e),e}createString(t){if(t==null)return 0;let e;if(t instanceof Uint8Array)e=t;else{e=[];let r=0;for(;r<t.length;){let s,i=t.charCodeAt(r++);if(i<55296||i>=56320)s=i;else{let n=t.charCodeAt(r++);s=(i<<10)+n+(65536-(55296<<10)-56320)}s<128?e.push(s):(s<2048?e.push(s>>6&31|192):(s<65536?e.push(s>>12&15|224):e.push(s>>18&7|240,s>>12&63|128),e.push(s>>6&63|128)),e.push(s&63|128))}}this.addInt8(0),this.startVector(1,e.length,1),this.bb.setPosition(this.space-=e.length);for(let r=0,s=this.space,i=this.bb.bytes();r<e.length;r++)i[s++]=e[r];return this.endVector()}createObjectOffset(t){return t===null?0:typeof t==\"string\"?this.createString(t):t.pack(this)}createObjectOffsetList(t){let e=[];for(let r=0;r<t.length;++r){let s=t[r];if(s!==null)e.push(this.createObjectOffset(s));else throw new Error(\"FlatBuffers: Argument for createObjectOffsetList cannot contain null.\")}return e}createStructOffsetList(t,e){return e(this,t.length),this.createObjectOffsetList(t),this.endVector()}},_=class{constructor(){this.bb=null,this.bb_pos=0}__init(t,e){return this.bb_pos=t,this.bb=e,this}static getRootAsTransform(t,e){return(e||new _).__init(t.readInt32(t.position())+t.position(),t)}static getSizePrefixedRootAsTransform(t,e){return t.setPosition(t.position()+4),(e||new _).__init(t.readInt32(t.position())+t.position(),t)}x(){let t=this.bb.__offset(this.bb_pos,4);return t?this.bb.readFloat32(this.bb_pos+t):null}y(){let t=this.bb.__offset(this.bb_pos,6);return t?this.bb.readFloat32(this.bb_pos+t):null}height(){let t=this.bb.__offset(this.bb_pos,8);return t?this.bb.readFloat32(this.bb_pos+t):null}width(){let t=this.bb.__offset(this.bb_pos,10);return t?this.bb.readFloat32(this.bb_pos+t):null}angle(){let t=this.bb.__offset(this.bb_pos,12);return t?this.bb.readFloat32(this.bb_pos+t):null}scale(){let t=this.bb.__offset(this.bb_pos,14);return t?this.bb.readFloat32(this.bb_pos+t):null}zOrder(){let t=this.bb.__offset(this.bb_pos,16);return t?this.bb.readUint16(this.bb_pos+t):null}bigZOrder(){let t=this.bb.__offset(this.bb_pos,18);return t?this.bb.readUint32(this.bb_pos+t):null}visible(){let t=this.bb.__offset(this.bb_pos,20);return t?!!this.bb.readInt8(this.bb_pos+t):null}opacity(){let t=this.bb.__offset(this.bb_pos,22);return t?this.bb.readUint8(this.bb_pos+t):null}animation(){let t=this.bb.__offset(this.bb_pos,24);return t?this.bb.readUint8(this.bb_pos+t):null}text(t){let e=this.bb.__offset(this.bb_pos,26);return e?this.bb.__string(this.bb_pos+e,t):null}static startTransform(t){t.startObject(12)}static addX(t,e){t.addFieldFloat32(0,e,0)}static addY(t,e){t.addFieldFloat32(1,e,0)}static addHeight(t,e){t.addFieldFloat32(2,e,0)}static addWidth(t,e){t.addFieldFloat32(3,e,0)}static addAngle(t,e){t.addFieldFloat32(4,e,0)}static addScale(t,e){t.addFieldFloat32(5,e,0)}static addZOrder(t,e){t.addFieldInt16(6,e,0)}static addBigZOrder(t,e){t.addFieldInt32(7,e,0)}static addVisible(t,e){t.addFieldInt8(8,+e,0)}static addOpacity(t,e){t.addFieldInt8(9,e,0)}static addAnimation(t,e){t.addFieldInt8(10,e,0)}static addText(t,e){t.addFieldOffset(11,e,0)}static endTransform(t){return t.endObject()}static createTransform(t,e,r,s,i,n,d,b,g,S,v,j,T){return _.startTransform(t),e!==null&&_.addX(t,e),r!==null&&_.addY(t,r),s!==null&&_.addHeight(t,s),i!==null&&_.addWidth(t,i),n!==null&&_.addAngle(t,n),d!==null&&_.addScale(t,d),b!==null&&_.addZOrder(t,b),g!==null&&_.addBigZOrder(t,g),S!==null&&_.addVisible(t,S),v!==null&&_.addOpacity(t,v),j!==null&&_.addAnimation(t,j),_.addText(t,T),_.endTransform(t)}},Vt=class{constructor(){this.bb=null,this.bb_pos=0}__init(t,e){return this.bb_pos=t,this.bb=e,this}static getRootAsCamera(t,e){return(e||new Vt).__init(t.readInt32(t.position())+t.position(),t)}static getSizePrefixedRootAsCamera(t,e){return t.setPosition(t.position()+4),(e||new Vt).__init(t.readInt32(t.position())+t.position(),t)}layer(t){let e=this.bb.__offset(this.bb_pos,4);return e?this.bb.__string(this.bb_pos+e,t):null}transform(t){let e=this.bb.__offset(this.bb_pos,6);return e?(t||new _).__init(this.bb.__indirect(this.bb_pos+e),this.bb):null}static startCamera(t){t.startObject(2)}static addLayer(t,e){t.addFieldOffset(0,e,0)}static addTransform(t,e){t.addFieldOffset(1,e,0)}static endCamera(t){let e=t.endObject();return t.requiredField(e,4),t.requiredField(e,6),e}},tt=class{constructor(){this.bb=null,this.bb_pos=0}__init(t,e){return this.bb_pos=t,this.bb=e,this}static getRootAsClientInputMessage(t,e){return(e||new tt).__init(t.readInt32(t.position())+t.position(),t)}static getSizePrefixedRootAsClientInputMessage(t,e){return t.setPosition(t.position()+4),(e||new tt).__init(t.readInt32(t.position())+t.position(),t)}name(t){let e=this.bb.__offset(this.bb_pos,4);return e?this.bb.__string(this.bb_pos+e,t):null}content(t){let e=this.bb.__offset(this.bb_pos,6);return e?this.bb.readUint8(this.bb.__vector(this.bb_pos+e)+t):0}contentLength(){let t=this.bb.__offset(this.bb_pos,6);return t?this.bb.__vector_len(this.bb_pos+t):0}contentArray(){let t=this.bb.__offset(this.bb_pos,6);return t?new Uint8Array(this.bb.bytes().buffer,this.bb.bytes().byteOffset+this.bb.__vector(this.bb_pos+t),this.bb.__vector_len(this.bb_pos+t)):null}static startClientInputMessage(t){t.startObject(2)}static addName(t,e){t.addFieldOffset(0,e,0)}static addContent(t,e){t.addFieldOffset(1,e,0)}static createContentVector(t,e){t.startVector(1,e.length,1);for(let r=e.length-1;r>=0;r--)t.addInt8(e[r]);return t.endVector()}static startContentVector(t,e){t.startVector(1,e,1)}static endClientInputMessage(t){let e=t.endObject();return t.requiredField(e,4),t.requiredField(e,6),e}static createClientInputMessage(t,e,r){return tt.startClientInputMessage(t),tt.addName(t,e),tt.addContent(t,r),tt.endClientInputMessage(t)}},at=class{constructor(){this.bb=null,this.bb_pos=0}__init(t,e){return this.bb_pos=t,this.bb=e,this}static getRootAsConnectionRequestMessage(t,e){return(e||new at).__init(t.readInt32(t.position())+t.position(),t)}static getSizePrefixedRootAsConnectionRequestMessage(t,e){return t.setPosition(t.position()+4),(e||new at).__init(t.readInt32(t.position())+t.position(),t)}token(t){let e=this.bb.__offset(this.bb_pos,4);return e?this.bb.__string(this.bb_pos+e,t):null}static startConnectionRequestMessage(t){t.startObject(1)}static addToken(t,e){t.addFieldOffset(0,e,0)}static endConnectionRequestMessage(t){return t.endObject()}static createConnectionRequestMessage(t,e){return at.startConnectionRequestMessage(t),at.addToken(t,e),at.endConnectionRequestMessage(t)}},et=class{constructor(){this.bb=null,this.bb_pos=0}__init(t,e){return this.bb_pos=t,this.bb=e,this}static getRootAsClientMessage(t,e){return(e||new et).__init(t.readInt32(t.position())+t.position(),t)}static getSizePrefixedRootAsClientMessage(t,e){return t.setPosition(t.position()+4),(e||new et).__init(t.readInt32(t.position())+t.position(),t)}contentType(){let t=this.bb.__offset(this.bb_pos,4);return t?this.bb.readUint8(this.bb_pos+t):0}content(t){let e=this.bb.__offset(this.bb_pos,6);return e?this.bb.__union(t,this.bb_pos+e):null}static startClientMessage(t){t.startObject(2)}static addContentType(t,e){t.addFieldInt8(0,e,0)}static addContent(t,e){t.addFieldOffset(1,e,0)}static endClientMessage(t){let e=t.endObject();return t.requiredField(e,6),e}static createClientMessage(t,e,r){return et.startClientMessage(t),et.addContentType(t,e),et.addContent(t,r),et.endClientMessage(t)}},C=class{constructor(){this.bb=null,this.bb_pos=0}__init(t,e){return this.bb_pos=t,this.bb=e,this}static getRootAsVariable(t,e){return(e||new C).__init(t.readInt32(t.position())+t.position(),t)}static getSizePrefixedRootAsVariable(t,e){return t.setPosition(t.position()+4),(e||new C).__init(t.readInt32(t.position())+t.position(),t)}type(){let t=this.bb.__offset(this.bb_pos,4);return t?this.bb.readUint8(this.bb_pos+t):0}text(t){let e=this.bb.__offset(this.bb_pos,6);return e?this.bb.__string(this.bb_pos+e,t):null}number(){let t=this.bb.__offset(this.bb_pos,8);return t?this.bb.readFloat32(this.bb_pos+t):0}boolean(){let t=this.bb.__offset(this.bb_pos,10);return t?!!this.bb.readInt8(this.bb_pos+t):!1}operations(t,e){let r=this.bb.__offset(this.bb_pos,12);return r?(e||new k).__init(this.bb.__indirect(this.bb.__vector(this.bb_pos+r)+t*4),this.bb):null}operationsLength(){let t=this.bb.__offset(this.bb_pos,12);return t?this.bb.__vector_len(this.bb_pos+t):0}static startVariable(t){t.startObject(5)}static addType(t,e){t.addFieldInt8(0,e,0)}static addText(t,e){t.addFieldOffset(1,e,0)}static addNumber(t,e){t.addFieldFloat32(2,e,0)}static addBoolean(t,e){t.addFieldInt8(3,+e,0)}static addOperations(t,e){t.addFieldOffset(4,e,0)}static createOperationsVector(t,e){t.startVector(4,e.length,4);for(let r=e.length-1;r>=0;r--)t.addOffset(e[r]);return t.endVector()}static startOperationsVector(t,e){t.startVector(4,e,4)}static endVariable(t){return t.endObject()}static createVariable(t,e,r,s,i,n){return C.startVariable(t),C.addType(t,e),C.addText(t,r),C.addNumber(t,s),C.addBoolean(t,i),C.addOperations(t,n),C.endVariable(t)}},k=class{constructor(){this.bb=null,this.bb_pos=0}__init(t,e){return this.bb_pos=t,this.bb=e,this}static getRootAsCollectionOperation(t,e){return(e||new k).__init(t.readInt32(t.position())+t.position(),t)}static getSizePrefixedRootAsCollectionOperation(t,e){return t.setPosition(t.position()+4),(e||new k).__init(t.readInt32(t.position())+t.position(),t)}operation(){let t=this.bb.__offset(this.bb_pos,4);return t?this.bb.readUint8(this.bb_pos+t):0}name(t){let e=this.bb.__offset(this.bb_pos,6);return e?this.bb.__string(this.bb_pos+e,t):null}index(){let t=this.bb.__offset(this.bb_pos,8);return t?this.bb.readUint16(this.bb_pos+t):0}val(t){let e=this.bb.__offset(this.bb_pos,10);return e?(t||new C).__init(this.bb.__indirect(this.bb_pos+e),this.bb):null}static startCollectionOperation(t){t.startObject(4)}static addOperation(t,e){t.addFieldInt8(0,e,0)}static addName(t,e){t.addFieldOffset(1,e,0)}static addIndex(t,e){t.addFieldInt16(2,e,0)}static addVal(t,e){t.addFieldOffset(3,e,0)}static endCollectionOperation(t){return t.endObject()}},D=class{constructor(){this.bb=null,this.bb_pos=0}__init(t,e){return this.bb_pos=t,this.bb=e,this}static getRootAsGameObject(t,e){return(e||new D).__init(t.readInt32(t.position())+t.position(),t)}static getSizePrefixedRootAsGameObject(t,e){return t.setPosition(t.position()+4),(e||new D).__init(t.readInt32(t.position())+t.position(),t)}id(){let t=this.bb.__offset(this.bb_pos,4);return t?this.bb.readUint16(this.bb_pos+t):0}name(t){let e=this.bb.__offset(this.bb_pos,6);return e?this.bb.__string(this.bb_pos+e,t):null}transform(t){let e=this.bb.__offset(this.bb_pos,8);return e?(t||new _).__init(this.bb.__indirect(this.bb_pos+e),this.bb):null}variables(t){let e=this.bb.__offset(this.bb_pos,10);return e?(t||new C).__init(this.bb.__indirect(this.bb_pos+e),this.bb):null}packedVariables(t){let e=this.bb.__offset(this.bb_pos,12);return e?this.bb.readUint8(this.bb.__vector(this.bb_pos+e)+t):0}packedVariablesLength(){let t=this.bb.__offset(this.bb_pos,12);return t?this.bb.__vector_len(this.bb_pos+t):0}packedVariablesArray(){let t=this.bb.__offset(this.bb_pos,12);return t?new Uint8Array(this.bb.bytes().buffer,this.bb.bytes().byteOffset+this.bb.__vector(this.bb_pos+t),this.bb.__vector_len(this.bb_pos+t)):null}static startGameObject(t){t.startObject(5)}static addId(t,e){t.addFieldInt16(0,e,0)}static addName(t,e){t.addFieldOffset(1,e,0)}static addTransform(t,e){t.addFieldOffset(2,e,0)}static addVariables(t,e){t.addFieldOffset(3,e,0)}static addPackedVariables(t,e){t.addFieldOffset(4,e,0)}static createPackedVariablesVector(t,e){t.startVector(1,e.length,1);for(let r=e.length-1;r>=0;r--)t.addInt8(e[r]);return t.endVector()}static startPackedVariablesVector(t,e){t.startVector(1,e,1)}static endGameObject(t){return t.endObject()}},G=class{constructor(){this.bb=null,this.bb_pos=0}__init(t,e){return this.bb_pos=t,this.bb=e,this}static getRootAsGameStateSnapshot(t,e){return(e||new G).__init(t.readInt32(t.position())+t.position(),t)}static getSizePrefixedRootAsGameStateSnapshot(t,e){return t.setPosition(t.position()+4),(e||new G).__init(t.readInt32(t.position())+t.position(),t)}camera(t,e){let r=this.bb.__offset(this.bb_pos,4);return r?(e||new Vt).__init(this.bb.__indirect(this.bb.__vector(this.bb_pos+r)+t*4),this.bb):null}cameraLength(){let t=this.bb.__offset(this.bb_pos,4);return t?this.bb.__vector_len(this.bb_pos+t):0}objects(t,e){let r=this.bb.__offset(this.bb_pos,6);return r?(e||new D).__init(this.bb.__indirect(this.bb.__vector(this.bb_pos+r)+t*4),this.bb):null}objectsLength(){let t=this.bb.__offset(this.bb_pos,6);return t?this.bb.__vector_len(this.bb_pos+t):0}variables(t){let e=this.bb.__offset(this.bb_pos,8);return e?this.bb.readUint8(this.bb.__vector(this.bb_pos+e)+t):0}variablesLength(){let t=this.bb.__offset(this.bb_pos,8);return t?this.bb.__vector_len(this.bb_pos+t):0}variablesArray(){let t=this.bb.__offset(this.bb_pos,8);return t?new Uint8Array(this.bb.bytes().buffer,this.bb.bytes().byteOffset+this.bb.__vector(this.bb_pos+t),this.bb.__vector_len(this.bb_pos+t)):null}static startGameStateSnapshot(t){t.startObject(3)}static addCamera(t,e){t.addFieldOffset(0,e,0)}static createCameraVector(t,e){t.startVector(4,e.length,4);for(let r=e.length-1;r>=0;r--)t.addOffset(e[r]);return t.endVector()}static startCameraVector(t,e){t.startVector(4,e,4)}static addObjects(t,e){t.addFieldOffset(1,e,0)}static createObjectsVector(t,e){t.startVector(4,e.length,4);for(let r=e.length-1;r>=0;r--)t.addOffset(e[r]);return t.endVector()}static startObjectsVector(t,e){t.startVector(4,e,4)}static addVariables(t,e){t.addFieldOffset(2,e,0)}static createVariablesVector(t,e){t.startVector(1,e.length,1);for(let r=e.length-1;r>=0;r--)t.addInt8(e[r]);return t.endVector()}static startVariablesVector(t,e){t.startVector(1,e,1)}static endGameStateSnapshot(t){return t.endObject()}static createGameStateSnapshot(t,e,r,s){return G.startGameStateSnapshot(t),G.addCamera(t,e),G.addObjects(t,r),G.addVariables(t,s),G.endGameStateSnapshot(t)}},ut=class{constructor(){this.bb=null,this.bb_pos=0}__init(t,e){return this.bb_pos=t,this.bb=e,this}static getRootAsConnectionStartMessage(t,e){return(e||new ut).__init(t.readInt32(t.position())+t.position(),t)}static getSizePrefixedRootAsConnectionStartMessage(t,e){return t.setPosition(t.position()+4),(e||new ut).__init(t.readInt32(t.position())+t.position(),t)}sceneName(t){let e=this.bb.__offset(this.bb_pos,4);return e?this.bb.__string(this.bb_pos+e,t):null}sceneSnapshot(t){let e=this.bb.__offset(this.bb_pos,6);return e?(t||new G).__init(this.bb.__indirect(this.bb_pos+e),this.bb):null}static startConnectionStartMessage(t){t.startObject(2)}static addSceneName(t,e){t.addFieldOffset(0,e,0)}static addSceneSnapshot(t,e){t.addFieldOffset(1,e,0)}static endConnectionStartMessage(t){let e=t.endObject();return t.requiredField(e,4),t.requiredField(e,6),e}},nt=class{constructor(){this.bb=null,this.bb_pos=0}__init(t,e){return this.bb_pos=t,this.bb=e,this}static getRootAsCreatedObject(t,e){return(e||new nt).__init(t.readInt32(t.position())+t.position(),t)}static getSizePrefixedRootAsCreatedObject(t,e){return t.setPosition(t.position()+4),(e||new nt).__init(t.readInt32(t.position())+t.position(),t)}id(){let t=this.bb.__offset(this.bb_pos,4);return t?this.bb.readUint16(this.bb_pos+t):0}name(t){let e=this.bb.__offset(this.bb_pos,6);return e?this.bb.__string(this.bb_pos+e,t):null}static startCreatedObject(t){t.startObject(2)}static addId(t,e){t.addFieldInt16(0,e,0)}static addName(t,e){t.addFieldOffset(1,e,0)}static endCreatedObject(t){let e=t.endObject();return t.requiredField(e,6),e}static createCreatedObject(t,e,r){return nt.startCreatedObject(t),nt.addId(t,e),nt.addName(t,r),nt.endCreatedObject(t)}},q=class{constructor(){this.bb=null,this.bb_pos=0}__init(t,e){return this.bb_pos=t,this.bb=e,this}static getRootAsGameStateDiff(t,e){return(e||new q).__init(t.readInt32(t.position())+t.position(),t)}static getSizePrefixedRootAsGameStateDiff(t,e){return t.setPosition(t.position()+4),(e||new q).__init(t.readInt32(t.position())+t.position(),t)}camera(t,e){let r=this.bb.__offset(this.bb_pos,4);return r?(e||new Vt).__init(this.bb.__indirect(this.bb.__vector(this.bb_pos+r)+t*4),this.bb):null}cameraLength(){let t=this.bb.__offset(this.bb_pos,4);return t?this.bb.__vector_len(this.bb_pos+t):0}objects(t,e){let r=this.bb.__offset(this.bb_pos,6);return r?(e||new D).__init(this.bb.__indirect(this.bb.__vector(this.bb_pos+r)+t*4),this.bb):null}objectsLength(){let t=this.bb.__offset(this.bb_pos,6);return t?this.bb.__vector_len(this.bb_pos+t):0}createdObjects(t,e){let r=this.bb.__offset(this.bb_pos,8);return r?(e||new nt).__init(this.bb.__indirect(this.bb.__vector(this.bb_pos+r)+t*4),this.bb):null}createdObjectsLength(){let t=this.bb.__offset(this.bb_pos,8);return t?this.bb.__vector_len(this.bb_pos+t):0}deletedObjects(t){let e=this.bb.__offset(this.bb_pos,10);return e?this.bb.readUint16(this.bb.__vector(this.bb_pos+e)+t*2):0}deletedObjectsLength(){let t=this.bb.__offset(this.bb_pos,10);return t?this.bb.__vector_len(this.bb_pos+t):0}deletedObjectsArray(){let t=this.bb.__offset(this.bb_pos,10);return t?new Uint16Array(this.bb.bytes().buffer,this.bb.bytes().byteOffset+this.bb.__vector(this.bb_pos+t),this.bb.__vector_len(this.bb_pos+t)):null}variables(t){let e=this.bb.__offset(this.bb_pos,12);return e?(t||new C).__init(this.bb.__indirect(this.bb_pos+e),this.bb):null}static startGameStateDiff(t){t.startObject(5)}static addCamera(t,e){t.addFieldOffset(0,e,0)}static createCameraVector(t,e){t.startVector(4,e.length,4);for(let r=e.length-1;r>=0;r--)t.addOffset(e[r]);return t.endVector()}static startCameraVector(t,e){t.startVector(4,e,4)}static addObjects(t,e){t.addFieldOffset(1,e,0)}static createObjectsVector(t,e){t.startVector(4,e.length,4);for(let r=e.length-1;r>=0;r--)t.addOffset(e[r]);return t.endVector()}static startObjectsVector(t,e){t.startVector(4,e,4)}static addCreatedObjects(t,e){t.addFieldOffset(2,e,0)}static createCreatedObjectsVector(t,e){t.startVector(4,e.length,4);for(let r=e.length-1;r>=0;r--)t.addOffset(e[r]);return t.endVector()}static startCreatedObjectsVector(t,e){t.startVector(4,e,4)}static addDeletedObjects(t,e){t.addFieldOffset(3,e,0)}static createDeletedObjectsVector(t,e){t.startVector(2,e.length,2);for(let r=e.length-1;r>=0;r--)t.addInt16(e[r]);return t.endVector()}static startDeletedObjectsVector(t,e){t.startVector(2,e,2)}static addVariables(t,e){t.addFieldOffset(4,e,0)}static endGameStateDiff(t){return t.endObject()}},ct=class{constructor(){this.bb=null,this.bb_pos=0}__init(t,e){return this.bb_pos=t,this.bb=e,this}static getRootAsGameStateUpdateMessage(t,e){return(e||new ct).__init(t.readInt32(t.position())+t.position(),t)}static getSizePrefixedRootAsGameStateUpdateMessage(t,e){return t.setPosition(t.position()+4),(e||new ct).__init(t.readInt32(t.position())+t.position(),t)}newState(t){let e=this.bb.__offset(this.bb_pos,4);return e?(t||new q).__init(this.bb.__indirect(this.bb_pos+e),this.bb):null}static startGameStateUpdateMessage(t){t.startObject(1)}static addNewState(t,e){t.addFieldOffset(0,e,0)}static endGameStateUpdateMessage(t){let e=t.endObject();return t.requiredField(e,4),e}static createGameStateUpdateMessage(t,e){return ct.startGameStateUpdateMessage(t),ct.addNewState(t,e),ct.endGameStateUpdateMessage(t)}},W=class{constructor(){this.bb=null,this.bb_pos=0}__init(t,e){return this.bb_pos=t,this.bb=e,this}static getRootAsResumePreviousSceneMessage(t,e){return(e||new W).__init(t.readInt32(t.position())+t.position(),t)}static getSizePrefixedRootAsResumePreviousSceneMessage(t,e){return t.setPosition(t.position()+4),(e||new W).__init(t.readInt32(t.position())+t.position(),t)}snapshot(t){let e=this.bb.__offset(this.bb_pos,4);return e?(t||new G).__init(this.bb.__indirect(this.bb_pos+e),this.bb):null}name(t){let e=this.bb.__offset(this.bb_pos,6);return e?this.bb.__string(this.bb_pos+e,t):null}static startResumePreviousSceneMessage(t){t.startObject(2)}static addSnapshot(t,e){t.addFieldOffset(0,e,0)}static addName(t,e){t.addFieldOffset(1,e,0)}static endResumePreviousSceneMessage(t){return t.endObject()}static createResumePreviousSceneMessage(t,e,r){return W.startResumePreviousSceneMessage(t),W.addSnapshot(t,e),W.addName(t,r),W.endResumePreviousSceneMessage(t)}},Y=class{constructor(){this.bb=null,this.bb_pos=0}__init(t,e){return this.bb_pos=t,this.bb=e,this}static getRootAsSceneSwitchMessage(t,e){return(e||new Y).__init(t.readInt32(t.position())+t.position(),t)}static getSizePrefixedRootAsSceneSwitchMessage(t,e){return t.setPosition(t.position()+4),(e||new Y).__init(t.readInt32(t.position())+t.position(),t)}sceneName(t){let e=this.bb.__offset(this.bb_pos,4);return e?this.bb.__string(this.bb_pos+e,t):null}isPause(){let t=this.bb.__offset(this.bb_pos,6);return t?!!this.bb.readInt8(this.bb_pos+t):!1}static startSceneSwitchMessage(t){t.startObject(2)}static addSceneName(t,e){t.addFieldOffset(0,e,0)}static addIsPause(t,e){t.addFieldInt8(1,+e,0)}static endSceneSwitchMessage(t){let e=t.endObject();return t.requiredField(e,4),e}static createSceneSwitchMessage(t,e,r){return Y.startSceneSwitchMessage(t),Y.addSceneName(t,e),Y.addIsPause(t,r),Y.endSceneSwitchMessage(t)}},Q=class{constructor(){this.bb=null,this.bb_pos=0}__init(t,e){return this.bb_pos=t,this.bb=e,this}static getRootAsServerMessage(t,e){return(e||new Q).__init(t.readInt32(t.position())+t.position(),t)}static getSizePrefixedRootAsServerMessage(t,e){return t.setPosition(t.position()+4),(e||new Q).__init(t.readInt32(t.position())+t.position(),t)}contentType(){let t=this.bb.__offset(this.bb_pos,4);return t?this.bb.readUint8(this.bb_pos+t):0}content(t){let e=this.bb.__offset(this.bb_pos,6);return e?this.bb.__union(t,this.bb_pos+e):null}static startServerMessage(t){t.startObject(2)}static addContentType(t,e){t.addFieldInt8(0,e,0)}static addContent(t,e){t.addFieldOffset(1,e,0)}static endServerMessage(t){let e=t.endObject();return t.requiredField(e,6),e}static createServerMessage(t,e,r){return Q.startServerMessage(t),Q.addContentType(t,e),Q.addContent(t,r),Q.endServerMessage(t)}},Lt;try{Lt=new TextDecoder}catch{}var f,rt,a=0,z={},I,lt,Z=0,$=0,B,st,H=[],O,re={useRecords:!1,mapsAsObjects:!0},ye=class{},we=new ye;we.name=\"MessagePack 0xC1\";var _t=!1,Se=2;try{new Function(\"\")}catch{Se=1/0}var Mt=class{constructor(t){t&&(t.useRecords===!1&&t.mapsAsObjects===void 0&&(t.mapsAsObjects=!0),t.structures?t.structures.sharedLength=t.structures.length:t.getStructures&&((t.structures=[]).uninitialized=!0,t.structures.sharedLength=0)),Object.assign(this,t)}unpack(t,e){if(f)return Ce(()=>(zt(),this?this.unpack(t,e):Mt.prototype.unpack.call(re,t,e)));rt=e>-1?e:t.length,a=0,$=0,lt=null,B=null,f=t;try{O=t.dataView||(t.dataView=new DataView(t.buffer,t.byteOffset,t.byteLength))}catch(r){throw f=null,t instanceof Uint8Array?r:new Error(\"Source must be a Uint8Array or Buffer but was a \"+(t&&typeof t==\"object\"?t.constructor.name:typeof t))}if(this instanceof Mt){if(z=this,this.structures)return I=this.structures,Ct();(!I||I.length>0)&&(I=[])}else z=re,(!I||I.length>0)&&(I=[]);return Ct()}unpackMultiple(t,e){let r,s=0;try{_t=!0;let i=t.length,n=this?this.unpack(t,i):je.unpack(t,i);if(e){for(e(n);a<i;)if(s=a,e(Ct())===!1)return}else{for(r=[n];a<i;)s=a,r.push(Ct());return r}}catch(i){throw i.lastPosition=s,i.values=r,i}finally{_t=!1,zt()}}_mergeStructures(t,e){t=t||[];for(let r=0,s=t.length;r<s;r++){let i=t[r];i&&(i.isShared=!0,r>=32&&(i.highByte=r-32>>5))}t.sharedLength=t.length;for(let r in e||[])if(r>=0){let s=t[r],i=e[r];i&&(s&&((t.restoreStructures||(t.restoreStructures=[]))[r]=s),t[r]=i)}return this.structures=t}decode(t,e){return this.unpack(t,e)}};function Ct(){try{if(!z.trusted&&!_t){let e=I.sharedLength||0;e<I.length&&(I.length=e)}let t=U();if(B&&(a=B.postBundlePosition),a==rt)I.restoreStructures&&se(),I=null,f=null,st&&(st=null);else{if(a>rt)throw new Error(\"Unexpected end of MessagePack data\");if(!_t)throw new Error(\"Data read, but end of buffer not reached \"+JSON.stringify(t).slice(0,100))}return t}catch(t){throw I.restoreStructures&&se(),zt(),(t instanceof RangeError||t.message.startsWith(\"Unexpected end of buffer\")||a>rt)&&(t.incomplete=!0),t}}function se(){for(let t in I.restoreStructures)I[t]=I.restoreStructures[t];I.restoreStructures=null}function U(){let t=f[a++];if(t<160)if(t<128){if(t<64)return t;{let e=I[t&63]||z.getStructures&&ve()[t&63];return e?(e.read||(e.read=Zt(e,t&63)),e.read()):t}}else if(t<144)if(t-=128,z.mapsAsObjects){let e={};for(let r=0;r<t;r++)e[Oe()]=U();return e}else{let e=new Map;for(let r=0;r<t;r++)e.set(U(),U());return e}else{t-=144;let e=new Array(t);for(let r=0;r<t;r++)e[r]=U();return e}else if(t<192){let e=t-160;if($>=a)return lt.slice(a-Z,(a+=e)-Z);if($==0&&rt<140){let r=e<16?Wt(e):me(e);if(r!=null)return r}return Gt(e)}else{let e;switch(t){case 192:return null;case 193:return B?(e=U(),e>0?B[1].slice(B.position1,B.position1+=e):B[0].slice(B.position0,B.position0-=e)):we;case 194:return!1;case 195:return!0;case 196:if(e=f[a++],e===void 0)throw new Error(\"Unexpected end of buffer\");return Rt(e);case 197:return e=O.getUint16(a),a+=2,Rt(e);case 198:return e=O.getUint32(a),a+=4,Rt(e);case 199:return bt(f[a++]);case 200:return e=O.getUint16(a),a+=2,bt(e);case 201:return e=O.getUint32(a),a+=4,bt(e);case 202:if(e=O.getFloat32(a),z.useFloat32>2){let r=Yt[(f[a]&127)<<1|f[a+1]>>7];return a+=4,(r*e+(e>0?.5:-.5)>>0)/r}return a+=4,e;case 203:return e=O.getFloat64(a),a+=8,e;case 204:return f[a++];case 205:return e=O.getUint16(a),a+=2,e;case 206:return e=O.getUint32(a),a+=4,e;case 207:return z.int64AsNumber?(e=O.getUint32(a)*4294967296,e+=O.getUint32(a+4)):e=O.getBigUint64(a),a+=8,e;case 208:return O.getInt8(a++);case 209:return e=O.getInt16(a),a+=2,e;case 210:return e=O.getInt32(a),a+=4,e;case 211:return z.int64AsNumber?(e=O.getInt32(a)*4294967296,e+=O.getUint32(a+4)):e=O.getBigInt64(a),a+=8,e;case 212:if(e=f[a++],e==114)return de(f[a++]&63);{let r=H[e];if(r)return r.read?(a++,r.read(U())):r.noBuffer?(a++,r()):r(f.subarray(a,++a));throw new Error(\"Unknown extension \"+e)}case 213:return e=f[a],e==114?(a++,de(f[a++]&63,f[a++])):bt(2);case 214:return bt(4);case 215:return bt(8);case 216:return bt(16);case 217:return e=f[a++],$>=a?lt.slice(a-Z,(a+=e)-Z):Ke(e);case 218:return e=O.getUint16(a),a+=2,$>=a?lt.slice(a-Z,(a+=e)-Z):$e(e);case 219:return e=O.getUint32(a),a+=4,$>=a?lt.slice(a-Z,(a+=e)-Z):Je(e);case 220:return e=O.getUint16(a),a+=2,ne(e);case 221:return e=O.getUint32(a),a+=4,ne(e);case 222:return e=O.getUint16(a),a+=2,ae(e);case 223:return e=O.getUint32(a),a+=4,ae(e);default:if(t>=224)return t-256;if(t===void 0){let r=new Error(\"Unexpected end of MessagePack data\");throw r.incomplete=!0,r}throw new Error(\"Unknown MessagePack token \"+t)}}}var Xe=/^[a-zA-Z_$][a-zA-Z\\d_$]*$/;function Zt(t,e){function r(){if(r.count++>Se){let i=t.read=new Function(\"r\",\"return function(){return {\"+t.map(n=>Xe.test(n)?n+\":r()\":\"[\"+JSON.stringify(n)+\"]:r()\").join(\",\")+\"}}\")(U);return t.highByte===0&&(t.read=ie(e,t.read)),i()}let s={};for(let i=0,n=t.length;i<n;i++){let d=t[i];s[d]=U()}return s}return r.count=0,t.highByte===0?ie(e,r):r}var ie=(t,e)=>function(){let r=f[a++];if(r===0)return e();let s=t<32?-(t+(r<<5)):t+(r<<5),i=I[s]||ve()[s];if(!i)throw new Error(\"Record id is not defined for \"+s);return i.read||(i.read=Zt(i,t)),i.read()};function ve(){let t=Ce(()=>(f=null,z.getStructures()));return I=z._mergeStructures(t,I)}var Gt=mt,Ke=mt,$e=mt,Je=mt;function mt(t){let e;if(t<16&&(e=Wt(t)))return e;if(t>64&&Lt)return Lt.decode(f.subarray(a,a+=t));let r=a+t,s=[];for(e=\"\";a<r;){let i=f[a++];if((i&128)===0)s.push(i);else if((i&224)===192){let n=f[a++]&63;s.push((i&31)<<6|n)}else if((i&240)===224){let n=f[a++]&63,d=f[a++]&63;s.push((i&31)<<12|n<<6|d)}else if((i&248)===240){let n=f[a++]&63,d=f[a++]&63,b=f[a++]&63,g=(i&7)<<18|n<<12|d<<6|b;g>65535&&(g-=65536,s.push(g>>>10&1023|55296),g=56320|g&1023),s.push(g)}else s.push(i);s.length>=4096&&(e+=N.apply(String,s),s.length=0)}return s.length>0&&(e+=N.apply(String,s)),e}function ne(t){let e=new Array(t);for(let r=0;r<t;r++)e[r]=U();return e}function ae(t){if(z.mapsAsObjects){let e={};for(let r=0;r<t;r++)e[Oe()]=U();return e}else{let e=new Map;for(let r=0;r<t;r++)e.set(U(),U());return e}}var N=String.fromCharCode;function me(t){let e=a,r=new Array(t);for(let s=0;s<t;s++){let i=f[a++];if((i&128)>0){a=e;return}r[s]=i}return N.apply(String,r)}function Wt(t){if(t<4)if(t<2){if(t===0)return\"\";{let e=f[a++];if((e&128)>1){a-=1;return}return N(e)}}else{let e=f[a++],r=f[a++];if((e&128)>0||(r&128)>0){a-=2;return}if(t<3)return N(e,r);let s=f[a++];if((s&128)>0){a-=3;return}return N(e,r,s)}else{let e=f[a++],r=f[a++],s=f[a++],i=f[a++];if((e&128)>0||(r&128)>0||(s&128)>0||(i&128)>0){a-=4;return}if(t<6){if(t===4)return N(e,r,s,i);{let n=f[a++];if((n&128)>0){a-=5;return}return N(e,r,s,i,n)}}else if(t<8){let n=f[a++],d=f[a++];if((n&128)>0||(d&128)>0){a-=6;return}if(t<7)return N(e,r,s,i,n,d);let b=f[a++];if((b&128)>0){a-=7;return}return N(e,r,s,i,n,d,b)}else{let n=f[a++],d=f[a++],b=f[a++],g=f[a++];if((n&128)>0||(d&128)>0||(b&128)>0||(g&128)>0){a-=8;return}if(t<10){if(t===8)return N(e,r,s,i,n,d,b,g);{let S=f[a++];if((S&128)>0){a-=9;return}return N(e,r,s,i,n,d,b,g,S)}}else if(t<12){let S=f[a++],v=f[a++];if((S&128)>0||(v&128)>0){a-=10;return}if(t<11)return N(e,r,s,i,n,d,b,g,S,v);let j=f[a++];if((j&128)>0){a-=11;return}return N(e,r,s,i,n,d,b,g,S,v,j)}else{let S=f[a++],v=f[a++],j=f[a++],T=f[a++];if((S&128)>0||(v&128)>0||(j&128)>0||(T&128)>0){a-=12;return}if(t<14){if(t===12)return N(e,r,s,i,n,d,b,g,S,v,j,T);{let P=f[a++];if((P&128)>0){a-=13;return}return N(e,r,s,i,n,d,b,g,S,v,j,T,P)}}else{let P=f[a++],X=f[a++];if((P&128)>0||(X&128)>0){a-=14;return}if(t<15)return N(e,r,s,i,n,d,b,g,S,v,j,T,P,X);let E=f[a++];if((E&128)>0){a-=15;return}return N(e,r,s,i,n,d,b,g,S,v,j,T,P,X,E)}}}}}function oe(){let t=f[a++],e;if(t<192)e=t-160;else switch(t){case 217:e=f[a++];break;case 218:e=O.getUint16(a),a+=2;break;case 219:e=O.getUint32(a),a+=4;break;default:throw new Error(\"Expected string\")}return mt(e)}function Rt(t){return z.copyBuffers?Uint8Array.prototype.slice.call(f,a,a+=t):f.subarray(a,a+=t)}function bt(t){let e=f[a++];if(H[e])return H[e](f.subarray(a,a+=t));throw new Error(\"Unknown extension type \"+e)}var le=new Array(4096);function Oe(){let t=f[a++];if(t>=160&&t<192){if(t=t-160,$>=a)return lt.slice(a-Z,(a+=t)-Z);if(!($==0&&rt<180))return Gt(t)}else return a--,U();let e=(t<<5^(t>1?O.getUint16(a):t>0?f[a]:0))&4095,r=le[e],s=a,i=a+t-3,n,d=0;if(r&&r.bytes==t){for(;s<i;){if(n=O.getUint32(s),n!=r[d++]){s=1879048192;break}s+=4}for(i+=3;s<i;)if(n=f[s++],n!=r[d++]){s=1879048192;break}if(s===i)return a=s,r.string;i-=3,s=a}for(r=[],le[e]=r,r.bytes=t;s<i;)n=O.getUint32(s),r.push(n),s+=4;for(i+=3;s<i;)n=f[s++],r.push(n);let b=t<16?Wt(t):me(t);return b!=null?r.string=b:r.string=Gt(t)}var de=(t,e)=>{var r=U();let s=t;e!==void 0&&(t=t<32?-((e<<5)+t):(e<<5)+t,r.highByte=e);let i=I[t];return i&&i.isShared&&((I.restoreStructures||(I.restoreStructures=[]))[t]=i),I[t]=r,r.read=Zt(r,s),r.read()};H[0]=()=>{};H[0].noBuffer=!0;H[101]=()=>{let t=U();return(globalThis[t[0]]||Error)(t[1])};H[105]=t=>{let e=O.getUint32(a-4);st||(st=new Map);let r=f[a],s;r>=144&&r<160||r==220||r==221?s=[]:s={};let i={target:s};st.set(e,i);let n=U();return i.used?Object.assign(s,n):(i.target=n,n)};H[112]=t=>{let e=O.getUint32(a-4),r=st.get(e);return r.used=!0,r.target};H[115]=()=>new Set(U());var Ie=[\"Int8\",\"Uint8\",\"Uint8Clamped\",\"Int16\",\"Uint16\",\"Int32\",\"Uint32\",\"Float32\",\"Float64\",\"BigInt64\",\"BigUint64\"].map(t=>t+\"Array\");H[116]=t=>{let e=t[0],r=Ie[e];if(!r)throw new Error(\"Could not find typed array for code \"+e);return new globalThis[r](Uint8Array.prototype.slice.call(t,1).buffer)};H[120]=()=>{let t=U();return new RegExp(t[0],t[1])};var tr=[];H[98]=t=>{let e=(t[0]<<24)+(t[1]<<16)+(t[2]<<8)+t[3],r=a;return a+=e-t.length,B=tr,B=[oe(),oe()],B.position0=0,B.position1=0,B.postBundlePosition=a,a=r,U()};H[255]=t=>t.length==4?new Date((t[0]*16777216+(t[1]<<16)+(t[2]<<8)+t[3])*1e3):t.length==8?new Date(((t[0]<<22)+(t[1]<<14)+(t[2]<<6)+(t[3]>>2))/1e6+((t[3]&3)*4294967296+t[4]*16777216+(t[5]<<16)+(t[6]<<8)+t[7])*1e3):t.length==12?new Date(((t[0]<<24)+(t[1]<<16)+(t[2]<<8)+t[3])/1e6+((t[4]&128?-281474976710656:0)+t[6]*1099511627776+t[7]*4294967296+t[8]*16777216+(t[9]<<16)+(t[10]<<8)+t[11])*1e3):new Date(\"invalid\");function Ce(t){let e=rt,r=a,s=Z,i=$,n=lt,d=st,b=B,g=new Uint8Array(f.slice(0,rt)),S=I,v=I.slice(0,I.length),j=z,T=_t,P=t();return rt=e,a=r,Z=s,$=i,lt=n,st=d,B=b,f=g,_t=T,I=S,I.splice(0,I.length,...v),z=j,O=new DataView(f.buffer,f.byteOffset,f.byteLength),P}function zt(){f=null,st=null,I=null}var Yt=new Array(147);for(let t=0;t<256;t++)Yt[t]=+(\"1e\"+Math.floor(45.15-t*.30103));var je=new Mt({useRecords:!1}),er=je.unpack,At;try{At=new TextEncoder}catch{}var Ht,Ae,Tt=typeof Buffer<\"u\",jt=Tt?function(t){return Buffer.allocUnsafeSlow(t)}:Uint8Array,Ve=Tt?Buffer:Uint8Array,he=Tt?4294967296:2144337920,l,wt,M,o=0,L,x=null,rr=61440,sr=/[\\u0080-\\uFFFF]/,pt=Symbol(\"record-id\"),ir=class extends Mt{constructor(t){super(t),this.offset=0;let e,r,s,i,n=0,d=Ve.prototype.utf8Write?function(h,w){return l.utf8Write(h,w,4294967295)}:At&&At.encodeInto?function(h,w){return At.encodeInto(h,l.subarray(w)).written}:!1,b=this;t||(t={});let g=t&&t.sequential,S=t.structures||t.saveStructures,v=t.maxSharedStructures;if(v==null&&(v=S?32:0),v>8160)throw new Error(\"Maximum maxSharedStructure is 8160\");t.structuredClone&&t.moreTypes==null&&(t.moreTypes=!0);let j=t.maxOwnStructures;j==null&&(j=S?32:64),!this.structures&&t.useRecords!=!1&&(this.structures=[]);let T=v>32||j+v>64,P=v+64,X=v+j+64;if(X>8256)throw new Error(\"Maximum maxSharedStructure + maxOwnStructure is 8192\");let E=[],Pt=0,Ot=0;this.pack=this.encode=function(h,w){if(l||(l=new jt(8192),M=new DataView(l.buffer,0,8192),o=0),L=l.length-10,L-o<2048?(l=new jt(l.length),M=new DataView(l.buffer,0,l.length),L=l.length-10,o=0):o=o+7&2147483640,e=o,i=b.structuredClone?new Map:null,b.bundleStrings&&typeof h!=\"string\"?(x=[],x.size=1/0):x=null,s=b.structures,s){s.uninitialized&&(s=b._mergeStructures(b.getStructures()));let u=s.sharedLength||0;if(u>v)throw new Error(\"Shared structures is larger than maximum shared structures, try increasing maxSharedStructures to \"+s.sharedLength);if(!s.transitions){s.transitions=Object.create(null);for(let c=0;c<u;c++){let p=s[c];if(!p)continue;let A,m=s.transitions;for(let y=0,F=p.length;y<F;y++){let V=p[y];A=m[V],A||(A=m[V]=Object.create(null)),m=A}m[pt]=c+64}n=u}g||(s.nextId=u+64)}r&&(r=!1);try{if(R(h),x&&ue(e,R),b.offset=o,i&&i.idsToInsert){o+=i.idsToInsert.length*6,o>L&&dt(o),b.offset=o;let u=ar(l.subarray(e,o),i.idsToInsert);return i=null,u}return w&dr?(l.start=e,l.end=o,l):l.subarray(e,o)}finally{if(s){Ot<10&&Ot++;let u=s.sharedLength||v;if(s.length>u&&(s.length=u),Pt>1e4)s.transitions=null,Ot=0,Pt=0,E.length>0&&(E=[]);else if(E.length>0&&!g){for(let c=0,p=E.length;c<p;c++)E[c][pt]=0;E=[]}if(r&&b.saveStructures){let c=l.subarray(e,o);return b.saveStructures(s,n)===!1?(b._mergeStructures(b.getStructures()),b.pack(h)):(n=u,c)}}w&hr&&(o=e)}};let R=h=>{o>L&&(l=dt(o));var w=typeof h,u;if(w===\"string\"){let c=h.length;if(x&&c>=4&&c<4096){if((x.size+=c)>rr){let y,F=(x[0]?x[0].length*3+x[1].length:0)+10;o+F>L&&(l=dt(o+F)),x.position?(l[o]=200,o+=3,l[o++]=98,y=o-e,o+=4,ue(e,R),M.setUint16(y+e-3,o-e-y)):(l[o++]=214,l[o++]=98,y=o-e,o+=4),x=[\"\",\"\"],x.size=0,x.position=y}let m=sr.test(h);x[m?0:1]+=h,l[o++]=193,R(m?-c:c);return}let p;c<32?p=1:c<256?p=2:c<65536?p=3:p=5;let A=c*3;if(o+A>L&&(l=dt(o+A)),c<64||!d){let m,y,F,V=o+p;for(m=0;m<c;m++)y=h.charCodeAt(m),y<128?l[V++]=y:y<2048?(l[V++]=y>>6|192,l[V++]=y&63|128):(y&64512)===55296&&((F=h.charCodeAt(m+1))&64512)===56320?(y=65536+((y&1023)<<10)+(F&1023),m++,l[V++]=y>>18|240,l[V++]=y>>12&63|128,l[V++]=y>>6&63|128,l[V++]=y&63|128):(l[V++]=y>>12|224,l[V++]=y>>6&63|128,l[V++]=y&63|128);u=V-o-p}else u=d(h,o+p);u<32?l[o++]=160|u:u<256?(p<2&&l.copyWithin(o+2,o+1,o+1+u),l[o++]=217,l[o++]=u):u<65536?(p<3&&l.copyWithin(o+3,o+2,o+2+u),l[o++]=218,l[o++]=u>>8,l[o++]=u&255):(p<5&&l.copyWithin(o+5,o+3,o+3+u),l[o++]=219,M.setUint32(o,u),o+=4),o+=u}else if(w===\"number\")if(h>>>0===h)h<64?l[o++]=h:h<256?(l[o++]=204,l[o++]=h):h<65536?(l[o++]=205,l[o++]=h>>8,l[o++]=h&255):(l[o++]=206,M.setUint32(o,h),o+=4);else if(h>>0===h)h>=-32?l[o++]=256+h:h>=-128?(l[o++]=208,l[o++]=h+256):h>=-32768?(l[o++]=209,M.setInt16(o,h),o+=2):(l[o++]=210,M.setInt32(o,h),o+=4);else{let c;if((c=this.useFloat32)>0&&h<4294967296&&h>=-2147483648){l[o++]=202,M.setFloat32(o,h);let p;if(c<4||(p=h*Yt[(l[o]&127)<<1|l[o+1]>>7])>>0===p){o+=4;return}else o--}l[o++]=203,M.setFloat64(o,h),o+=8}else if(w===\"object\")if(!h)l[o++]=192;else{if(i){let p=i.get(h);if(p){if(!p.id){let A=i.idsToInsert||(i.idsToInsert=[]);p.id=A.push(p)}l[o++]=214,l[o++]=112,M.setUint32(o,p.id),o+=4;return}else i.set(h,{offset:o-e})}let c=h.constructor;if(c===Object)$t(h,!0);else if(c===Array){u=h.length,u<16?l[o++]=144|u:u<65536?(l[o++]=220,l[o++]=u>>8,l[o++]=u&255):(l[o++]=221,M.setUint32(o,u),o+=4);for(let p=0;p<u;p++)R(h[p])}else if(c===Map){u=h.size,u<16?l[o++]=128|u:u<65536?(l[o++]=222,l[o++]=u>>8,l[o++]=u&255):(l[o++]=223,M.setUint32(o,u),o+=4);for(let[p,A]of h)R(p),R(A)}else{for(let p=0,A=Ht.length;p<A;p++){let m=Ae[p];if(h instanceof m){let y=Ht[p];if(y.write){y.type&&(l[o++]=212,l[o++]=y.type,l[o++]=0),R(y.write.call(this,h));return}let F=l,V=M,J=o;l=null;let ht;try{ht=y.pack.call(this,h,yt=>(l=F,F=null,o+=yt,o>L&&dt(o),{target:l,targetView:M,position:o-yt}),R)}finally{F&&(l=F,M=V,o=J,L=l.length-10)}ht&&(ht.length+o>L&&dt(ht.length+o),o=nr(ht,l,o,y.type));return}}$t(h,!h.hasOwnProperty)}}else if(w===\"boolean\")l[o++]=h?195:194;else if(w===\"bigint\"){if(h<BigInt(1)<<BigInt(63)&&h>=-(BigInt(1)<<BigInt(63)))l[o++]=211,M.setBigInt64(o,h);else if(h<BigInt(1)<<BigInt(64)&&h>0)l[o++]=207,M.setBigUint64(o,h);else if(this.largeBigIntToFloat)l[o++]=203,M.setFloat64(o,Number(h));else throw new RangeError(h+\" was too large to fit in MessagePack 64-bit integer format, set largeBigIntToFloat to convert to float-64\");o+=8}else if(w===\"undefined\")this.encodeUndefinedAsNil?l[o++]=192:(l[o++]=212,l[o++]=0,l[o++]=0);else if(w===\"function\")R(this.writeFunction&&this.writeFunction());else throw new Error(\"Unknown type: \"+w)},$t=this.useRecords===!1?this.variableMapSize?h=>{let w=Object.keys(h),u=w.length;u<16?l[o++]=128|u:u<65536?(l[o++]=222,l[o++]=u>>8,l[o++]=u&255):(l[o++]=223,M.setUint32(o,u),o+=4);let c;for(let p=0;p<u;p++)R(c=w[p]),R(h[c])}:(h,w)=>{l[o++]=222;let u=o-e;o+=2;let c=0;for(let p in h)(w||h.hasOwnProperty(p))&&(R(p),R(h[p]),c++);l[u+++e]=c>>8,l[u+e]=c&255}:t.progressiveRecords&&!T?(h,w)=>{let u,c=s.transitions||(s.transitions=Object.create(null)),p=o++-e,A;for(let m in h)if(w||h.hasOwnProperty(m)){if(u=c[m],u)c=u;else{let y=Object.keys(h),F=c;c=s.transitions;let V=0;for(let J=0,ht=y.length;J<ht;J++){let yt=y[J];u=c[yt],u||(u=c[yt]=Object.create(null),V++),c=u}p+e+1==o?(o--,Nt(c,y,V)):Jt(c,y,p,V),A=!0,c=F[m]}R(h[m])}if(!A){let m=c[pt];m?l[p+e]=m:Jt(c,Object.keys(h),p,0)}}:(h,w)=>{let u,c=s.transitions||(s.transitions=Object.create(null)),p=0;for(let m in h)(w||h.hasOwnProperty(m))&&(u=c[m],u||(u=c[m]=Object.create(null),p++),c=u);let A=c[pt];A?A>=96&&T?(l[o++]=((A-=96)&31)+96,l[o++]=A>>5):l[o++]=A:Nt(c,c.__keys__||Object.keys(h),p);for(let m in h)(w||h.hasOwnProperty(m))&&R(h[m])},dt=h=>{let w;if(h>16777216){if(h-e>he)throw new Error(\"Packed buffer would be larger than maximum buffer size\");w=Math.min(he,Math.round(Math.max((h-e)*(h>67108864?1.25:2),4194304)/4096)*4096)}else w=(Math.max(h-e<<2,l.length-1)>>12)+1<<12;let u=new jt(w);return M=new DataView(u.buffer,0,w),h=Math.min(h,l.length),l.copy?l.copy(u,0,e,h):u.set(l.slice(e,h)),o-=e,e=0,L=u.length-10,l=u},Nt=(h,w,u)=>{let c=s.nextId;c||(c=64),c<P&&this.shouldShareStructure&&!this.shouldShareStructure(w)?(c=s.nextOwnId,c<X||(c=P),s.nextOwnId=c+1):(c>=X&&(c=P),s.nextId=c+1);let p=w.highByte=c>=96&&T?c-96>>5:-1;h[pt]=c,h.__keys__=w,s[c-64]=w,c<P?(w.isShared=!0,s.sharedLength=c-63,r=!0,p>=0?(l[o++]=(c&31)+96,l[o++]=p):l[o++]=c):(p>=0?(l[o++]=213,l[o++]=114,l[o++]=(c&31)+96,l[o++]=p):(l[o++]=212,l[o++]=114,l[o++]=c),u&&(Pt+=Ot*u),E.length>=j&&(E.shift()[pt]=0),E.push(h),R(w))},Jt=(h,w,u,c)=>{let p=l,A=o,m=L,y=e;l=wt,o=0,e=0,l||(wt=l=new jt(8192)),L=l.length-10,Nt(h,w,c),wt=l;let F=o;if(l=p,o=A,L=m,e=y,F>1){let V=o+F-1;V>L&&dt(V);let J=u+e;l.copyWithin(J+F,J+1,o),l.set(wt.slice(0,F),J),o=V}else l[u+e]=wt[0]}}useBuffer(t){l=t,M=new DataView(l.buffer,l.byteOffset,l.byteLength),o=0}clearSharedData(){this.structures&&(this.structures=[])}};Ae=[Date,Set,Error,RegExp,ArrayBuffer,Object.getPrototypeOf(Uint8Array.prototype).constructor,ye];Ht=[{pack(t,e,r){let s=t.getTime()/1e3;if((this.useTimestamp32||t.getMilliseconds()===0)&&s>=0&&s<4294967296){let{target:i,targetView:n,position:d}=e(6);i[d++]=214,i[d++]=255,n.setUint32(d,s)}else if(s>0&&s<4294967296){let{target:i,targetView:n,position:d}=e(10);i[d++]=215,i[d++]=255,n.setUint32(d,t.getMilliseconds()*4e6+(s/1e3/4294967296>>0)),n.setUint32(d+4,s)}else if(isNaN(s)){if(this.onInvalidDate)return e(0),r(this.onInvalidDate());let{target:i,targetView:n,position:d}=e(3);i[d++]=212,i[d++]=255,i[d++]=255}else{let{target:i,targetView:n,position:d}=e(15);i[d++]=199,i[d++]=12,i[d++]=255,n.setUint32(d,t.getMilliseconds()*1e6),n.setBigInt64(d+4,BigInt(Math.floor(s)))}}},{pack(t,e,r){let s=Array.from(t),{target:i,position:n}=e(this.moreTypes?3:0);this.moreTypes&&(i[n++]=212,i[n++]=115,i[n++]=0),r(s)}},{pack(t,e,r){let{target:s,position:i}=e(this.moreTypes?3:0);this.moreTypes&&(s[i++]=212,s[i++]=101,s[i++]=0),r([t.name,t.message])}},{pack(t,e,r){let{target:s,position:i}=e(this.moreTypes?3:0);this.moreTypes&&(s[i++]=212,s[i++]=120,s[i++]=0),r([t.source,t.flags])}},{pack(t,e){this.moreTypes?be(t,16,e):ce(Tt?Buffer.from(t):new Uint8Array(t),e)}},{pack(t,e){let r=t.constructor;r!==Ve&&this.moreTypes?be(t,Ie.indexOf(r.name),e):ce(t,e)}},{pack(t,e){let{target:r,position:s}=e(1);r[s]=193}}];function be(t,e,r,s){let i=t.byteLength;if(i+1<256){var{target:n,position:d}=r(4+i);n[d++]=199,n[d++]=i+1}else if(i+1<65536){var{target:n,position:d}=r(5+i);n[d++]=200,n[d++]=i+1>>8,n[d++]=i+1&255}else{var{target:n,position:d,targetView:b}=r(7+i);n[d++]=201,b.setUint32(d,i+1),d+=4}n[d++]=116,n[d++]=e,n.set(new Uint8Array(t.buffer,t.byteOffset,t.byteLength),d)}function ce(t,e){let r=t.byteLength;var s,i;if(r<256){var{target:s,position:i}=e(r+2);s[i++]=196,s[i++]=r}else if(r<65536){var{target:s,position:i}=e(r+3);s[i++]=197,s[i++]=r>>8,s[i++]=r&255}else{var{target:s,position:i,targetView:n}=e(r+5);s[i++]=198,n.setUint32(i,r),i+=4}s.set(t,i)}function nr(t,e,r,s){let i=t.length;switch(i){case 1:e[r++]=212;break;case 2:e[r++]=213;break;case 4:e[r++]=214;break;case 8:e[r++]=215;break;case 16:e[r++]=216;break;default:i<256?(e[r++]=199,e[r++]=i):i<65536?(e[r++]=200,e[r++]=i>>8,e[r++]=i&255):(e[r++]=201,e[r++]=i>>24,e[r++]=i>>16&255,e[r++]=i>>8&255,e[r++]=i&255)}return e[r++]=s,e.set(t,r),r+=i,r}function ar(t,e){let r,s=e.length*6,i=t.length-s;for(e.sort((n,d)=>n.offset>d.offset?1:-1);r=e.pop();){let n=r.offset,d=r.id;t.copyWithin(n+s,n,i),s-=6;let b=n+s;t[b++]=214,t[b++]=105,t[b++]=d>>24,t[b++]=d>>16&255,t[b++]=d>>8&255,t[b++]=d&255,i=n}return t}function ue(t,e){M.setUint32(x.position+t,o-x.position-t);let r=x;x=null,e(r[0]),e(r[1])}var or=new ir({useRecords:!1}),lr=or.pack,dr=512,hr=1024,Qt=t=>lr(t.toJSObject()),Xt=(t,e)=>t.fromJSObject(er(e)),Me=(t,e)=>{if(!e.thnkServer)return-1;let{syncedVariable:r,objectsRegistery:s}=e.thnkServer,i=r.getChildrenCount()!==0?G.createVariablesVector(t,Qt(r)):null,n=s.createObjectsSnapshot(t),d=n.length?G.createObjectsVector(t,n):null;return G.startGameStateSnapshot(t),i&&G.addVariables(t,i),d&&G.addObjects(t,d),G.endGameStateSnapshot(t)},br=(t,e)=>{if(!e.thnkServer)return-1;let{syncedVariable:r,objectsRegistery:s}=e.thnkServer,i=r.isDirty()?r.serialize(t):null,n=s.diffObjects(t),d=n.length?q.createObjectsVector(t,n):null,b=s.getCreatedObjects(),g=b.length?q.createCreatedObjectsVector(t,b.map(([j,T])=>{let P=t.createSharedString(T);return nt.createCreatedObject(t,j,P)})):null,S=s.getDeletedObjects(),v=S.length?q.createCreatedObjectsVector(t,S):null;return q.startGameStateDiff(t),i&&q.addVariables(t,i),d&&q.addObjects(t,d),g&&q.addCreatedObjects(t,g),v&&q.addDeletedObjects(t,v),q.endGameStateDiff(t)},cr=(t,e,r)=>{let s=new ft(512),i=s.createString(r.getName()),n=Me(s,r);ut.startConnectionStartMessage(s),ut.addSceneName(s,i),ut.addSceneSnapshot(s,n),e.sendServerMessageTo(t,s,Q.createServerMessage(s,1,ut.endConnectionStartMessage(s)))},ur=(t,e)=>{let r=new ft(256),s=br(r,e);t.sendServerMessageToAll(r,Q.createServerMessage(r,2,ct.createGameStateUpdateMessage(r,s)))},fr=(t,e,r)=>{let s=new ft(512),i=s.createString(e);Y.startSceneSwitchMessage(s),Y.addSceneName(s,i),Y.addIsPause(s,r),t.sendServerMessageToAll(s,Q.createServerMessage(s,3,Y.endSceneSwitchMessage(s)))},Bt=(t,e,r)=>{let s=new ft(512),i=r?s.createString(r.getName()):null,n=r?Me(s,r):null;W.startResumePreviousSceneMessage(s),n&&i&&(W.addSnapshot(s,n),W.addName(s,i));let d=Q.createServerMessage(s,4,W.endResumePreviousSceneMessage(s));for(let b of t)e.sendServerMessageTo(b,s,d)},Ue={};kt(Ue,{getCurrentPlayerID:()=>pr,switchPlayerContext:()=>Ut});var Fe=\"\",pr=()=>Fe,Ut=t=>{Fe=t},fe=new Map,Kt=t=>{let e=fe.get(t);return e||fe.set(t,e=[]),e},gr=(t,e,r)=>{Kt(e).push({initiatorUserID:t,serializedExtraData:r})},_r=(t,e,r)=>{Kt(e).push({initiatorUserID:t,extraData:r})},yr=(t,e)=>{let r=Kt(t);if(r.length){let s=r.shift();return Ut(s.initiatorUserID),s.serializedExtraData?Xt(e,s.serializedExtraData):s.extraData&&gdjs.Variable.copy(s.extraData,e),!0}return!1},wr=t=>{var e;return!!((e=t.thnkServer)!=null&&e.popConnection())},Sr=t=>{var e;return!!((e=t.thnkServer)!=null&&e.popDisconnection())},ke={};kt(ke,{getTickRate:()=>Ne,isDedicated:()=>xe,setDedicated:()=>vr,setTickRate:()=>mr});var Te=!1,Pe=120,vr=()=>{Te=!0},mr=t=>{Pe=Math.max(1,t)},Ne=()=>Pe,xe=()=>Te,K=class extends gdjs.Variable{constructor(){super(...arguments),this.dirty=!0,this.operations=[]}reinitialize(t){if(this._type=\"number\",this._value=0,this._str=\"0\",this._bool=!1,this._children={},this._childrenArray=[],this._undefinedInContainer=!1,t!==void 0){if(this._type=t.type||\"number\",this._type===\"number\")this._value=parseFloat(t.value||\"0\"),this._value!==this._value&&(this._value=0);else if(this._type===\"string\")this._str=\"\"+t.value||\"0\";else if(this._type===\"boolean\")this._bool=!!t.value;else if(this._type===\"structure\"){if(t.children!==void 0)for(var e=0,r=t.children.length;e<r;++e){var s=t.children[e];if(s.name===void 0)continue;let i=new K(s);this._children[s.name]=i,this.operations.push({type:1,targetName:s.name,targetVariable:i})}}else if(this._type===\"array\"&&t.children)for(let i of t.children){let n=new K(i);this._childrenArray.push(n),this.operations.push({type:1,targetName:i.name,targetVariable:n})}}}setBoolean(t){this.dirty=!0,super.setBoolean(t)}setNumber(t){this.dirty=!0,super.setNumber(t)}setString(t){this.dirty=!0,super.setString(t)}clearChildren(){this.dirty=!0,this.operations.push({type:3}),super.clearChildren()}addChild(t,e){return this.dirty=!0,Object.getPrototypeOf(e)!==K.prototype&&Object.setPrototypeOf(e,K.prototype),this.operations.push({type:1,targetName:t,targetVariable:e}),super.addChild(t,e)}getChild(t){if(this.isPrimitive()&&this.castTo(\"structure\"),this._type===\"array\")return this.getChildAt(parseInt(t,10)||0);if(this._children[t]===void 0||this._children[t]===null){this.dirty=!0;let e=new K;this._children[t]=e,this.operations.push({type:1,targetName:t,targetVariable:e})}return this._children[t]}getChildAt(t){if(this.castTo(\"array\"),this._childrenArray[t]===void 0||this._childrenArray[t]===null){this.dirty=!0;let e=new K;this._childrenArray[t]=e,this.operations.push({type:1,targetName:t,targetVariable:e})}return this._childrenArray[t]}removeChild(t){super.removeChild(t),this.operations.push({type:2,targetName:t})}removeAtIndex(t){super.removeAtIndex(t),this.operations.push({type:2,targetName:t})}pushValue(t){this.dirty=!0;let e=this._childrenArray.length;this.castTo(\"array\"),this._childrenArray.push(new K({type:typeof t,value:t})),this.operations.push({type:1,targetName:e,targetVariable:this._childrenArray[e]})}pushVariableCopy(t){this.dirty=!0;let e=this._childrenArray.length;this.castTo(\"array\"),this._childrenArray.push(gdjs.Variable.copy(t,new K)),this.operations.push({type:1,targetName:e,targetVariable:this._childrenArray[e]})}getAllChildrenArray(){return super.getAllChildrenArray()}getAllChildren(){return super.getAllChildren()}isDirty(){if(this.dirty)return!0;if(!this.isPrimitive()){for(let t of this.getAllChildrenArray())if(t.isDirty())return this.dirty=!0,!0}return!1}serialize(t){switch(this.dirty=!1,this.getType()){case\"number\":return C.startVariable(t),C.addType(t,2),C.addNumber(t,this._value),C.endVariable(t);case\"string\":let s=t.createSharedString(this._str);return C.startVariable(t),C.addType(t,1),C.addText(t,s),C.endVariable(t);case\"boolean\":return C.startVariable(t),C.addType(t,3),C.addBoolean(t,this._bool),C.endVariable(t)}let e=[];for(let s of this.operations){let i=typeof s.targetName==\"string\"?t.createString(s.targetName):null,n=typeof s.targetName==\"number\"?s.targetName:null,d=s.targetVariable?s.targetVariable.serialize(t):null;k.startCollectionOperation(t),k.addOperation(t,s.type),i&&k.addName(t,i),n&&k.addIndex(t,n),d&&k.addVal(t,d),e.push(k.endCollectionOperation(t))}if(this.operations.length=0,this._type===\"array\")for(let s in this._childrenArray){let i=+s,n=this._childrenArray[i];if(n.isDirty()){let d=n.serialize(t);k.startCollectionOperation(t),k.addOperation(t,1),k.addIndex(t,i),k.addVal(t,d),e.push(k.endCollectionOperation(t))}}else for(let[s,i]of Object.entries(this.getAllChildren()))if(i.isDirty()){let n=t.createString(s),d=i.serialize(t);k.startCollectionOperation(t),k.addOperation(t,1),k.addName(t,n),k.addVal(t,d),e.push(k.endCollectionOperation(t))}let r=C.createOperationsVector(t,e);return C.startVariable(t),C.addType(t,this._type===\"structure\"?4:5),C.addOperations(t,r),C.endVariable(t)}},Or=(t,e)=>{if(_.startTransform(t),_.addX(t,e.getX()),_.addY(t,e.getY()),_.addHeight(t,e.getHeight()),_.addWidth(t,e.getWidth()),_.addAngle(t,e.getAngle()),_.addVisible(t,e.isHidden()),e.getScale&&_.addScale(t,e.getScale()),e.getZOrder()<=65535?_.addZOrder(t,e.getZOrder()):_.addBigZOrder(t,e.getZOrder()),e.getOpacity&&_.addOpacity(t,e.getOpacity()),e.getAnimation&&_.addAnimation(t,e.getAnimation()),e.getString){let d=t.createSharedString(e.getString());_.addText(t,d)}let r=_.endTransform(t),{stateVariable:s}=e,i=s.getChildrenCount()!==0?D.createPackedVariablesVector(t,Qt(s)):null,n=t.createSharedString(e.getName());return D.startGameObject(t),D.addId(t,e.thnkID),D.addName(t,n),D.addTransform(t,r),i&&D.addVariables(t,i),D.endGameObject(t)},Ir=(t,e)=>{let r=null;if(e.getX()!==e.prevX||e.getY()!==e.prevY||e.getAngle()!==e.prevAngle||e.getScale&&e.getScale()!==e.prevScale){if(_.startTransform(t),e.getX()!==e.prevX&&(e.prevX=e.getX(),_.addX(t,e.getX())),e.getY()!==e.prevY&&(e.prevY=e.getY(),_.addY(t,e.getY())),e.getHeight()!==e.prevHeight&&(e.prevHeight=e.getHeight(),_.addHeight(t,e.getHeight())),e.getWidth()!==e.prevWidth&&(e.prevWidth=e.getWidth(),_.addWidth(t,e.getWidth())),e.getAngle()!==e.prevAngle&&(e.prevAngle=e.getAngle(),_.addAngle(t,e.getAngle())),e.getScale&&e.getScale()!==e.prevScale&&(e.prevScale=e.getScale(),_.addScale(t,e.getScale())),e.getZOrder()!==e.prevZOrder&&(e.prevZOrder=e.getZOrder(),e.getZOrder()<=65535?_.addZOrder(t,e.getZOrder()):_.addBigZOrder(t,e.getZOrder())),e.isHidden()!==e.prevVisibility&&(e.prevVisibility=e.isHidden(),_.addVisible(t,e.isHidden())),e.getOpacity&&e.getOpacity()!==e.prevOpacity&&(e.prevOpacity=e.getOpacity(),_.addOpacity(t,e.getOpacity())),e.getAnimation&&e.getAnimation()!==e.prevAnimation&&(e.prevAnimation=e.getAnimation(),_.addAnimation(t,e.getAnimation())),e.getString&&e.getString()!==e.prevText){e.prevText=e.getString();let n=t.createSharedString(e.getString());_.addText(t,n)}r=_.endTransform(t)}let{stateVariable:s}=e,i=s.isDirty()?s.serialize(t):null;return!r&&!i?null:(D.startGameObject(t),D.addId(t,e.thnkID),r&&D.addTransform(t,r),i&&D.addVariables(t,i),D.endGameObject(t))},Cr=new gdjs.Logger(\"THNK - Objects replication\"),jr=class{constructor(){this.recycledIDs=[],this.currentNewID=0,this.generateNewID=()=>{let t=this.recycledIDs.pop()??this.currentNewID++;return t>65535?(Cr.error(\"Maximum amount of simultaneously replicated objects reached! Weird stuff is going to happen...\"),t%65535):t},this.registeredObjects=new Map,this.createdObjects=new Map,this.deletedObjects=new Set}registerObject(t){t.thnkID=this.generateNewID(),this.registeredObjects.set(t.thnkID,t),this.createdObjects.set(t.thnkID,t.getName()),t.stateVariable=new K,t.getVariables().add(\"State\",t.stateVariable)}unregisterObject(t){this.recycledIDs.push(t.thnkID),this.registeredObjects.delete(t.thnkID),this.deletedObjects.add(t.thnkID),this.createdObjects.delete(t.thnkID)}diffObjects(t){let e=[];for(let r of this.registeredObjects.values()){let s=Ir(t,r);s&&e.push(s)}return e}createObjectsSnapshot(t){let e=[];for(let r of this.registeredObjects.values())e.push(Or(t,r));return e}getCreatedObjects(){let t=[...this.createdObjects.entries()];return this.createdObjects.clear(),t}getDeletedObjects(){let t=[...this.deletedObjects.values()];return this.deletedObjects.clear(),t}},Ar=class{constructor(t,e){this.objectsRegistery=new jr,this.runServerCode=!0,this.connectionsQueue=[],this.disconnectionsQueue=[],this.adapter=t,this.syncedVariable=e}addConnectionToTheQueue(t){this.connectionsQueue.push(t)}popConnection(){return this.connectionsQueue.length?(Ut(this.connectionsQueue.shift()),!0):!1}addDisconnectionToTheQueue(t){this.disconnectionsQueue.push(t)}popDisconnection(){return this.disconnectionsQueue.length?(Ut(this.disconnectionsQueue.shift()),!0):!1}},Re=(t,e)=>{let r=new K;t.getVariables().add(\"State\",r),t.getTimeManager().addTimer(\"__THNK_Ticker\"),t.thnkServer=new Ar(e,r),xe()||t.thnkServer.addConnectionToTheQueue(e.getServerID())},qt=new gdjs.Logger(\"THNK - Server\"),Dt=0,Vr=t=>{if(!t.thnkServer)return;let{adapter:e}=t.thnkServer;for(let[s,i]of e.getUsersPendingMessages()){for(let n of i)switch(n.contentType()){case 1:cr(s,e,t),t.thnkServer.addConnectionToTheQueue(s);continue;case 2:let d=n.content(new tt),b=d.name();if(!b)continue;let g=d.contentArray();gr(s,b,g);continue;default:qt.error(`Received message with unknown type '${n.contentType()}'`);continue}i.length=0}for(let s of e.getDisconnectedUsers())t.thnkServer.addDisconnectionToTheQueue(s);e.getDisconnectedUsers().length=0;let r=t.getTimeManager();Dt+=r.getElapsedTime()/r.getTimeScale(),Dt>1e3/Ne()&&(Dt=0,t.thnkServer.runServerCode=!0)},Mr=t=>{!t.thnkServer||!t.thnkServer.runServerCode||(t.thnkServer.runServerCode=!1,ur(t.thnkServer.adapter,t))},gt=null,Be=(t,e)=>{if(t.thnkServer){let{adapter:r}=t.thnkServer;gt={adapter:r,isPause:e},e&&(t.thnkServer.previouslyConnectedUsers=new Set(r.getConnectedUsers()))}},Ur=t=>{if(gt){let{adapter:e,isPause:r}=gt;Re(t,e);for(let s of e.getConnectedUsers())t.thnkServer.addConnectionToTheQueue(s);fr(e,t.getName(),r),gt=null}},Fr=t=>{if(gt)if(t.thnkServer){let{adapter:e,previouslyConnectedUsers:r}=t.thnkServer;if(r){let s=[],i=[];for(let n of e.getConnectedUsers())r.has(n)?i.push(n):s.push(n);Bt(s,e,t),Bt(i,e)}else qt.warn(\"List of previously connected players not found! A full snapshot will be sent to all players. This is likely a bug, please open an issue on the THNK GitHub page!\"),Bt([...e.getConnectedUsers()],e,t)}else qt.warn(\"Resumed a scene that is not a server, shutting the server down. This is likely a bug, please open an issue on the THNK GitHub page!\"),gt.adapter.close()};gdjs.registerRuntimeScenePreEventsCallback(Vr);gdjs.registerRuntimeScenePostEventsCallback(Mr);gdjs.registerRuntimeSceneUnloadedCallback(t=>Be(t,!1));gdjs.registerRuntimeScenePausedCallback(t=>Be(t,!0));gdjs.registerRuntimeSceneLoadedCallback(Ur);gdjs.registerRuntimeSceneResumedCallback(Fr);var kr=new gdjs.Logger(\"THNK - Server\"),Tr=async(t,e,r)=>{try{await t.prepare()}catch(i){kr.error(\"Adapter crashed while starting server! Error: \",i);return}let s=r?e.getGame().getSceneStack().replace(r,!0):e;Re(s,t)},Pr={popMessage:yr,addRawMessageToTheQueue:_r,popConnection:wr,popDisconnection:Sr},De={};kt(De,{getConnectionState:()=>Dr,messages:()=>Gr,startClient:()=>Lr});var Ft=(t,e)=>{switch(e.type()){case 1:return t.setString(e.text()),t;case 2:return t.setNumber(e.number()),t;case 3:return t.setBoolean(e.boolean()),t}if(e.type()===4){t.castTo(\"structure\");for(let r=e.operationsLength(),s=0,i=e.operations(0);s<r;i=e.operations(++s))switch(i.operation()){case 1:let n=i.name(),d=i.val();n&&d&&Ft(t.getChild(n),d);continue;case 2:let b=i.name();b&&t.removeChild(b);continue;case 3:t.clearChildren();continue}}else{t.castTo(\"array\");for(let r=e.operationsLength(),s=0,i=e.operations(0);s<r;i=e.operations(++s))switch(i.operation()){case 1:let n=i.val();n&&Ft(t.getChildAt(i.index()),n);continue;case 2:t.removeAtIndex(i.index());continue;case 3:t.clearChildren();continue}}return t},Ee=(t,e)=>{let r=t.transform();if(r){let n=r.x();n!==null&&e.setX(n);let d=r.y();d!==null&&e.setY(d);let b=r.height();b!==null&&e.setHeight(b);let g=r.width();g!==null&&e.setWidth(g);let S=r.angle();S!==null&&e.setAngle(S);let v=r.scale();v!==null&&e.setScale&&e.setScale(v);let j=r.visible();j!==null&&e.hide(j);let T=r.zOrder()??r.bigZOrder();T!==null&&e.setZOrder(T);let P=r.opacity();P!==null&&e.setOpacity&&e.setOpacity(P);let X=r.animation();X!==null&&e.setAnimation&&e.setAnimation(X);let E=r.text();E!==null&&e.setString&&e.setString(E)}let s=e.getVariables().get(\"State\"),i=t.variables();if(i)Ft(s,i);else{let n=t.packedVariablesArray();n&&Xt(s,n)}},ot=new Map,Le=(t,e)=>{if(!e.thnkClient)return;let r=t.variablesArray();if(r&&Xt(e.getVariables().get(\"State\"),r),ot.forEach(s=>s.deleteFromScene(e)),ot.clear(),t.objectsLength()!==0)for(let s=t.objectsLength(),i=0,n=t.objects(0);i<s;n=t.objects(++i)){let d=n.name();if(!d)continue;let b=e.createObject(d);console.log(b),Ee(n,b),ot.set(n.id(),b)}},Nr=(t,e)=>{if(!e.thnkClient)return;let r=t.variables();r&&Ft(e.getVariables().get(\"State\"),r);let s=t.deletedObjectsArray();if(s)for(let i of s){let n=ot.get(i);n&&(ot.delete(i),n.deleteFromScene(e))}if(t.createdObjectsLength()!==0)for(let i=t.createdObjectsLength(),n=0,d=t.createdObjects(0);n<i;d=t.createdObjects(++n)){let b=d.name();if(!b)continue;let g=e.createObject(b);ot.set(d.id(),g)}if(t.objectsLength()!==0)for(let i=t.objectsLength(),n=0,d=t.objects(0);n<i;d=t.objects(++n)){let b=ot.get(d.id());if(!b){let g=d.name();g&&(b=e.createObject(g),ot.set(d.id(),b))}b&&Ee(d,b)}},pe=new gdjs.Logger(\"THNK - Client\"),xr=t=>{if(!t.thnkClient)return;let{adapter:e}=t.thnkClient;for(let r of e.getPendingMessages())switch(r.contentType()){case 1:pe.warn(\"A second ConnectionStartMessage was received from the server. This is likely a bug, please open an issue on the THNK GitHub!\");continue;case 2:let s=r.content(new ct).newState();s&&Nr(s,t);continue;case 3:let i=r.content(new Y),n=i.sceneName();if(!n){console.error(\"Server requested scene switch, but no scene name was sent! This is likely a bug, please open an issue on the THNK GitHub!\");continue}let d=i.isPause()?t.getGame().getSceneStack().push(n):t.getGame().getSceneStack().replace(n,!0);d.thnkClient=t.thnkClient,t=d;continue;case 4:let b=r.content(new W),g=b.name(),S=null;try{S=g?t.getGame().getSceneStack().replace(g,!0):t.getGame().getSceneStack().pop()}catch{console.info(\"Error spotted!\")}if(!S)continue;let v=b.snapshot();v&&Le(v,S),S.thnkClient=t.thnkClient,t=S;continue;default:pe.error(`Received message with unknown type '${r.contentType()}'`)}e.markPendingMessagesAsRead()};gdjs.registerRuntimeScenePreEventsCallback(xr);var Rr=(t,e)=>{let r=new ft(32),s=e?r.createString(e):null;at.startConnectionRequestMessage(r),s&&at.addToken(r,s);let i=at.endConnectionRequestMessage(r);t.sendClientMessage(r,et.createClientMessage(r,1,i))},Br=(t,e,r)=>{let s=new ft(256),i=s.createString(e),n=tt.createContentVector(s,Qt(r)),d=tt.createClientInputMessage(s,i,n);t.sendClientMessage(s,et.createClientMessage(s,2,d))},Ge=\"disconnected\",St=t=>Ge=t,Dr=()=>Ge,Er=new gdjs.Logger(\"THNK - Client\"),ge=t=>{St(\"failed\"),Er.error(\"Connection failed: \"+t)},Lr=async(t,e)=>{St(\"connecting\");let r=t.getGame().getSceneStack();try{await e.prepare(t)}catch{ge(\"Adapter crashed while starting server!\");return}St(\"loading\"),Rr(e);let s=setInterval(()=>{let i=e.getPendingMessages().shift();if(!!i&&i.contentType()===1){clearInterval(s);let n=i.content(new ut),d=n.sceneName(),b=n.sceneSnapshot();if(!d||!b){ge(\"Server Connection Start Message was invalid, couldn't finish setting up the connection.\");return}let g=r.replace(d,!0);g.thnkClient={adapter:e},Le(b,g),St(\"connected\")}},200)},Gr={sendClientMessage:Br},zr=class{constructor(){this.pendingMessages=[]}sendClientMessage(t,e){t.finish(e),this.doSendMessage(t.asUint8Array())}getPendingMessages(){return this.pendingMessages}markPendingMessagesAsRead(){this.pendingMessages.length=0}onMessage(t){this.pendingMessages.push(Q.getRootAsServerMessage(new vt(t)))}onDisconnection(){St(\"disconnected\")}},Hr=class{constructor(){this.usersPendingMessages=new Map,this.disconnectedUsers=[]}sendServerMessageTo(t,e,r){e.finish(r),this.doSendMessageTo(t,e.asUint8Array())}sendServerMessageToAll(t,e){t.finish(e);let r=t.asUint8Array();for(let s of this.usersPendingMessages.keys())this.doSendMessageTo(s,r)}getUsersPendingMessages(){return this.usersPendingMessages.entries()}getConnectedUsers(){return this.usersPendingMessages.keys()}getDisconnectedUsers(){return this.disconnectedUsers}onMessage(t,e){this.usersPendingMessages.get(t).push(et.getRootAsClientMessage(new vt(e)))}onConnection(t){this.usersPendingMessages.set(t,[])}onDisconnection(t){this.usersPendingMessages.delete(t),this.disconnectedUsers.push(t)}};return Ye(qr);})();\n",
+          "parameterObjects": "",
+          "useStrict": true,
+          "eventsSheetExpanded": false
+        }
+      ],
+      "parameters": [],
+      "objectGroups": []
+    },
+    {
+      "description": "",
+      "fullName": "",
+      "functionType": "Action",
+      "group": "",
+      "name": "___Lifetime_Functions___",
+      "private": true,
+      "sentence": "",
+      "events": [],
+      "parameters": [],
+      "objectGroups": []
+    },
+    {
+      "description": "Triggered once when the dedicated server starts up. Returns false if the initialisation is not successful, and crashes the server. Don't forget to log a message in the console before returning false to see why your server crashes!",
+      "fullName": "The dedicated server starts",
+      "functionType": "Condition",
+      "group": "Lifetime function",
+      "name": "OnServerStart",
+      "private": true,
+      "sentence": "The dedicated server starts",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::Comment",
+          "color": {
+            "b": 109,
+            "g": 230,
+            "r": 255,
+            "textB": 0,
+            "textG": 0,
+            "textR": 0
+          },
+          "comment": "By default, no special action is done here, and true is returned for signaling a successful initialisation.\nReturn false instead of true to crash the server at the beginnign if something is wrong.\nYou could use this for:\n- Starting all the remote scenes you need, for example, in the case of an MMO, where you want the players to have one remote scene for each \"room\"/scene.\n- Running basic diagnostics like verifying accesses to required external services, for example firebase.\n- Send yourself some analytics to see how many users start their own dedicated server.\n- Prevent running the server on a system that doesn't meet certain requirements.\n- Logging a welcome message when starting up the server :D",
+          "comment2": ""
+        },
+        {
+          "type": "BuiltinCommonInstructions::Standard",
+          "conditions": [],
+          "actions": [
+            {
+              "type": {
+                "value": "DebuggerTools::ConsoleLog"
+              },
+              "parameters": [
+                "\"Startup succeeded 👍\"",
+                "\"info\"",
+                "\"Dedicated server\""
+              ]
+            },
+            {
+              "type": {
+                "value": "SetReturnBoolean"
+              },
+              "parameters": [
+                "True"
+              ]
+            }
+          ]
+        }
+      ],
+      "parameters": [],
+      "objectGroups": []
+    },
+    {
+      "description": "Triggers when a client just joined the dedicated server.",
+      "fullName": "A client has connected to the server",
+      "functionType": "Condition",
+      "group": "Lifetime function",
+      "name": "OnConnection",
+      "private": true,
+      "sentence": "A client joined",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::Comment",
+          "color": {
+            "b": 109,
+            "g": 230,
+            "r": 255,
+            "textB": 0,
+            "textG": 0,
+            "textR": 0
+          },
+          "comment": "By default, do nothing. Return false to prevent the connection.\nYou can use this to:\n- Update presence informations on your database\n- Prevent unauthenticated players from joining\n- Only let certain beta testers connect to the server at all",
+          "comment2": ""
+        },
+        {
+          "type": "BuiltinCommonInstructions::Standard",
+          "conditions": [],
+          "actions": [
+            {
+              "type": {
+                "value": "SetReturnBoolean"
+              },
+              "parameters": [
+                "True"
+              ]
+            }
+          ]
+        }
+      ],
+      "parameters": [],
+      "objectGroups": []
+    },
+    {
+      "description": "Triggered whenever a client asks for a remote scene to be created. Return false if the creation of the room was not allowed, to tell the client. Remove the \"start a remote scene\" action to disable creating new rooms alltogether.",
+      "fullName": "A client requests a remote scene to be created",
+      "functionType": "Condition",
+      "group": "Lifetime function",
+      "name": "OnRSCreationRequest",
+      "private": true,
+      "sentence": "A client request a remote scene to be created",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::Comment",
+          "color": {
+            "b": 109,
+            "g": 230,
+            "r": 255,
+            "textB": 0,
+            "textG": 0,
+            "textR": 0
+          },
+          "comment": "By default, allow all remote scene creations and do as the client says.\nYou can use this: \n- To prevent making other remote scenes out of a scene (for example in an MMORPG where all rooms are in common, people cannot make their own private version of a room).\n- To prevent users that do not have the required privilieges to create certain types of rooms.",
+          "comment2": ""
+        },
+        {
+          "type": "BuiltinCommonInstructions::Standard",
+          "conditions": [
+            {
+              "type": {
+                "inverted": true,
+                "value": "THNK::RemoteSceneExists"
+              },
+              "parameters": [
+                "",
+                "GetArgumentAsString(\"remote_scene_name\")",
+                ""
+              ]
+            }
+          ],
+          "actions": [
+            {
+              "type": {
+                "value": "THNK::CreateRemoteScene"
+              },
+              "parameters": [
+                "",
+                "GetArgumentAsString(\"base_scene_name\")",
+                "GetArgumentAsString(\"remote_scene_name\")",
+                ""
+              ]
+            },
+            {
+              "type": {
+                "value": "DebuggerTools::ConsoleLog"
+              },
+              "parameters": [
+                "\"Remote scene '\" + GetArgumentAsString(\"remote_scene_name\") + \"' based on scene '\" + GetArgumentAsString(\"base_scene_name\") + \"' created\"",
+                "\"info\"",
+                "\"Dedicated server\""
+              ]
+            },
+            {
+              "type": {
+                "value": "SetReturnBoolean"
+              },
+              "parameters": [
+                "True"
+              ]
+            }
+          ]
+        }
+      ],
+      "parameters": [
+        {
+          "codeOnly": false,
+          "defaultValue": "",
+          "description": "The remote scene name",
+          "longDescription": "",
+          "name": "remote_scene_name",
+          "optional": false,
+          "supplementaryInformation": "",
+          "type": "string"
+        },
+        {
+          "codeOnly": false,
+          "defaultValue": "",
+          "description": "The name of the scene the remote scene should be based on",
+          "longDescription": "",
+          "name": "base_scene_name",
+          "optional": false,
+          "supplementaryInformation": "",
+          "type": "sceneName"
+        }
+      ],
+      "objectGroups": []
+    },
+    {
+      "description": "Triggered whenever a client asks to connect to a remote scene. Return false if the creation of the room was not allowed, to tell the client. Remove the \"start a remote scene\" action to disable creating new rooms alltogether.",
+      "fullName": "A client requests to join a remote scene",
+      "functionType": "Condition",
+      "group": "Lifetime function",
+      "name": "OnRSJoinRequest",
+      "private": true,
+      "sentence": "A client request to join a remote scene",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::Comment",
+          "color": {
+            "b": 109,
+            "g": 230,
+            "r": 255,
+            "textB": 0,
+            "textG": 0,
+            "textR": 0
+          },
+          "comment": "By default, allow joining all rooms.\nYou can use this: \n- To make a set of remote scenes only available to beta testers.\n- To prevent joining any remote scenes without an approved account.\n- To lock a banned player out of joining remote scenes.",
+          "comment2": ""
+        },
+        {
+          "type": "BuiltinCommonInstructions::Standard",
+          "conditions": [
+            {
+              "type": {
+                "value": "THNK::RemoteSceneExists"
+              },
+              "parameters": [
+                "",
+                "GetArgumentAsString(\"remote_scene_name\")",
+                ""
+              ]
+            }
+          ],
+          "actions": [
+            {
+              "type": {
+                "value": "THNK::MoveToRemoteScene"
+              },
+              "parameters": [
+                "",
+                "GetArgumentAsString(\"remote_scene_name\")",
+                ""
+              ]
+            },
+            {
+              "type": {
+                "value": "DebuggerTools::ConsoleLog"
+              },
+              "parameters": [
+                "\"Player '\" + ToString(THNK::CurrentPlayer()) + \"' joined remote scene '\" + GetArgumentAsString(\"base_scene_name\") + \"'\"",
+                "\"info\"",
+                "\"Dedicated server\""
+              ]
+            },
+            {
+              "type": {
+                "value": "SetReturnBoolean"
+              },
+              "parameters": [
+                "True"
+              ]
+            }
+          ]
+        }
+      ],
+      "parameters": [
+        {
+          "codeOnly": false,
+          "defaultValue": "",
+          "description": "The remote scene name",
+          "longDescription": "",
+          "name": "remote_scene_name",
+          "optional": false,
+          "supplementaryInformation": "",
+          "type": "string"
+        }
+      ],
+      "objectGroups": []
+    },
+    {
+      "description": "Triggers when a client just disconnected from the dedicated server.",
+      "fullName": "A client has disconnected from the server",
+      "functionType": "Condition",
+      "group": "Lifetime function",
+      "name": "OnDisconnection",
+      "private": true,
+      "sentence": "A client disconnected",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::Comment",
+          "color": {
+            "b": 109,
+            "g": 230,
+            "r": 255,
+            "textB": 0,
+            "textG": 0,
+            "textR": 0
+          },
+          "comment": "By default, do nothing.\nYou can use this to:\n- Update presence informations on your database\n- Apply sanctions to a player if they disconnected at a moment they were not allowed to",
+          "comment2": ""
+        },
+        {
+          "type": "BuiltinCommonInstructions::Standard",
+          "conditions": [],
+          "actions": [
+            {
+              "type": {
+                "value": "SetReturnBoolean"
+              },
+              "parameters": [
+                "True"
+              ]
+            }
+          ]
+        }
+      ],
+      "parameters": [],
+      "objectGroups": []
+    },
+    {
+      "description": "",
+      "fullName": "",
+      "functionType": "Action",
+      "group": "",
+      "name": "___Client___",
+      "private": true,
+      "sentence": "",
+      "events": [],
+      "parameters": [],
+      "objectGroups": []
+    },
+    {
+      "description": "Checks if the game is currently running a server. Do not use this to delimit server code, as this ignores the server tick rate. Rather, use this in client code to display additional options reseerved to the host",
+      "fullName": "Is a server?",
+      "functionType": "Condition",
+      "group": "Client",
+      "name": "IsServer",
+      "private": false,
+      "sentence": "A server is running on this client",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::JsCode",
+          "inlineCode": "eventsFunctionContext.returnValue = !!runtimeScene.thnkServer;\n",
+          "parameterObjects": "",
+          "useStrict": true,
+          "eventsSheetExpanded": false
+        }
+      ],
+      "parameters": [],
+      "objectGroups": []
+    },
+    {
+      "description": "Triggers if the current scene is in singleplayer mode. When switching to a scene normally (without connecting to a remote scene), the game runs in this mode and doesn't run any netcode, while still emulating the THNK framework to allow the game to run as it would otherwise. This condition can be used to disable features that only make sense in multiplayer, like a chat, in the case the game is not being played in multiplayer.",
+      "fullName": "Is singleplayer?",
+      "functionType": "Condition",
+      "group": "",
+      "name": "IsSinglePlayer",
+      "private": false,
+      "sentence": "Scene running in singleplayer mode",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::JsCode",
+          "inlineCode": "// If we are neither client nor server, we are playing singleplayer.\neventsFunctionContext.returnValue = !runtimeScene.thnkServer && !runtimeScene.thnkClient;\n",
+          "parameterObjects": "",
+          "useStrict": true,
+          "eventsSheetExpanded": false
+        }
+      ],
+      "parameters": [],
+      "objectGroups": []
+    },
+    {
+      "description": "The condition to put before the start of client code. This ensures that dedicated servers do not run client-only code.",
+      "fullName": "Start client code",
+      "functionType": "Condition",
+      "group": "Client",
+      "name": "StartClientCode",
+      "private": false,
+      "sentence": "Currently running on the client",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::JsCode",
+          "inlineCode": "eventsFunctionContext.returnValue = !THNK.settings.DEDICATED;\n",
+          "parameterObjects": "",
+          "useStrict": true,
+          "eventsSheetExpanded": false
+        }
+      ],
+      "parameters": [],
+      "objectGroups": []
+    },
+    {
+      "description": "Checks if a connection to a server/remote scene is currently in progress",
+      "fullName": "Is connecting to the server?",
+      "functionType": "Condition",
+      "group": "Client",
+      "name": "ConnectingToServer",
+      "private": false,
+      "sentence": "Connecting to server",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::JsCode",
+          "inlineCode": "eventsFunctionContext.returnValue = THNK.client.getConnectionState() === \"connecting\";\n",
+          "parameterObjects": "",
+          "useStrict": true,
+          "eventsSheetExpanded": false
+        }
+      ],
+      "parameters": [],
+      "objectGroups": []
+    },
+    {
+      "description": "Checks if the connection to the server has failed. If the connection succeeded, the game would have switched to the remote scene.",
+      "fullName": "Connection to server failed",
+      "functionType": "Condition",
+      "group": "Client",
+      "name": "ConnectionFailed",
+      "private": false,
+      "sentence": "Connection to the server has failed",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::Comment",
+          "color": {
+            "b": 109,
+            "g": 230,
+            "r": 255,
+            "textB": 0,
+            "textG": 0,
+            "textR": 0
+          },
+          "comment": "UNIMPLEMENTED",
+          "comment2": ""
+        }
+      ],
+      "parameters": [],
+      "objectGroups": []
+    },
+    {
+      "description": "Gives the error code returned by the server while attempting a connection",
+      "fullName": "Server connection error code",
+      "functionType": "StringExpression",
+      "group": "Client",
+      "name": "ServerConnectionError",
+      "private": false,
+      "sentence": "",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::Comment",
+          "color": {
+            "b": 109,
+            "g": 230,
+            "r": 255,
+            "textB": 0,
+            "textG": 0,
+            "textR": 0
+          },
+          "comment": "UNIMPLEMENTED",
+          "comment2": ""
+        }
+      ],
+      "parameters": [],
+      "objectGroups": []
+    },
+    {
+      "description": "Sends a message to the server.",
+      "fullName": "Send a message to the server",
+      "functionType": "Action",
+      "group": "Client",
+      "name": "SendMessage",
+      "private": false,
+      "sentence": "Send message _PARAM1_ to the server (extra data: _PARAM2_)",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::JsCode",
+          "inlineCode": "if (runtimeScene.thnkClient) {\n    THNK.client.messages.sendClientMessage(\n        runtimeScene.thnkClient.adapter,\n        eventsFunctionContext.getArgument(\"message\"),\n        eventsFunctionContext.getArgument(\"extra_data\")\n    );\n} else THNK.server.events.addRawMessageToTheQueue(\n    runtimeScene.thnkServer\n        ? runtimeScene.thnkServer.adapter.getServerID()\n        : THNK.players.getCurrentPlayerID(),\n    eventsFunctionContext.getArgument(\"message\"),\n    eventsFunctionContext.getArgument(\"extra_data\")\n);\n",
+          "parameterObjects": "",
+          "useStrict": true,
+          "eventsSheetExpanded": false
+        }
+      ],
+      "parameters": [
+        {
+          "codeOnly": false,
+          "defaultValue": "",
+          "description": "The message name",
+          "longDescription": "",
+          "name": "message",
+          "optional": false,
+          "supplementaryInformation": "",
+          "type": "string"
+        },
+        {
+          "codeOnly": false,
+          "defaultValue": "",
+          "description": "(Optional) A variable with extra data for the server",
+          "longDescription": "",
+          "name": "extra_data",
+          "optional": false,
+          "supplementaryInformation": "",
+          "type": "scenevar"
+        }
+      ],
+      "objectGroups": []
+    },
+    {
+      "description": "",
+      "fullName": "",
+      "functionType": "Action",
+      "group": "",
+      "name": "___Server___",
+      "private": true,
+      "sentence": "",
+      "events": [],
+      "parameters": [],
+      "objectGroups": []
+    },
+    {
+      "description": "The condition to put before the start of server code. Ensures that events meant for the server are only run when needed.",
+      "fullName": "Start server code",
+      "functionType": "Condition",
+      "group": "Server",
+      "name": "StartServerCode",
+      "private": false,
+      "sentence": "Server code should run",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::JsCode",
+          "inlineCode": "eventsFunctionContext.returnValue = runtimeScene.thnkServer \n    // The server is active, only run server code if it is time to.\n    ? runtimeScene.thnkServer.runServerCode \n    // The server is innactive. Only run the server code if client mode is innactive too, as that'd mean singleplayer.\n    : !runtimeScene.thnkClient;\n",
+          "parameterObjects": "",
+          "useStrict": true,
+          "eventsSheetExpanded": false
+        }
+      ],
+      "parameters": [],
+      "objectGroups": []
+    },
+    {
+      "description": "Give the server a target of ticks per second. A tick is when the server side code is executed. Default is 20.",
+      "fullName": "Set target tick rate",
+      "functionType": "Action",
+      "group": "Server",
+      "name": "SetServerTickRate",
+      "private": false,
+      "sentence": "Set server target TPS to _PARAM1_",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::Standard",
+          "conditions": [],
+          "actions": []
+        },
+        {
+          "type": "BuiltinCommonInstructions::JsCode",
+          "inlineCode": "THNK.settings.setTickRate(eventsFunctionContext.getArgument(\"TargetTPS\"));\n",
+          "parameterObjects": "",
+          "useStrict": true,
+          "eventsSheetExpanded": false
+        }
+      ],
+      "parameters": [
+        {
+          "codeOnly": false,
+          "defaultValue": "",
+          "description": "The new TPS target",
+          "longDescription": "",
+          "name": "TargetTPS",
+          "optional": false,
+          "supplementaryInformation": "",
+          "type": "expression"
+        }
+      ],
+      "objectGroups": []
+    },
+    {
+      "description": "Sets the currently picked player to another one, by its ID",
+      "fullName": "Pick a player (by ID)",
+      "functionType": "Action",
+      "group": "Server/Player",
+      "name": "PickPlayerByID",
+      "private": false,
+      "sentence": "Set the picked player to _PARAM1_",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::JsCode",
+          "inlineCode": "THNK.players.switchPlayerContext(eventsFunctionContext.getArgument(\"PlayerID\"));\n",
+          "parameterObjects": "",
+          "useStrict": true,
+          "eventsSheetExpanded": false
+        }
+      ],
+      "parameters": [
+        {
+          "codeOnly": false,
+          "defaultValue": "",
+          "description": "The ID of the picked player",
+          "longDescription": "",
+          "name": "PlayerID",
+          "optional": false,
+          "supplementaryInformation": "",
+          "type": "string"
+        }
+      ],
+      "objectGroups": []
+    },
+    {
+      "description": "Returns the ID of the player that is currently picked. The picked player can be changed by some conditions (like OnMessage) and actions, and will be used to know who to target with other actions (like MoveToRemoteScene) and conditions.",
+      "fullName": "Current player's ID",
+      "functionType": "StringExpression",
+      "group": "Server/Player",
+      "name": "CurrentPlayer",
+      "private": false,
+      "sentence": "",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::JsCode",
+          "inlineCode": "eventsFunctionContext.returnValue = THNK.players.getCurrentPlayerID();\n",
+          "parameterObjects": "",
+          "useStrict": true,
+          "eventsSheetExpanded": false
+        }
+      ],
+      "parameters": [],
+      "objectGroups": []
+    },
+    {
+      "description": "Triggered when a message from the client has been received.",
+      "fullName": "Received message from client",
+      "functionType": "Condition",
+      "group": "Server/Remote Scene Lifetime",
+      "name": "OnMessage",
+      "private": false,
+      "sentence": "Client sent message _PARAM1_ (extra data: _PARAM2_)",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::JsCode",
+          "inlineCode": "if (!runtimeScene.thnkClient) eventsFunctionContext.returnValue = THNK.server.events.popMessage(\n    eventsFunctionContext.getArgument(\"message\"),\n    eventsFunctionContext.getArgument(\"extra_data\")\n);\n",
+          "parameterObjects": "",
+          "useStrict": true,
+          "eventsSheetExpanded": false
+        }
+      ],
+      "parameters": [
+        {
+          "codeOnly": false,
+          "defaultValue": "",
+          "description": "The name of the message",
+          "longDescription": "",
+          "name": "message",
+          "optional": false,
+          "supplementaryInformation": "",
+          "type": "string"
+        },
+        {
+          "codeOnly": false,
+          "defaultValue": "",
+          "description": "(Optional) A variable with extra data from the client",
+          "longDescription": "",
+          "name": "extra_data",
+          "optional": false,
+          "supplementaryInformation": "",
+          "type": "scenevar"
+        }
+      ],
+      "objectGroups": []
+    },
+    {
+      "description": "Triggers when a client has connected to the scene.",
+      "fullName": "On client connected",
+      "functionType": "Condition",
+      "group": "Server/Remote Scene Lifetime",
+      "name": "OnClientConnect",
+      "private": false,
+      "sentence": "A client has connected",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::Comment",
+          "color": {
+            "b": 109,
+            "g": 230,
+            "r": 255,
+            "textB": 0,
+            "textG": 0,
+            "textR": 0
+          },
+          "comment": "In singleplayer, there is only one player. Trigger their connection event one at the start and that's it.",
+          "comment2": ""
+        },
+        {
+          "type": "BuiltinCommonInstructions::Standard",
+          "conditions": [
+            {
+              "type": {
+                "value": "THNK::IsSinglePlayer"
+              },
+              "parameters": [
+                "",
+                ""
+              ]
+            },
+            {
+              "type": {
+                "value": "DepartScene"
+              },
+              "parameters": [
+                ""
+              ]
+            }
+          ],
+          "actions": [
+            {
+              "type": {
+                "value": "SetReturnBoolean"
+              },
+              "parameters": [
+                "True"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "BuiltinCommonInstructions::JsCode",
+          "inlineCode": "if (runtimeScene.thnkServer) eventsFunctionContext.returnValue = THNK.server.events.popConnection(runtimeScene);\n",
+          "parameterObjects": "",
+          "useStrict": true,
+          "eventsSheetExpanded": false
+        }
+      ],
+      "parameters": [],
+      "objectGroups": []
+    },
+    {
+      "description": "Triggers when a client has disconnected from the scene.",
+      "fullName": "On client disconnected",
+      "functionType": "Condition",
+      "group": "Server/Remote Scene Lifetime",
+      "name": "OnClientDisconnect",
+      "private": false,
+      "sentence": "A client has disconnected",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::JsCode",
+          "inlineCode": "if (runtimeScene.thnkServer) eventsFunctionContext.returnValue = THNK.server.events.popDisconnection(runtimeScene);\n",
+          "parameterObjects": "",
+          "useStrict": true,
+          "eventsSheetExpanded": false
+        }
+      ],
+      "parameters": [],
+      "objectGroups": []
+    }
+  ],
+  "eventsBasedBehaviors": [
+    {
+      "description": "Makes the THNK framework automatically synchronize instances of an object across clients. To be used for objects like moving terrain, player objects, etc: objects that will display the same for every user.\nNot to be used on objects unique to a single user, like an inventory menu. Prefer to send over variables the contents of the inventory and display it with non-synchronized objects.",
+      "fullName": "Synchronize object",
+      "name": "SynchronizedObject",
+      "objectType": "",
+      "eventsFunctions": [
+        {
+          "description": "",
+          "fullName": "",
+          "functionType": "Action",
+          "group": "",
+          "name": "onCreated",
+          "private": false,
+          "sentence": "",
+          "events": [
+            {
+              "type": "BuiltinCommonInstructions::JsCode",
+              "inlineCode": "if (runtimeScene.thnkServer)\r\n    runtimeScene.thnkServer.objectsRegistery.registerObject(objects[0]);\r\n",
+              "parameterObjects": "Object",
+              "useStrict": true,
+              "eventsSheetExpanded": false
+            }
+          ],
+          "parameters": [
+            {
+              "codeOnly": false,
+              "defaultValue": "",
+              "description": "Object",
+              "longDescription": "",
+              "name": "Object",
+              "optional": false,
+              "supplementaryInformation": "",
+              "type": "object"
+            },
+            {
+              "codeOnly": false,
+              "defaultValue": "",
+              "description": "Behavior",
+              "longDescription": "",
+              "name": "Behavior",
+              "optional": false,
+              "supplementaryInformation": "THNK::SynchronizedObject",
+              "type": "behavior"
+            }
+          ],
+          "objectGroups": []
+        },
+        {
+          "description": "",
+          "fullName": "",
+          "functionType": "Action",
+          "group": "",
+          "name": "onDestroy",
+          "private": false,
+          "sentence": "",
+          "events": [
+            {
+              "type": "BuiltinCommonInstructions::JsCode",
+              "inlineCode": "if (runtimeScene.thnkServer)\n    runtimeScene.thnkServer.objectsRegistery.unregisterObject(objects[0]);\n",
+              "parameterObjects": "Object",
+              "useStrict": true,
+              "eventsSheetExpanded": false
+            }
+          ],
+          "parameters": [
+            {
+              "codeOnly": false,
+              "defaultValue": "",
+              "description": "Object",
+              "longDescription": "",
+              "name": "Object",
+              "optional": false,
+              "supplementaryInformation": "",
+              "type": "object"
+            },
+            {
+              "codeOnly": false,
+              "defaultValue": "",
+              "description": "Behavior",
+              "longDescription": "",
+              "name": "Behavior",
+              "optional": false,
+              "supplementaryInformation": "THNK::SynchronizedObject",
+              "type": "behavior"
+            }
+          ],
+          "objectGroups": []
+        }
+      ],
+      "propertyDescriptors": []
+    }
+  ]
+}
