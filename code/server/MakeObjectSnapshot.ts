@@ -5,6 +5,10 @@ export const makeObjectSnapshot = (
   builder: Builder,
   obj: gdjs.RuntimeObject
 ): number => {
+  const textOffset = obj.getString
+    ? builder.createSharedString(obj.getString())
+    : null;
+
   Transform.startTransform(builder);
 
   Transform.addX(builder, obj.getX());
@@ -18,10 +22,7 @@ export const makeObjectSnapshot = (
   else Transform.addBigZOrder(builder, obj.getZOrder());
   if (obj.getOpacity) Transform.addOpacity(builder, obj.getOpacity());
   if (obj.getAnimation) Transform.addAnimation(builder, obj.getAnimation());
-  if (obj.getString) {
-    const textOffset = builder.createSharedString(obj.getString());
-    Transform.addText(builder, textOffset);
-  }
+  if (textOffset) Transform.addText(builder, textOffset);
 
   const transformOffset = Transform.endTransform(builder);
 

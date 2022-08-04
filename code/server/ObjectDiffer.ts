@@ -11,6 +11,11 @@ export const diffObject = (
     obj.getAngle() !== obj.prevAngle ||
     (obj.getScale && obj.getScale() !== obj.prevScale)
   ) {
+    const textOffset =
+      obj.getString && obj.getString() !== obj.prevText
+        ? builder.createSharedString(obj.getString())
+        : null;
+
     Transform.startTransform(builder);
 
     if (obj.getX() !== obj.prevX) {
@@ -65,9 +70,8 @@ export const diffObject = (
       Transform.addAnimation(builder, obj.getAnimation());
     }
 
-    if (obj.getString && obj.getString() !== obj.prevText) {
+    if (obj.getString && textOffset) {
       obj.prevText = obj.getString();
-      const textOffset = builder.createSharedString(obj.getString());
       Transform.addText(builder, textOffset);
     }
 
