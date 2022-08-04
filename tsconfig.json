@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "allowJs": true,
     "noEmit": true,
     "esModuleInterop": true,
     "strict": true,
@@ -7,5 +8,5 @@
     "target": "ES6",
     "moduleResolution": "node"
   },
-  "include": ["types/**/*s", "code/**/*s"]
+  "include": ["types/**/*s", "code/**/*s", "scripts/*.js"]
 }

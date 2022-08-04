@@ -56,13 +56,15 @@ const runClientTickPreEvent = (runtimeScene: gdjs.RuntimeScene) => {
 
         let resumedScene: gdjs.RuntimeScene | null = null;
         try {
-        resumedScene = resumedSceneName
-          ? runtimeScene
-              .getGame()
-              .getSceneStack()
-              .replace(resumedSceneName, true)
-          : runtimeScene.getGame().getSceneStack().pop();
-        }catch(e) {console.info("Error spotted!")}
+          resumedScene = resumedSceneName
+            ? runtimeScene
+                .getGame()
+                .getSceneStack()
+                .replace(resumedSceneName, true)
+            : runtimeScene.getGame().getSceneStack().pop();
+        } catch (e) {
+          console.info("Error spotted!");
+        }
 
         if (!resumedScene) continue;
 

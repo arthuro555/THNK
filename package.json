@@ -7,11 +7,12 @@
     "postinstall": "npm run generate-protocol",
     "test": "jest",
     "ts": "tsc",
-    "format": "prettier --write ./code/**/*",
+    "format": "prettier --write ./code/**/* ./scripts/*.js",
     "generate-protocol": "node ./scripts/generate-protocol.js",
     "build:thnk": "tsup ./code/index.ts --format esm --platform=browser --treeshake smallest --minify && tsup ./dist/index.mjs --format iife --platform=browser --global-name THNK --minify && node -e \"fs.promises.rm('./dist/index.mjs', {force:true})\"",
     "build:thnk:dev": "tsup ./code/index.ts --format iife --platform=browser --global-name THNK",
     "build:adapters": "tsup ./code/adapters/*.ts --format iife",
+    "build:extensions": "node ./scripts/generate-extensions.js",
     "build:clean": "node -e \"fs.promises.rm('./dist', {recursive:true,force:true})\"",
     "build": "npm run build:clean && npm run generate-protocol && npm run build:thnk && npm run build:adapters"
   },

@@ -1,3 +1,4 @@
+//@ts-check
 const { readdirSync, writeFileSync, rmSync } = require("fs");
 const { basename } = require("path");
 const { execSync } = require("child_process");
