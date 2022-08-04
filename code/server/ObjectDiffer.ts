@@ -1,5 +1,36 @@
 import { type Builder, GameObject, Transform } from "../t-h-n-k";
 
+type IsGettableProperty<T> = T extends `get${infer G}` ? G : never;
+type GettableProperties<T> = keyof {
+  [Key in IsGettableProperty<keyof T>]: unknown;
+};
+
+type AllSupportedRuntimeObject = gdjs.RuntimeObject &
+  gdjs.SpriteRuntimeObject &
+  gdjs.TextRuntimeObject &
+  gdjs.TextEntryRuntimeObject;
+
+type AnySupportedRuntimeObject =
+  | gdjs.RuntimeObject
+  | gdjs.SpriteRuntimeObject
+  | gdjs.TextRuntimeObject
+  | gdjs.TextEntryRuntimeObject;
+
+type ValidPropertyName = GettableProperties<AllSupportedRuntimeObject>;
+
+const propertiesToDiff: ValidPropertyName[] = [
+  "X",
+  "Y",
+  "Height",
+  "Width",
+  "Angle",
+  "Scale",
+  "ZOrder",
+  "String",
+];
+
+const differentProperties: ValidPropertyName[] = [];
+
 export const diffObject = (
   builder: Builder,
   obj: gdjs.RuntimeObject
