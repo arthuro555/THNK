@@ -17,16 +17,17 @@ If you have disabled postinstall scripts, run `yarn generate-protocol` to run th
 
 ### Building
 
-Run `yarn build` to execute the full build pipeline. You can also build individual parts with the other build scripts in package.json.
+Run `yarn build` to execute the full build pipeline. You can also build individual parts with the other build scripts in package.json:
 
-Building THNK outputs an `index.global.js` file in the `dist` folder. Import the THNK extension file in `extensions` into GDevelop, and in the `onFirstSceneLoaded` functions, replace the contents of the JS code block with the contents of `index.global.js`. At the beginning of the code block , replace `var THNK` with `window.THNK`. You now are running your custom build of THNK.
+Building THNK with `yarn build:thnk` and the adapters with `yarn build:adapters` outputs a bundle to the `dist` folder. `yarn build:extensions` automatically inserts its contents into the THNK extensions in `extensions`.
 
-For the adapters, the process is similar. Each produce another file in `dist`, with code that can be copied to the `onFirstSceneLoaded` of their respective extensions. The difference lies within the fact that you need to rename the two references to THNK at the bottom at the file with `window.THNK`, **not the `var THNK` at the top of the file**.
+To test your changes, import the extension with your changes into GDevelop. If you make changes to the extension itself, don't forget to export it back to the `extensions` folder.
 
-### Testing
+### Submitting changes
 
-Before submitting a PR, make sure that your code passes both typescript and jest tests.
+Before submitting a PR, make sure that your code builds & fully functions within the extension, and that it passes both typescript & jest tests.
 Run `yarn ts && yarn test` to run both checks.
+Make sure the extensions in `extensions` are properly generated with the latest version of your code. In case of doubts, run `yarn build` again before committing.
 
 ### Understanding the architecture
 
@@ -37,4 +38,4 @@ There are a few main folders that you need to keep in mind while contributing:
 - `code/server` - All of the server-only code.
 - `code/client` - All of the client-only code.
 - `code/adapters` - All the different adapters implementations. Each file contains a server and client adapter for a single backend.
-- `extensions` - Contains the GDevelop extensions files. While most of the mportant code is in `code`, the extensions themselves need to be modified to add actions, conditions, etc. You also need them to actually use the THNK built code.
+- `extensions` - Contains the GDevelop extensions files. While most of the mportant code is in `code`, the extensions themselves need to be modified to add actions, conditions, etc. You also need them to actually use the built THNK code.

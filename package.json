@@ -14,7 +14,7 @@
     "build:adapters": "tsup ./code/adapters/*.ts --format iife",
     "build:extensions": "node ./scripts/generate-extensions.js",
     "build:clean": "node -e \"fs.promises.rm('./dist', {recursive:true,force:true})\"",
-    "build": "npm run build:clean && npm run generate-protocol && npm run build:thnk && npm run build:adapters"
+    "build": "npm run build:clean && npm run generate-protocol && npm run build:thnk && npm run build:adapters && npm run build:extensions"
   },
   "devDependencies": {
     "@types/jest": "^28.1.6",
