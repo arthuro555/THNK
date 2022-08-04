@@ -8,8 +8,15 @@ export const diffObject = (
   if (
     obj.getX() !== obj.prevX ||
     obj.getY() !== obj.prevY ||
+    obj.getHeight() !== obj.prevHeight ||
+    obj.getWidth() !== obj.prevWidth ||
     obj.getAngle() !== obj.prevAngle ||
-    (obj.getScale && obj.getScale() !== obj.prevScale)
+    (obj.getScale && obj.getScale() !== obj.prevScale) ||
+    obj.getZOrder() !== obj.prevZOrder ||
+    obj.isHidden() !== obj.prevVisibility ||
+    (obj.getOpacity && obj.getOpacity() !== obj.prevOpacity) ||
+    (obj.getAnimation && obj.getAnimation() !== obj.prevAnimation) ||
+    (obj.getString && obj.getString() !== obj.prevText)
   ) {
     const textOffset =
       obj.getString && obj.getString() !== obj.prevText
