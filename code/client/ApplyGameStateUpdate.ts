@@ -1,13 +1,13 @@
 import { GameStateDiff } from "../t-h-n-k";
 import { deserializeObject } from "./ObjectDeserializer";
 import { deserializeVariable } from "./VariableDeserializer";
-import { clientObjectsRegistery } from "./ClientObjectsRegistery";
 
 export const applyGameStateUpdateToScene = (
   gameState: GameStateDiff,
   runtimeScene: gdjs.RuntimeScene
 ) => {
   if (!runtimeScene.thnkClient) return;
+  const { objectsRegistery } = runtimeScene.thnkClient;
 
   const rootVariable = gameState.variables();
   if (rootVariable)
@@ -16,11 +16,7 @@ export const applyGameStateUpdateToScene = (
   const deletedObjects = gameState.deletedObjectsArray();
   if (deletedObjects)
     for (const id of deletedObjects) {
-      const obj = clientObjectsRegistery.get(id);
-      if (obj) {
-        clientObjectsRegistery.delete(id);
-        obj.deleteFromScene(runtimeScene);
-      }
+      objectsRegistery.deleteObject(id);
     }
 
   if (gameState.createdObjectsLength() !== 0)
@@ -34,7 +30,7 @@ export const applyGameStateUpdateToScene = (
       const name = createdObject.name();
       if (!name) continue;
       const obj = runtimeScene.createObject(name)!;
-      clientObjectsRegistery.set(createdObject.id(), obj);
+      objectsRegistery.registerObject(createdObject.id(), obj);
     }
 
   if (gameState.objectsLength() !== 0)
@@ -45,13 +41,13 @@ export const applyGameStateUpdateToScene = (
       i < len;
       gameObject = gameState.objects(++i)!
     ) {
-      let obj = clientObjectsRegistery.get(gameObject.id());
+      let obj = objectsRegistery.getObject(gameObject.id());
 
       if (!obj) {
         const name = gameObject.name();
         if (name) {
           obj = runtimeScene.createObject(name)!;
-          clientObjectsRegistery.set(gameObject.id(), obj);
+          objectsRegistery.registerObject(gameObject.id(), obj);
         }
       }
 

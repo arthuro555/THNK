@@ -1,6 +1,5 @@
 import { GameStateSnapshot } from "../t-h-n-k";
 import { deserializeObject } from "./ObjectDeserializer";
-import { clientObjectsRegistery } from "./ClientObjectsRegistery";
 import { unpackVariable } from "../VariablePacker";
 
 export const applyGameStateSnapshotToScene = (
@@ -8,16 +7,14 @@ export const applyGameStateSnapshotToScene = (
   runtimeScene: gdjs.RuntimeScene
 ) => {
   if (!runtimeScene.thnkClient) return;
+  const { objectsRegistery } = runtimeScene.thnkClient;
 
   const rootVariable = gameState.variablesArray();
   if (rootVariable)
     unpackVariable(runtimeScene.getVariables().get("State"), rootVariable);
 
   // Delete previous objects, as the snapshot expects to be applied to a blank state.
-  clientObjectsRegistery.forEach((runtimeObject) =>
-    runtimeObject.deleteFromScene(runtimeScene)
-  );
-  clientObjectsRegistery.clear();
+  objectsRegistery.clear();
 
   if (gameState.objectsLength() !== 0) {
     for (
@@ -29,9 +26,9 @@ export const applyGameStateSnapshotToScene = (
     ) {
       const name = gameObject.name();
       if (!name) continue;
-      const obj = runtimeScene.createObject(name)!;console.log(obj);
+      const obj = runtimeScene.createObject(name)!;
       deserializeObject(gameObject, obj);
-      clientObjectsRegistery.set(gameObject.id(), obj);
+      objectsRegistery.registerObject(gameObject.id(), obj);
     }
   }
 };

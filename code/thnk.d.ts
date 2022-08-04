@@ -1,18 +1,14 @@
 import { ClientAdapter, ServerAdapter } from "./Adapter";
 import { ClientObjectsRegistery } from "./client/ClientObjectsRegistery";
+import { THNKClientContext } from "./client/THNKClientContext";
 import { ServerObjectsRegistery } from "./server/ServerObjectsRegistery";
 import { SyncedVariable } from "./server/SyncedVariable";
 import { THNKServerContext } from "./server/THNKServerContext";
 
-interface THNKClient {
-  /** The adapter used by the scene to get new messages from the server. */
-  adapter: ClientAdapter;
-}
-
 declare global {
   namespace gdjs {
     interface RuntimeScene {
-      thnkClient?: THNKClient;
+      thnkClient?: THNKClientContext;
       thnkServer?: THNKServerContext;
     }
 

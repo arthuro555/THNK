@@ -4,6 +4,7 @@ import { ConnectionStartMessage } from "../t-h-n-k/connection-start-message";
 import { applyGameStateSnapshotToScene } from "./ApplyGameStateSnapshot";
 import { sendConnectionRequest } from "./ClientMessageSender";
 import { setConnectionState } from "./ClientConnectionState";
+import { THNKClientContext } from "./THNKClientContext";
 
 const logger = new gdjs.Logger("THNK - Client");
 const fail = (reason: string) => {
@@ -48,9 +49,7 @@ export const startClient = async (
       }
 
       const newScene = sceneStack.replace(sceneName, true);
-      newScene.thnkClient = {
-        adapter,
-      };
+      newScene.thnkClient = new THNKClientContext(adapter, newScene);
 
       applyGameStateSnapshotToScene(sceneSnapshot, newScene);
 
