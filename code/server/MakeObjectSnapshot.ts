@@ -41,6 +41,6 @@ export const makeObjectSnapshot = (
   GameObject.addId(builder, obj.thnkID);
   GameObject.addName(builder, name);
   GameObject.addTransform(builder, transformOffset);
-  if (variableOffset) GameObject.addVariables(builder, variableOffset);
+  if (variableOffset) GameObject.addPackedVariables(builder, variableOffset);
   return GameObject.endGameObject(builder);
 };
