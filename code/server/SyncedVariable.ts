@@ -66,20 +66,21 @@ export class SyncedVariable extends gdjs.Variable {
   }
 
   setBoolean(newValue: boolean): void {
-    this.dirty = true;
+    if (newValue !== this._bool) this.dirty = true;
     super.setBoolean(newValue);
   }
   setNumber(newValue: number): void {
-    this.dirty = true;
+    if (newValue !== this._value) this.dirty = true;
     super.setNumber(newValue);
   }
   setString(newValue: string): void {
-    this.dirty = true;
+    if (newValue !== this._str) this.dirty = true;
     super.setString(newValue);
   }
 
   clearChildren(): void {
     this.dirty = true;
+    this.operations.length = 0;
     this.operations.push({ type: CollectionOperationType.clear });
     super.clearChildren();
   }
