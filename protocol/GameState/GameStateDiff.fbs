@@ -1,4 +1,3 @@
-include "Camera.fbs";
 include "GameObject.fbs";
 include "Variables.fbs";
 
@@ -10,7 +9,6 @@ table CreatedObject {
 }
 
 table GameStateDiff {
-  camera: [Camera];
   objects: [GameObject];
   created_objects: [CreatedObject];
   deleted_objects: [ushort];

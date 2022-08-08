@@ -1,10 +1,8 @@
-include "Camera.fbs";
 include "GameObject.fbs";
 
 namespace THNK;
 
 table GameStateSnapshot {
-  camera: [Camera];
   objects: [GameObject];
   variables: [ubyte];
 }
