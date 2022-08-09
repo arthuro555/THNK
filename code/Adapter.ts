@@ -5,6 +5,12 @@ import {
   ByteBuffer,
   type Builder,
 } from "./t-h-n-k";
+import { inflateRaw, deflateRaw } from "pako";
+
+const decompress = (data: Uint8Array): Uint8Array =>
+  inflateRaw(data) as Uint8Array;
+const compress = (data: Uint8Array): Uint8Array =>
+  deflateRaw(data, { level: 9 });
 
 export abstract class ClientAdapter {
   /** Ensure returns a promise that resolves once fully connected to a server. */
@@ -14,7 +20,7 @@ export abstract class ClientAdapter {
 
   sendClientMessage(builder: Builder, messageOffset: number): void {
     builder.finish(messageOffset);
-    this.doSendMessage(builder.asUint8Array());
+    this.doSendMessage(compress(builder.asUint8Array()));
   }
 
   private readonly pendingMessages: ServerMessage[] = [];
@@ -30,7 +36,7 @@ export abstract class ClientAdapter {
   /** Call this whenever the server/client has sent a message. */
   protected onMessage(bytes: Uint8Array): void {
     this.pendingMessages.push(
-      ServerMessage.getRootAsServerMessage(new ByteBuffer(bytes))
+      ServerMessage.getRootAsServerMessage(new ByteBuffer(decompress(bytes)))
     );
   }
   protected onDisconnection(): void {
@@ -50,11 +56,11 @@ export abstract class ServerAdapter {
     messageOffset: number
   ): void {
     builder.finish(messageOffset);
-    this.doSendMessageTo(userID, builder.asUint8Array());
+    this.doSendMessageTo(userID, compress(builder.asUint8Array()));
   }
   sendServerMessageToAll(builder: Builder, messageOffset: number) {
     builder.finish(messageOffset);
-    const messageAsArray = builder.asUint8Array();
+    const messageAsArray = compress(builder.asUint8Array());
     for (const userID of this.usersPendingMessages.keys())
       this.doSendMessageTo(userID, messageAsArray);
   }
@@ -80,7 +86,9 @@ export abstract class ServerAdapter {
   protected onMessage(userID: string, bytes: Uint8Array): void {
     this.usersPendingMessages
       .get(userID)!
-      .push(ClientMessage.getRootAsClientMessage(new ByteBuffer(bytes)));
+      .push(
+        ClientMessage.getRootAsClientMessage(new ByteBuffer(decompress(bytes)))
+      );
   }
   /** Call this whenever a client connects. */
   protected onConnection(userID: string) {
