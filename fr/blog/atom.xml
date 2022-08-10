@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://thnk.arthuro555.com/fr/blog</id>
+    <title>THNK Blog</title>
+    <updated>2022-05-08T00:00:00.000Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://thnk.arthuro555.com/fr/blog"/>
+    <subtitle>THNK Blog</subtitle>
+    <icon>https://thnk.arthuro555.com/fr/img/favicon.ico</icon>
+    <entry>
+        <title type="html"><![CDATA[Le site est lancé!]]></title>
+        <id>website-released</id>
+        <link href="https://thnk.arthuro555.com/fr/blog/website-released"/>
+        <updated>2022-05-08T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[THNK à maintenant un site internet!]]></summary>
+        <content type="html"><![CDATA[<p>THNK à maintenant un site internet!</p><p>Il a été crée avec Docusaurus 2.0, and c'est daurénavant l'endroit ou ce trouvera la documentation et le blog de THNK. Des modifications peuvent être proposées via GitHub, et les bienvenues 😊. J'espère que nous pourrons construire une super resource bien complète sur l'utilisation de THNK tous ensemble!</p><p>C'est tout pour le moment, il n'y a pas vraiment grand chose de plus a dire pour le moment. A très bientôt 😉!</p>]]></content>
+        <author>
+            <name>Arthur Pacaud</name>
+            <uri>https://github.com/arthuro555</uri>
+        </author>
+        <category label="site" term="site"/>
+        <category label="documentation" term="documentation"/>
+        <category label="annonce" term="annonce"/>
+    </entry>
+</feed>

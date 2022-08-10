@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+    <channel>
+        <title>THNK Blog</title>
+        <link>https://thnk.arthuro555.com/fr/blog</link>
+        <description>THNK Blog</description>
+        <lastBuildDate>Sun, 08 May 2022 00:00:00 GMT</lastBuildDate>
+        <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
+        <generator>https://github.com/jpmonette/feed</generator>
+        <language>fr</language>
+        <item>
+            <title><![CDATA[Le site est lancé!]]></title>
+            <link>https://thnk.arthuro555.com/fr/blog/website-released</link>
+            <guid>website-released</guid>
+            <pubDate>Sun, 08 May 2022 00:00:00 GMT</pubDate>
+            <description><![CDATA[THNK à maintenant un site internet!]]></description>
+            <content:encoded><![CDATA[<p>THNK à maintenant un site internet!</p><p>Il a été crée avec Docusaurus 2.0, and c'est daurénavant l'endroit ou ce trouvera la documentation et le blog de THNK. Des modifications peuvent être proposées via GitHub, et les bienvenues 😊. J'espère que nous pourrons construire une super resource bien complète sur l'utilisation de THNK tous ensemble!</p><p>C'est tout pour le moment, il n'y a pas vraiment grand chose de plus a dire pour le moment. A très bientôt 😉!</p>]]></content:encoded>
+            <category>site</category>
+            <category>documentation</category>
+            <category>annonce</category>
+        </item>
+    </channel>
+</rss>

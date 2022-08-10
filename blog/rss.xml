@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+    <channel>
+        <title>THNK Blog</title>
+        <link>https://thnk.arthuro555.com/blog</link>
+        <description>THNK Blog</description>
+        <lastBuildDate>Sun, 08 May 2022 00:00:00 GMT</lastBuildDate>
+        <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
+        <generator>https://github.com/jpmonette/feed</generator>
+        <language>en</language>
+        <item>
+            <title><![CDATA[The website has been released!]]></title>
+            <link>https://thnk.arthuro555.com/blog/website-released</link>
+            <guid>website-released</guid>
+            <pubDate>Sun, 08 May 2022 00:00:00 GMT</pubDate>
+            <description><![CDATA[THNK now has a website!]]></description>
+            <content:encoded><![CDATA[<p>THNK now has a website! </p><p>It is built upon Docusaurus 2.0, and will be home to the documentation and the blog/devlog of THNK. You can submit modifications to it via GitHub, and are welcome to help. I hope to achieve to build together a quality resource for understanding THNK.</p><p>That's it for now, there is not much to say yet. See you later for more 😉!</p>]]></content:encoded>
+            <category>website</category>
+            <category>docs</category>
+            <category>announcement</category>
+        </item>
+    </channel>
+</rss>
