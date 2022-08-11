@@ -11,7 +11,6 @@ export const diffObject = (
     obj.getHeight() !== obj.prevHeight ||
     obj.getWidth() !== obj.prevWidth ||
     obj.getAngle() !== obj.prevAngle ||
-    (obj.getScale && obj.getScale() !== obj.prevScale) ||
     obj.getZOrder() !== obj.prevZOrder ||
     obj.isHidden() !== obj.prevVisibility ||
     (obj.getOpacity && obj.getOpacity() !== obj.prevOpacity) ||
@@ -48,11 +47,6 @@ export const diffObject = (
     if (obj.getAngle() !== obj.prevAngle) {
       obj.prevAngle = obj.getAngle();
       Transform.addAngle(builder, obj.getAngle());
-    }
-
-    if (obj.getScale && obj.getScale() !== obj.prevScale) {
-      obj.prevScale = obj.getScale();
-      Transform.addScale(builder, obj.getScale());
     }
 
     if (obj.getZOrder() !== obj.prevZOrder) {

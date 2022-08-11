@@ -23,9 +23,6 @@ export const deserializeObject = (
     const angle = transform.angle();
     if (angle !== null) obj.setAngle(angle);
 
-    const scale = transform.scale();
-    if (scale !== null && obj.setScale) obj.setScale(scale);
-
     const visibility = transform.visible();
     if (visibility !== null) obj.hide(visibility);
 

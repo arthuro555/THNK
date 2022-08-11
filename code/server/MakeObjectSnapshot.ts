@@ -17,7 +17,6 @@ export const makeObjectSnapshot = (
   Transform.addWidth(builder, obj.getWidth());
   Transform.addAngle(builder, obj.getAngle());
   Transform.addVisible(builder, obj.isHidden());
-  if (obj.getScale) Transform.addScale(builder, obj.getScale());
   if (obj.getZOrder() <= 65_535) Transform.addZOrder(builder, obj.getZOrder());
   else Transform.addBigZOrder(builder, obj.getZOrder());
   if (obj.getOpacity) Transform.addOpacity(builder, obj.getOpacity());
