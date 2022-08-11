@@ -30,7 +30,7 @@ export const diffScene = (
 
   const deletedObjects = objectsRegistery.getDeletedObjects();
   const deletedObjectsOffset = deletedObjects.length
-    ? GameStateDiff.createCreatedObjectsVector(builder, deletedObjects)
+    ? GameStateDiff.createDeletedObjectsVector(builder, deletedObjects)
     : null;
 
   GameStateDiff.startGameStateDiff(builder);

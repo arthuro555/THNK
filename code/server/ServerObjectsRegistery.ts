@@ -13,7 +13,7 @@ export class ServerObjectsRegistery {
   // We heavily recycle IDs to keep using a short as the ID without consuming all the available ones at once.
   private readonly recycledIDs: number[] = [];
   // But we may still generate a brand new one if none of the already generated ones are available.
-  private currentNewID = 0;
+  private currentNewID = 1; // IDs start by 1, so that an invalid or missing ID doesn't touch the object with ID 0.
 
   private generateNewID = () => {
     const id = this.recycledIDs.pop() ?? this.currentNewID++;
@@ -79,7 +79,7 @@ export class ServerObjectsRegistery {
   }
 
   getDeletedObjects() {
-    const array = [...this.deletedObjects.values()];
+    const array = Uint16Array.from(this.deletedObjects.values());
     this.deletedObjects.clear();
     return array;
   }
