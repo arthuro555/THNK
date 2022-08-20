@@ -1,6 +1,5 @@
 import type { ServerAdapter } from "../Adapter";
 import { isDedicated } from "../Settings";
-import { ServerObjectsRegistery } from "./ServerObjectsRegistery";
 import { SyncedVariable } from "./SyncedVariable";
 import { THNKServerContext } from "./THNKServerContext";
 
@@ -11,8 +10,7 @@ export const setupSceneAsServer = (
   runtimeScene: gdjs.RuntimeScene,
   adapter: ServerAdapter
 ) => {
-  const syncedVariable = new SyncedVariable();
-  runtimeScene.getVariables().add("State", syncedVariable);
+  const syncedVariable = SyncedVariable.setupSyncedVariable(runtimeScene.getVariables());
   runtimeScene.getTimeManager().addTimer("__THNK_Ticker");
   runtimeScene.thnkServer = new THNKServerContext(adapter, syncedVariable);
 

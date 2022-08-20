@@ -18,6 +18,17 @@ export class SyncedVariable extends gdjs.Variable {
     targetVariable?: SyncedVariable;
   }[] = [];
 
+  static setupSyncedVariable(
+    container: gdjs.VariablesContainer,
+    variableName: string = "State"
+  ) {
+    const syncedVariable = new SyncedVariable();
+    if (container.has(variableName))
+      gdjs.Variable.copy(container.get(variableName), syncedVariable);
+    container.add(variableName, syncedVariable);
+    return syncedVariable;
+  }
+
   reinitialize(varData?: VariableData | undefined) {
     this._type = "number";
     this._value = 0;

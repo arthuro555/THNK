@@ -36,8 +36,7 @@ export class ServerObjectsRegistery {
     this.registeredObjects.set(obj.thnkID, obj);
     this.createdObjects.set(obj.thnkID, obj.getName());
 
-    obj.stateVariable = new SyncedVariable();
-    obj.getVariables().add("State", obj.stateVariable);
+    obj.stateVariable = SyncedVariable.setupSyncedVariable(obj.getVariables());
   }
 
   unregisterObject(obj: gdjs.RuntimeObject) {
