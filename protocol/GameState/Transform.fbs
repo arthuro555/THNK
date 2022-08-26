@@ -1,20 +1,43 @@
 namespace THNK;
 
-table Transform {    
+table Transform {
   x: float = null;
   y: float = null;
   height: float = null;
   width: float = null;
   angle: float = null;
   scale: float = null;
+
+  // TODO Remove once optional scalars are fixed
+  //┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅//╶┐
+  setXTo0: bool = false;     // │
+  setYTo0: bool = false;     // │
+  setHeightTo0: bool = false;// │  
+  setWidthTo0: bool = false; // │
+  setAngleTo0: bool = false; // │
+  setScaleTo0: bool = false; // │
+  //┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅//╶┘
+
+  /// The zOrder offsetted by 1
   z_order: ushort = null;
+  /// The zOrder (still offsetted by 1) if it doesn't fit in a short
   big_z_order: uint = null;
 
-  visible: bool = null;
-  flippedX: bool = null;
-  flippedY: bool = null;
-  opacity: ubyte = null;
+  // TODO Switch to bool once possible to do so
+  //┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅//╶┐
+  visible: ubyte = null; // │
+  flippedX: ubyte = null;// │
+  flippedY: ubyte = null;// │
+  //┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅//╶┘
 
+  /// The sprite's opacity
+  opacity: ubyte = null;
+  // TODO Switch to bool once possible to do so
+  setOpacityTo0: bool = false;
+
+  /// Animation number offsetted by 1
   animation: ubyte = null;
+
+  /// Text field standing for all the objects that contain text
   text: string;
 }

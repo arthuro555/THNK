@@ -28,59 +28,71 @@ export const diffObject = (
 
     if (obj.getX() !== obj.prevX) {
       obj.prevX = obj.getX();
-      Transform.addX(builder, obj.getX());
+      if (obj.getX() !== 0) Transform.addX(builder, obj.getX());
+      else Transform.addSetXTo0(builder, true); // TODO Remove once optional scalars are fixed
     }
 
     if (obj.getY() !== obj.prevY) {
       obj.prevY = obj.getY();
-      Transform.addY(builder, obj.getY());
+      if (obj.getY() !== 0) Transform.addY(builder, obj.getY());
+      else Transform.addSetYTo0(builder, true); // TODO Remove once optional scalars are fixed
     }
 
     if (obj.getHeight() !== obj.prevHeight) {
       obj.prevHeight = obj.getHeight();
-      Transform.addHeight(builder, obj.getHeight());
+      if (obj.getHeight() !== 0) Transform.addHeight(builder, obj.getHeight());
+      else Transform.addSetHeightTo0(builder, true); // TODO Remove once optional scalars are fixed
     }
 
     if (obj.getWidth() !== obj.prevWidth) {
       obj.prevWidth = obj.getWidth();
-      Transform.addWidth(builder, obj.getWidth());
+      if (obj.getWidth() !== 0) Transform.addWidth(builder, obj.getWidth());
+      else Transform.addSetWidthTo0(builder, true); // TODO Remove once optional scalars are fixed
     }
 
     if (obj.getAngle() !== obj.prevAngle) {
       obj.prevAngle = obj.getAngle();
-      Transform.addAngle(builder, obj.getAngle());
+      if (obj.getAngle() !== 0) Transform.addAngle(builder, obj.getAngle());
+      else Transform.addSetAngleTo0(builder, true); // TODO Remove once optional scalars are fixed
     }
 
+    // TODO Remove offset once optional scalars are fixed
     if (obj.getZOrder() !== obj.prevZOrder) {
       obj.prevZOrder = obj.getZOrder();
       if (obj.getZOrder() <= 65_535)
-        Transform.addZOrder(builder, obj.getZOrder());
-      else Transform.addBigZOrder(builder, obj.getZOrder());
+        Transform.addZOrder(builder, obj.getZOrder() + 1);
+      else Transform.addBigZOrder(builder, obj.getZOrder() + 1);
     }
 
+    // TODO Replace with real booleans when optional scalars are fixed
+    //┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅
     if (obj.isHidden() !== obj.prevVisibility) {
       obj.prevVisibility = obj.isHidden();
-      Transform.addVisible(builder, obj.isHidden());
+      Transform.addVisible(builder, obj.isHidden() ? 1 : 2);
     }
 
     if (obj.isFlippedX && obj.isFlippedX() !== obj.prevFlippedX) {
       obj.prevFlippedX = obj.isFlippedX();
-      Transform.addFlippedX(builder, obj.isFlippedX());
+      Transform.addFlippedX(builder, obj.isFlippedX() ? 1 : 2);
     }
 
     if (obj.isFlippedY && obj.isFlippedY() !== obj.prevFlippedY) {
       obj.prevFlippedY = obj.isFlippedY();
-      Transform.addFlippedY(builder, obj.isFlippedY());
+      Transform.addFlippedY(builder, obj.isFlippedY() ? 1 : 2);
     }
+    //┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅
 
     if (obj.getOpacity && obj.getOpacity() !== obj.prevOpacity) {
       obj.prevOpacity = obj.getOpacity();
-      Transform.addOpacity(builder, obj.getOpacity());
+      if (obj.getOpacity() !== 0)
+        Transform.addOpacity(builder, obj.getOpacity());
+      else Transform.addSetOpacityTo0(builder, true); // TODO Remove once optional scalars are fixed
     }
 
+    // TODO Remove offset once optional scalars are fixed
     if (obj.getAnimation && obj.getAnimation() !== obj.prevAnimation) {
       obj.prevAnimation = obj.getAnimation();
-      Transform.addAnimation(builder, obj.getAnimation());
+      Transform.addAnimation(builder, obj.getAnimation() + 1);
     }
 
     if (obj.getString && textOffset) {

@@ -23,23 +23,45 @@ export const deserializeObject = (
     const angle = transform.angle();
     if (angle !== null) obj.setAngle(angle);
 
-    const visibility = transform.visible();
-    if (visibility !== null) obj.hide(visibility);
+    // prettier-ignore
+    {
+      // TODO Remove once optional scalars are fixed
+      //┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅//╶┐
+      if (transform.setXTo0()) obj.setX(0);           // │
+      if (transform.setYTo0()) obj.setY(0);           // │
+      if (transform.setHeightTo0()) obj.setHeight(0); // │
+      if (transform.setWidthTo0()) obj.setWidth(0);   // │
+      if (transform.setAngleTo0()) obj.setAngle(0);   // │
+      //┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅//╶┘
+    }
 
-    const flippedX = transform.flippedX();
-    if (flippedX !== null && obj.flipX) obj.flipX(flippedX);
-
-    const flippedY = transform.flippedY();
-    if (flippedY !== null && obj.flipY) obj.flipY(flippedY);
+    // prettier-ignore
+    {
+      // TODO Use a boolean once it becomes possible
+      //┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅//╶┐
+      const visibility = transform.visible();                        // │
+      if (visibility !== null) obj.hide(visibility === 1);           // │
+                                                                     // │
+      const flippedX = transform.flippedX();                         // │
+      if (flippedX !== null && obj.flipX) obj.flipX(flippedX === 1); // │
+                                                                     // │
+      const flippedY = transform.flippedY();                         // │
+      if (flippedY !== null && obj.flipY) obj.flipY(flippedY === 1); // │
+      //┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅//╶┘
+    }
 
     const zOrder = transform.zOrder() ?? transform.bigZOrder();
-    if (zOrder !== null) obj.setZOrder(zOrder);
+    if (zOrder !== null) obj.setZOrder(zOrder - 1); // TODO Remove
 
     const opacity = transform.opacity();
-    if (opacity !== null && obj.setOpacity) obj.setOpacity(opacity);
+    if (obj.setOpacity) {
+      if (opacity !== null) obj.setOpacity(opacity);
+      // TODO Remove once optional scalars are fixed
+      if (transform.setOpacityTo0()) obj.setOpacity(0);
+    }
 
     const animation = transform.animation();
-    if (animation !== null && obj.setAnimation) obj.setAnimation(animation);
+    if (animation !== null && obj.setAnimation) obj.setAnimation(animation - 1);
 
     const text = transform.text();
     if (text !== null && obj.setString) obj.setString(text);
