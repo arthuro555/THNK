@@ -27,6 +27,8 @@ declare global {
       prevHeight: number;
       prevWidth: number;
       prevOpacity: number;
+      prevFlippedX: boolean;
+      prevFlippedY: boolean;
       prevVisibility: boolean;
       prevAnimation: number;
       prevText: string;
@@ -36,6 +38,10 @@ declare global {
       setScale?: (value: number) => void;
       getOpacity?: () => number;
       setOpacity?: (value: number) => void;
+      isFlippedX?: () => boolean;
+      flipX?: (value: boolean) => void;
+      isFlippedY?: () => boolean;
+      flipY?: (value: boolean) => void;
       getAnimation?: () => number;
       setAnimation?: (value: number) => void;
       getString?: () => string;

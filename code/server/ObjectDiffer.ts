@@ -13,6 +13,8 @@ export const diffObject = (
     obj.getAngle() !== obj.prevAngle ||
     obj.getZOrder() !== obj.prevZOrder ||
     obj.isHidden() !== obj.prevVisibility ||
+    (obj.isFlippedX && obj.isFlippedX() !== obj.prevFlippedX) ||
+    (obj.isFlippedY && obj.isFlippedY() !== obj.prevFlippedY) ||
     (obj.getOpacity && obj.getOpacity() !== obj.prevOpacity) ||
     (obj.getAnimation && obj.getAnimation() !== obj.prevAnimation) ||
     (obj.getString && obj.getString() !== obj.prevText)
@@ -59,6 +61,16 @@ export const diffObject = (
     if (obj.isHidden() !== obj.prevVisibility) {
       obj.prevVisibility = obj.isHidden();
       Transform.addVisible(builder, obj.isHidden());
+    }
+
+    if (obj.isFlippedX && obj.isFlippedX() !== obj.prevFlippedX) {
+      obj.prevFlippedX = obj.isFlippedX();
+      Transform.addFlippedX(builder, obj.isFlippedX());
+    }
+
+    if (obj.isFlippedY && obj.isFlippedY() !== obj.prevFlippedY) {
+      obj.prevFlippedY = obj.isFlippedY();
+      Transform.addFlippedY(builder, obj.isFlippedY());
     }
 
     if (obj.getOpacity && obj.getOpacity() !== obj.prevOpacity) {

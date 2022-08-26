@@ -26,6 +26,12 @@ export const deserializeObject = (
     const visibility = transform.visible();
     if (visibility !== null) obj.hide(visibility);
 
+    const flippedX = transform.flippedX();
+    if (flippedX !== null && obj.flipX) obj.flipX(flippedX);
+
+    const flippedY = transform.flippedY();
+    if (flippedY !== null && obj.flipY) obj.flipY(flippedY);
+
     const zOrder = transform.zOrder() ?? transform.bigZOrder();
     if (zOrder !== null) obj.setZOrder(zOrder);
 

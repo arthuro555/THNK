@@ -19,6 +19,8 @@ export const makeObjectSnapshot = (
   Transform.addVisible(builder, obj.isHidden());
   if (obj.getZOrder() <= 65_535) Transform.addZOrder(builder, obj.getZOrder());
   else Transform.addBigZOrder(builder, obj.getZOrder());
+  if (obj.isFlippedX) Transform.addFlippedX(builder, obj.isFlippedX());
+  if (obj.isFlippedY) Transform.addFlippedY(builder, obj.isFlippedY());
   if (obj.getOpacity) Transform.addOpacity(builder, obj.getOpacity());
   if (obj.getAnimation) Transform.addAnimation(builder, obj.getAnimation());
   if (textOffset) Transform.addText(builder, textOffset);

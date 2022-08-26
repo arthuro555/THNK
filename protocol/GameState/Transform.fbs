@@ -11,6 +11,8 @@ table Transform {
   big_z_order: uint = null;
 
   visible: bool = null;
+  flippedX: bool = null;
+  flippedY: bool = null;
   opacity: ubyte = null;
 
   animation: ubyte = null;
