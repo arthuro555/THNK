@@ -1,6 +1,6 @@
 namespace THNK;
 
-table Transform {
+table ObjState {
   x: float = null;
   y: float = null;
   height: float = null;

@@ -1,4 +1,4 @@
-include "Transform.fbs";
+include "ObjState.fbs";
 include "Variables.fbs";
 
 namespace THNK;
@@ -10,7 +10,7 @@ table GameObject {
   /// Used to create the object
   name: string;
 
-  transform: Transform;
+  objState: ObjState;
   variables: Variable;
   packed_variables: [ubyte];
 }

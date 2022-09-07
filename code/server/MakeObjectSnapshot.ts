@@ -1,4 +1,4 @@
-import { type Builder, GameObject, Transform } from "../t-h-n-k";
+import { type Builder, GameObject, ObjState } from "../t-h-n-k";
 import { packVariable } from "../VariablePacker";
 
 export const makeObjectSnapshot = (
@@ -9,30 +9,30 @@ export const makeObjectSnapshot = (
     ? builder.createSharedString(obj.getString())
     : null;
 
-  Transform.startTransform(builder);
+  ObjState.startObjState(builder);
 
-  Transform.addX(builder, obj.getX());
-  Transform.addY(builder, obj.getY());
-  Transform.addHeight(builder, obj.getHeight());
-  Transform.addWidth(builder, obj.getWidth());
-  Transform.addAngle(builder, obj.getAngle());
+  ObjState.addX(builder, obj.getX());
+  ObjState.addY(builder, obj.getY());
+  ObjState.addHeight(builder, obj.getHeight());
+  ObjState.addWidth(builder, obj.getWidth());
+  ObjState.addAngle(builder, obj.getAngle());
 
   // TODO Remove when optional scalars are fixed
   //┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅
-  if (obj.getX() === 0) Transform.addSetXTo0(builder, true);
-  if (obj.getY() === 0) Transform.addSetYTo0(builder, true);
-  if (obj.getHeight() === 0) Transform.addSetHeightTo0(builder, true);
-  if (obj.getWidth() === 0) Transform.addSetWidthTo0(builder, true);
-  if (obj.getWidth() === 0) Transform.addSetAngleTo0(builder, true);
+  if (obj.getX() === 0) ObjState.addSetXTo0(builder, true);
+  if (obj.getY() === 0) ObjState.addSetYTo0(builder, true);
+  if (obj.getHeight() === 0) ObjState.addSetHeightTo0(builder, true);
+  if (obj.getWidth() === 0) ObjState.addSetWidthTo0(builder, true);
+  if (obj.getWidth() === 0) ObjState.addSetAngleTo0(builder, true);
   //┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅
 
   if (obj.getZOrder() <= 65_535) {
-    Transform.addZOrder(
+    ObjState.addZOrder(
       builder,
       obj.getZOrder() + 1 // TODO: Remove 1 offset once optional scalars are fixed
     );
   } else {
-    Transform.addBigZOrder(
+    ObjState.addBigZOrder(
       builder,
       obj.getZOrder() + 1 // TODO: Remove 1 offset once optional scalars are fixed
     );
@@ -40,26 +40,26 @@ export const makeObjectSnapshot = (
 
   // TODO: Convert to boolean once optional scalars are fixed
   //┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅
-  Transform.addVisible(builder, obj.isHidden() ? 1 : 2);
-  if (obj.isFlippedX) Transform.addFlippedX(builder, obj.isFlippedX() ? 1 : 2);
-  if (obj.isFlippedY) Transform.addFlippedY(builder, obj.isFlippedY() ? 1 : 2);
+  ObjState.addVisible(builder, obj.isHidden() ? 1 : 2);
+  if (obj.isFlippedX) ObjState.addFlippedX(builder, obj.isFlippedX() ? 1 : 2);
+  if (obj.isFlippedY) ObjState.addFlippedY(builder, obj.isFlippedY() ? 1 : 2);
   //┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅
 
   if (obj.getOpacity) {
-    if (obj.getOpacity() !== 0) Transform.addOpacity(builder, obj.getOpacity());
-    else Transform.addSetOpacityTo0(builder, true); // TODO Remove when optional scalars are fixed
+    if (obj.getOpacity() !== 0) ObjState.addOpacity(builder, obj.getOpacity());
+    else ObjState.addSetOpacityTo0(builder, true); // TODO Remove when optional scalars are fixed
   }
 
   if (obj.getAnimation) {
-    Transform.addAnimation(
+    ObjState.addAnimation(
       builder,
       obj.getAnimation() + 1 // TODO: Remove 1 offset once optional scalars are fixed
     );
   }
 
-  if (textOffset) Transform.addText(builder, textOffset);
+  if (textOffset) ObjState.addText(builder, textOffset);
 
-  const transformOffset = Transform.endTransform(builder);
+  const objStateOffset = ObjState.endObjState(builder);
 
   const { stateVariable } = obj;
   const variableOffset =
@@ -75,7 +75,7 @@ export const makeObjectSnapshot = (
   GameObject.startGameObject(builder);
   GameObject.addId(builder, obj.thnkID);
   GameObject.addName(builder, name);
-  GameObject.addTransform(builder, transformOffset);
+  GameObject.addObjState(builder, objStateOffset);
   if (variableOffset) GameObject.addPackedVariables(builder, variableOffset);
   return GameObject.endGameObject(builder);
 };

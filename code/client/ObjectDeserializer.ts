@@ -6,32 +6,32 @@ export const deserializeObject = (
   gameObject: GameObject,
   obj: gdjs.RuntimeObject
 ) => {
-  const transform = gameObject.transform();
-  if (transform) {
-    const x = transform.x();
+  const objState = gameObject.objState();
+  if (objState) {
+    const x = objState.x();
     if (x !== null) obj.setX(x);
 
-    const y = transform.y();
+    const y = objState.y();
     if (y !== null) obj.setY(y);
 
-    const height = transform.height();
+    const height = objState.height();
     if (height !== null) obj.setHeight(height);
 
-    const width = transform.width();
+    const width = objState.width();
     if (width !== null) obj.setWidth(width);
 
-    const angle = transform.angle();
+    const angle = objState.angle();
     if (angle !== null) obj.setAngle(angle);
 
     // prettier-ignore
     {
       // TODO Remove once optional scalars are fixed
       //┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅//╶┐
-      if (transform.setXTo0()) obj.setX(0);           // │
-      if (transform.setYTo0()) obj.setY(0);           // │
-      if (transform.setHeightTo0()) obj.setHeight(0); // │
-      if (transform.setWidthTo0()) obj.setWidth(0);   // │
-      if (transform.setAngleTo0()) obj.setAngle(0);   // │
+      if (objState.setXTo0()) obj.setX(0);           // │
+      if (objState.setYTo0()) obj.setY(0);           // │
+      if (objState.setHeightTo0()) obj.setHeight(0); // │
+      if (objState.setWidthTo0()) obj.setWidth(0);   // │
+      if (objState.setAngleTo0()) obj.setAngle(0);   // │
       //┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅//╶┘
     }
 
@@ -39,31 +39,31 @@ export const deserializeObject = (
     {
       // TODO Use a boolean once it becomes possible
       //┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅//╶┐
-      const visibility = transform.visible();                        // │
+      const visibility = objState.visible();                        // │
       if (visibility !== null) obj.hide(visibility === 1);           // │
                                                                      // │
-      const flippedX = transform.flippedX();                         // │
+      const flippedX = objState.flippedX();                         // │
       if (flippedX !== null && obj.flipX) obj.flipX(flippedX === 1); // │
                                                                      // │
-      const flippedY = transform.flippedY();                         // │
+      const flippedY = objState.flippedY();                         // │
       if (flippedY !== null && obj.flipY) obj.flipY(flippedY === 1); // │
       //┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅//╶┘
     }
 
-    const zOrder = transform.zOrder() ?? transform.bigZOrder();
+    const zOrder = objState.zOrder() ?? objState.bigZOrder();
     if (zOrder !== null) obj.setZOrder(zOrder - 1); // TODO Remove
 
-    const opacity = transform.opacity();
+    const opacity = objState.opacity();
     if (obj.setOpacity) {
       if (opacity !== null) obj.setOpacity(opacity);
       // TODO Remove once optional scalars are fixed
-      if (transform.setOpacityTo0()) obj.setOpacity(0);
+      if (objState.setOpacityTo0()) obj.setOpacity(0);
     }
 
-    const animation = transform.animation();
+    const animation = objState.animation();
     if (animation !== null && obj.setAnimation) obj.setAnimation(animation - 1);
 
-    const text = transform.text();
+    const text = objState.text();
     if (text !== null && obj.setString) obj.setString(text);
   }
 
