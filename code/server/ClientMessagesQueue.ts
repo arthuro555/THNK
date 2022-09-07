@@ -50,7 +50,7 @@ export const popMessage = (name: string, extraData: gdjs.Variable) => {
 };
 
 export const popConnection = (runtimeScene: gdjs.RuntimeScene) =>
-  !!runtimeScene.thnkServer?.popConnection();
+  !!runtimeScene.thnkServer?.playerManager.popConnection();
 
 export const popDisconnection = (runtimeScene: gdjs.RuntimeScene) =>
-  !!runtimeScene.thnkServer?.popDisconnection();
+  !!runtimeScene.thnkServer?.playerManager.popDisconnection();

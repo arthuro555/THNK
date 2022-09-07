@@ -23,7 +23,7 @@ const runServerTickPreEvent = (runtimeScene: gdjs.RuntimeScene) => {
       switch (messageType) {
         case ClientMessageContent.ConnectionRequestMessage:
           sendConnectionStartMessageTo(userID, adapter, runtimeScene);
-          runtimeScene.thnkServer.addConnectionToTheQueue(userID);
+          runtimeScene.thnkServer.playerManager._onConnect(userID);
           continue;
         case ClientMessageContent.ClientInputMessage:
           const clientMessage = message.content(
@@ -46,7 +46,7 @@ const runServerTickPreEvent = (runtimeScene: gdjs.RuntimeScene) => {
   }
 
   for (const disconnectedUser of adapter.getDisconnectedUsers())
-    runtimeScene.thnkServer.addDisconnectionToTheQueue(disconnectedUser);
+    runtimeScene.thnkServer.playerManager._onDisconnect(disconnectedUser);
   adapter.getDisconnectedUsers().length = 0;
 
   const timeManager = runtimeScene.getTimeManager();
@@ -93,7 +93,7 @@ const onSceneSwitched = (newRuntimeScene: gdjs.RuntimeScene) => {
 
     // Trigger a new connection for every user so that the scene is properly initialized for each player
     for (const user of adapter.getConnectedUsers())
-      newRuntimeScene.thnkServer!.addConnectionToTheQueue(user);
+      newRuntimeScene.thnkServer!.playerManager._onConnect(user);
 
     // Tell everyone to switch to the scene as that is more efficient than a full snapshot 😎
     sendSceneSwitchMessageToAll(adapter, newRuntimeScene.getName(), isPause);
