@@ -1,6 +1,7 @@
 /// <reference path="../global.d.ts"/>
 import { geckos, type ClientChannel } from "@geckos.io/client";
-const logger = new gdjs.Logger("THNK - P2P Adapter");
+
+const logger = new gdjs.Logger("THNK - Geckos.io Adapter");
 
 export class GeckosClientAdapter extends THNK.ClientAdapter {
   ip: string;
