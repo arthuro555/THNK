@@ -17,6 +17,8 @@
     "build": "npm run build:clean && npm run generate-protocol && npm run build:thnk && npm run build:adapters && npm run build:extensions"
   },
   "devDependencies": {
+    "@geckos.io/client": "^2.2.3",
+    "@geckos.io/server": "^2.2.3",
     "@types/jest": "^28.1.6",
     "@types/node": "^18.0.3",
     "@types/pako": "^2.0.0",
