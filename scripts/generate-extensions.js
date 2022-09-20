@@ -10,8 +10,8 @@ const fs = require("fs");
     fs.readFileSync(extensionsPath + "THNK.json").toString()
   );
 
-  thnkExt.eventsFunctions[0].events[0].inlineCode = `// Load THNK library (https://github.com/arthuro555/THNK)
-window.${thnkCode.slice(`"use strict";var `.length)}`;
+  thnkExt.eventsFunctions[0].events[0].inlineCode = `}// Load THNK library (https://github.com/arthuro555/THNK)
+window.${thnkCode.slice(`"use strict";var `.length)}{`;
 
   fs.writeFileSync(
     extensionsPath + "THNK.json",
@@ -33,5 +33,24 @@ window.${thnkCode.slice(`"use strict";var `.length)}`;
   fs.writeFileSync(
     extensionsPath + "THNK_P2P.json",
     JSON.stringify(p2pExt, null, 2)
+  );
+}
+
+{
+  const geckosServerCode = fs
+    .readFileSync(distPath + "geckos-server.js")
+    .toString();
+  /** @type {{eventsFunctions: { name: string, events: { type: string, inlineCode: string }[] }[]}} */
+  const geckosServerExt = JSON.parse(
+    fs.readFileSync(extensionsPath + "THNK_GeckosServer.json").toString()
+  );
+
+  geckosServerExt.eventsFunctions[0].events[0].inlineCode =
+    `// Load THNK Geckos Server Adapter (https://github.com/arthuro555/THNK)\n` +
+    geckosServerCode;
+
+  fs.writeFileSync(
+    extensionsPath + "THNK_GeckosServer.json",
+    JSON.stringify(geckosServerExt, null, 2)
   );
 }

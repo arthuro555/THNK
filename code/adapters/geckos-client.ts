@@ -1,9 +1,10 @@
 /// <reference path="../global.d.ts"/>
 import { geckos, type ClientChannel } from "@geckos.io/client";
-
 const logger = new gdjs.Logger("THNK - Geckos.io Adapter");
 
-export class GeckosClientAdapter extends THNK.ClientAdapter {
+THNK.GeckosClientAdapter = class GeckosClientAdapter extends (
+  THNK.ClientAdapter
+) {
   ip: string;
   port: number;
   connection: ClientChannel | null = null;
@@ -41,4 +42,4 @@ export class GeckosClientAdapter extends THNK.ClientAdapter {
       message.buffer.slice(message.buffer.byteLength - message.byteLength)
     );
   }
-}
+};

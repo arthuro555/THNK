@@ -14,7 +14,7 @@ export const startServer = async (
     // The adapter is responsible for initiating a server on which we can listen to Uint8Arrays from clients.
     // Once the promise resolves, we assume we are all set to start receiving clients, and begin listening to
     // incoming messages.
-    await adapter.prepare();
+    await adapter.prepare(runtimeScene);
   } catch (e) {
     logger.error("Adapter crashed while starting server! Error: ", e);
     // Abort server startup

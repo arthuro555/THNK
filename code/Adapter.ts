@@ -46,7 +46,7 @@ export abstract class ClientAdapter {
 
 export abstract class ServerAdapter {
   /** Ensure returns a promise that resolves once fully connected to a server. */
-  abstract prepare(): Promise<void>;
+  abstract prepare(runtimeScene: gdjs.RuntimeScene): Promise<void>;
   /** Called when the adapter is no longer needed to gracefully shutdown. */
   abstract close(): void;
 
