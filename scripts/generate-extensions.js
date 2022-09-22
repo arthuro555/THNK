@@ -54,3 +54,22 @@ window.${thnkCode.slice(`"use strict";var `.length)}{`;
     JSON.stringify(geckosServerExt, null, 2)
   );
 }
+
+{
+  const geckosClientCode = fs
+    .readFileSync(distPath + "geckos-client.global.js")
+    .toString();
+  /** @type {{eventsFunctions: { name: string, events: { type: string, inlineCode: string }[] }[]}} */
+  const geckosClientExt = JSON.parse(
+    fs.readFileSync(extensionsPath + "THNK_GeckosClient.json").toString()
+  );
+
+  geckosClientExt.eventsFunctions[0].events[0].inlineCode =
+    `// Load THNK Geckos Client Adapter (https://github.com/arthuro555/THNK)\n` +
+    geckosClientCode;
+
+  fs.writeFileSync(
+    extensionsPath + "THNK_GeckosClient.json",
+    JSON.stringify(geckosClientExt, null, 2)
+  );
+}
