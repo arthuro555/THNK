@@ -1,0 +1,14 @@
+{
+  "title": {
+    "message": "Blog | THNK",
+    "description": "The title for the blog used in SEO"
+  },
+  "description": {
+    "message": "Le blog du dévelopment de THNK - Le framework de création de jeux multijoueur pour tous.",
+    "description": "The description for the blog used in SEO"
+  },
+  "sidebar.title": {
+    "message": "Posts récents",
+    "description": "The label for the left sidebar"
+  }
+}
