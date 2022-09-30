@@ -13,7 +13,6 @@ export const setupSceneAsServer = (
   const syncedVariable = SyncedVariable.setupSyncedVariable(
     runtimeScene.getVariables()
   );
-  runtimeScene.getTimeManager().addTimer("__THNK_Ticker");
   runtimeScene.thnkServer = new THNKServerContext(adapter, syncedVariable);
 
   // Unless "dedicated" is switched on, a server is always also a client to itself.

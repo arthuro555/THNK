@@ -15,15 +15,13 @@ const getSomeNums = () =>
 THNK.GeckosServerAdapter = class GeckosServerAdapter extends (
   THNK.ServerAdapter
 ) {
-  ip: string;
   port: number;
   id = 0;
   server: GeckosServer | null = null;
   httpServer: import("http").Server | null = null;
   channels = new Map<string, ServerChannel>();
-  constructor(ip: string, port: number) {
+  constructor(port: number) {
     super();
-    this.ip = ip;
     this.port = port;
   }
 

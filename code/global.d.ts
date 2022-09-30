@@ -4,6 +4,6 @@ export class GeckosClientAdapter extends ClientAdapter {
   constructor(ip: string, port: number) {}
 }
 export class GeckosServerAdapter extends ServerAdapter {
-  constructor(ip: string, port: number) {}
+  constructor(port: number) {}
 }
 export as namespace THNK;

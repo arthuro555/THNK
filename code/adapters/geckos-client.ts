@@ -10,7 +10,7 @@ THNK.GeckosClientAdapter = class GeckosClientAdapter extends (
   connection: ClientChannel | null = null;
   constructor(ip: string, port: number) {
     super();
-    this.ip = ip;
+    this.ip = `http://${ip}`;
     this.port = port;
   }
 
