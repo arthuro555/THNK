@@ -21,11 +21,16 @@ The P2P adapter simply allows a THNK game to be hosted onto your P2P connection,
 
 To use it, you need to first connect your game to a broker server. It is up to you wehter to use the default one or a custom one - THNK works with either. Then, you can use the actions to host a server. When hosting the server, give a way to copy your P2P ID, for example with the text input object. Finally, you can use the connection action to connect as a client to a P2P server using the server's ID.
 
+## Geckos.io Adapter
+
+Geckos.io is a networking solution that allows to establish direct connections between a server and a client. Those connections are fast and secure UDP connections, perfect for all kinds of games. It is backed by the same tech as P2P: WebRTC.
+
+This adapter is ideal for architectures where you connect to "The Server™" (e.g. Minecraft-like multiplayer) and not directly a friend to play (e.g. Among Us-like multiplayer).
+
 ## Planned Adapters
 
 Here is the list of adapters planned for the future:
 
-- WebSockets
 - Split screen multiplayer
 - THNK Cloud
 
