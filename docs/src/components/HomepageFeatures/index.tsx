@@ -29,9 +29,8 @@ const NetworkingOptionsList: NetworkingOption[] = [
     Svg: require("@site/static/img/LAN.svg").default,
     description: (
       <Translate>
-        You can easily make LAN games! With the WebSocket adapter (comming
-        soon!), start a server on your machine and let other connect to it via
-        your local IP
+        You can easily make LAN games! With the Geckos.io adapter, start a
+        server on your machine and let other connect to it via your local IP
       </Translate>
     ),
   },
@@ -66,7 +65,9 @@ export default function NetworkingOptions(): JSX.Element {
     <section className={styles.features}>
       <div className="container">
         <div className="text--center">
-          <h1><Translate>Create all kinds of multiplayer experiences!</Translate></h1>
+          <h1>
+            <Translate>Create all kinds of multiplayer experiences!</Translate>
+          </h1>
         </div>
         <br />
         <div className="row">
