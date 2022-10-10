@@ -8,6 +8,6 @@ Have you started to create a game without THNK, and want to move to it? Here is 
 
 :::note
 
-The guide has not been written yet, lol
+This page is still a WIP 👨‍🏭
 
 :::
