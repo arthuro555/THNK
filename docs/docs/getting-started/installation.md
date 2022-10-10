@@ -1,5 +1,8 @@
 ---
 sidebar_position: 1
+description: To start off the getting started tutorial, we take a look at how to install THNK here.
+keywords:
+  [get started, install, download, adapter, THNK, p2p, multiplayer, GDevelop]
 ---
 
 # Installing THNK
@@ -12,7 +15,7 @@ THNK is currently in early stages. It is still usable and a much better experien
 
 ## Pre-requisites
 
-THNK is a GDevelop framework, so you will need to have GDevelop downloaded. It is recommended to have some base GDevelop knowledge before getting started with THNK. [You can find resources to learn GDevelop on the GDevelop wiki.](https://wiki.gdevelop.io/gdevelop5/tutorials/basic-game-making-concepts)
+THNK is a GDevelop framework, so you will need to have GDevelop downloaded. It is recommended to have some base GDevelop knowledge before getting started with THNK. [You can find resources to learn GDevelop on the GDevelop wiki](https://wiki.gdevelop.io/gdevelop5/tutorials/basic-game-making-concepts).
 
 ## Installation
 
@@ -26,6 +29,6 @@ To import it, go into the Project Manager, click on Functions/Behaviors, select 
 
 ![GIF showing how to install THNK](./install-gifs/install-thnk.gif)
 
-## Install an adapter
+## (Optional) Install an adapter
 
-THNK by itself doesn't provide much value, make sure you follow the same steps
+THNK by itself doesn't let you make a multiplayer game. You can develop your game for single-player fine using the THNK framework features, but to actually get multiple players playing together, you need an adapter extension. An adapter extension tells THNK a way to make your games communicate together. Adapters come in the form of other GDevelop extensions, you can find them and download them on the THNK download page. [Learn more about adapters](/docs/concepts/adapters.md)

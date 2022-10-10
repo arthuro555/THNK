@@ -48,6 +48,8 @@ const config = {
     locales: ["en"],
   },
 
+  plugins: [require.resolve("docusaurus-plugin-image-zoom")],
+
   presets: [
     [
       "classic",
@@ -79,6 +81,13 @@ const config = {
         defaultMode: "dark",
       },
       image: "img/THNK-thumbnail.png",
+      metadata: [
+        {
+          name: "keywords",
+          content:
+            "gdevelop, p2p, multiplayer, thnk, network, docs, documentation, manual, gd, framework, online, players, game, gamer",
+        },
+      ],
       announcementBar: {
         id: "preview",
         content:
@@ -125,9 +134,9 @@ const config = {
               },
               {
                 label: "Getting started",
-                to: "/docs/category/getting-started/",
+                to: "/docs/getting-started/",
               },
-              
+
               {
                 label: "Migrating to THNK",
                 to: "/docs/migrating",
@@ -145,6 +154,12 @@ const config = {
         theme: lightCodeTheme,
         darkTheme: darkCodeTheme,
       },
+      zoom: {
+        background: {
+          light: 'rgb(255, 255, 255)',
+          dark: 'rgb(50, 50, 50)'
+        },
+      }
     }),
 };
 

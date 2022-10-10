@@ -1,5 +1,8 @@
 ---
 sidebar_position: 2
+description: In this second part of the getting started tutorial, we take a look at how to make a GDevelop scene the THNK way.
+keywords:
+  [get started, scene, setup, create, rules, THNK, p2p, multiplayer, GDevelop]
 ---
 
 # Creating a THNK scene

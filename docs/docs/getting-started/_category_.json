@@ -1,8 +1,9 @@
 {
-  "label": "Getting started",
+  "label": "Getting started - Platformer tutorial",
   "position": 2,
   "link": {
     "type": "generated-index",
-    "description": "A thorough introduction to THNK. This is the recommended way to learn THNK."
+    "slug": "getting-started",
+    "description": "A thorough introduction to THNK, where we build a platformer game with THNK. This is the recommended way to learn THNK."
   }
 }
