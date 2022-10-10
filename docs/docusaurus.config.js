@@ -134,7 +134,7 @@ const config = {
               },
               {
                 label: "Getting started",
-                to: "/docs/category/getting-started/",
+                to: "/docs/getting-started/",
               },
 
               {

@@ -88,4 +88,4 @@ It is planned to add the possibility to leverage the optimized binary snapshotti
 
 ## How do I get started?
 
-Are you convinced yet? If so, [continue to the next page to learn how to get started using THNK.](/docs/category/getting-started/)
+Are you convinced yet? If so, [continue to the next page to learn how to get started using THNK.](/docs/getting-started/)
