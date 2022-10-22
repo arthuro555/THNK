@@ -20,6 +20,7 @@ THNK.GeckosServerAdapter = class GeckosServerAdapter extends (
   server: GeckosServer | null = null;
   httpServer: import("http").Server | null = null;
   channels = new Map<string, ServerChannel>();
+  serverID = `${getSomeNums()}-server-${getSomeNums()}`;
   constructor(port: number) {
     super();
     this.port = port;
@@ -86,11 +87,15 @@ THNK.GeckosServerAdapter = class GeckosServerAdapter extends (
       // yet not easily guessable (as that can open up
       // an attack vector in some cases)
       const id = `${getSomeNums()}-${this.id++}-${getSomeNums()}`;
+
       this.onConnection(id);
       this.channels.set(id, channel);
 
       channel.onRaw((message) => this.onMessage(id, message as Uint8Array));
-      channel.onDisconnect(() => this.onDisconnection(id));
+      channel.onDisconnect(() => {
+        this.onDisconnection(id);
+        this.channels.delete(id);
+      });
     });
 
     this.httpServer = (
@@ -134,6 +139,6 @@ THNK.GeckosServerAdapter = class GeckosServerAdapter extends (
   }
 
   getServerID(): string {
-    return `${getSomeNums()}-server-${getSomeNums()}`;
+    return this.serverID;
   }
 };

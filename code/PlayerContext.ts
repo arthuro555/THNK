@@ -16,13 +16,22 @@ export const markObjectAsOwned = (object: gdjs.RuntimeObject) => {
   lists.addObject(object.getName(), object);
 };
 
-export const pickOwnedObjects = (objectsListsHashtable: ObjectsLists) => {
+export const pickOwnedObjects = (
+  objectsListsHashtable: ObjectsLists
+): boolean => {
   const playerLists = playerObjectsLists.get(currentPlayerID);
-  if (!playerLists) return;
+  if (!playerLists) {
+    // No objects lists exist for that player, don't pick any objects and return false.
+    for (const objectList of Object.values(objectsListsHashtable.items))
+      objectList.length = 0;
+    return false;
+  }
 
   for (const [objectName, objectList] of Object.entries(
     objectsListsHashtable.items
   )) {
     gdjs.copyArray(playerLists.getObjects(objectName), objectList);
   }
+
+  return true;
 };
