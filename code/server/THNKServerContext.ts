@@ -1,7 +1,7 @@
-import type { ServerAdapter } from "../Adapter";
-import { PlayerManager } from "./PlayersManager";
-import { ServerObjectsRegistery } from "./ServerObjectsRegistery";
-import type { SyncedVariable } from "./SyncedVariable";
+import type { ServerAdapter } from "adapters/Adapter";
+import { PlayerManager } from "server/PlayersManager";
+import { ServerObjectsRegistery } from "server/ServerObjectsRegistery";
+import type { SyncedVariable } from "server/SyncedVariable";
 
 export class THNKServerContext {
   /** The adapter used by the scene to get new messages from the client. */

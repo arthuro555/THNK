@@ -1,4 +1,4 @@
-/// <reference path="../global.d.ts"/>
+/// <reference path="../types/global.d.ts"/>
 const logger = new gdjs.Logger("THNK - P2P Adapter");
 namespace THNK {
   class P2PConnectionAwaiter extends gdjs.AsyncTask {

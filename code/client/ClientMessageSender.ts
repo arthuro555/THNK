@@ -1,4 +1,4 @@
-import { type ClientAdapter } from "../Adapter";
+import { type ClientAdapter } from "../adapters/Adapter";
 import {
   Builder,
   ClientInputMessage,
@@ -6,7 +6,7 @@ import {
   ClientMessageContent,
   ConnectionRequestMessage,
 } from "../t-h-n-k";
-import { packVariable } from "../VariablePacker";
+import { packVariable } from "../utils/VariablePacker";
 
 export const sendConnectionRequest = (
   adapter: ClientAdapter,

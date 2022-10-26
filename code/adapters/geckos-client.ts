@@ -1,4 +1,4 @@
-/// <reference path="../global.d.ts"/>
+/// <reference path="../types/global.d.ts"/>
 import { geckos, type ClientChannel } from "@geckos.io/client";
 const logger = new gdjs.Logger("THNK - Geckos.io Adapter");
 

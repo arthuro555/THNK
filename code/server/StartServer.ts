@@ -1,5 +1,5 @@
-import { type ServerAdapter } from "../Adapter";
-import { setupSceneAsServer } from "./SetupServerScene";
+import { type ServerAdapter } from "adapters/Adapter";
+import { setupSceneAsServer } from "server/SetupServerScene";
 
 const logger = new gdjs.Logger("THNK - Server");
 /**

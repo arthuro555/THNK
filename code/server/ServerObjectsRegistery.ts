@@ -1,7 +1,7 @@
-import type { Builder } from "../t-h-n-k";
-import { makeObjectSnapshot } from "./MakeObjectSnapshot";
-import { diffObject } from "./ObjectDiffer";
-import { SyncedVariable } from "./SyncedVariable";
+import type { Builder } from "t-h-n-k";
+import { makeObjectSnapshot } from "server/MakeObjectSnapshot";
+import { diffObject } from "server/ObjectDiffer";
+import { SyncedVariable } from "server/SyncedVariable";
 
 const logger = new gdjs.Logger("THNK - Objects replication");
 
@@ -30,6 +30,10 @@ export class ServerObjectsRegistery {
   };
 
   private readonly registeredObjects = new Map<number, gdjs.RuntimeObject>();
+
+  forEach(callback: (obj: gdjs.RuntimeObject) => void) {
+    for (const obj of this.registeredObjects.values()) callback(obj);
+  }
 
   registerObject(obj: gdjs.RuntimeObject) {
     obj.thnkID = this.generateNewID();

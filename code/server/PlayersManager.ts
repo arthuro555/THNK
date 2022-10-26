@@ -1,5 +1,5 @@
-import { switchPlayerContext } from "../PlayerContext";
-import { SyncedVariable } from "./SyncedVariable";
+import { switchPlayerContext } from "server/PlayerContext";
+import { SyncedVariable } from "server/SyncedVariable";
 
 class Player {
   variable = new SyncedVariable();

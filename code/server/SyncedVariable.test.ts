@@ -1,7 +1,7 @@
 import "../tests-utils/gdjs-mock";
-import { SyncedVariable } from "./SyncedVariable";
-import { deserializeVariable } from "../client/VariableDeserializer";
-import { Variable, Builder, ByteBuffer } from "../t-h-n-k";
+import { SyncedVariable } from "server/SyncedVariable";
+import { deserializeVariable } from "client/VariableDeserializer";
+import { Variable, Builder, ByteBuffer } from "t-h-n-k";
 
 const serializeVar = (variable: SyncedVariable) => {
   const b = new Builder(512);

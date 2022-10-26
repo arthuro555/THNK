@@ -1,7 +1,7 @@
-import type { ServerAdapter } from "../Adapter";
-import { isDedicated } from "../Settings";
-import { SyncedVariable } from "./SyncedVariable";
-import { THNKServerContext } from "./THNKServerContext";
+import type { ServerAdapter } from "adapters/Adapter";
+import { isDedicated } from "utils/Settings";
+import { SyncedVariable } from "server/SyncedVariable";
+import { THNKServerContext } from "server/THNKServerContext";
 
 /**
  * Sets up a scene's server context, so that it may act as a THNK server.

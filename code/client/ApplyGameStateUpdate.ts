@@ -1,6 +1,6 @@
-import { GameStateDiff } from "../t-h-n-k";
-import { deserializeObject } from "./ObjectDeserializer";
-import { deserializeVariable } from "./VariableDeserializer";
+import { GameStateDiff } from "t-h-n-k";
+import { deserializeObject } from "client/ObjectDeserializer";
+import { deserializeVariable } from "client/VariableDeserializer";
 
 export const applyGameStateUpdateToScene = (
   gameState: GameStateDiff,

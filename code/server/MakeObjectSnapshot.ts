@@ -1,5 +1,5 @@
-import { type Builder, GameObject, ObjState } from "../t-h-n-k";
-import { packVariable } from "../VariablePacker";
+import { type Builder, GameObject, ObjState } from "t-h-n-k";
+import { packVariable } from "utils/VariablePacker";
 
 export const makeObjectSnapshot = (
   builder: Builder,

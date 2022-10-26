@@ -3,9 +3,9 @@ import {
   ResumePreviousSceneMessage,
   SceneSwitchMessage,
   ServerMessageContent,
-} from "../t-h-n-k";
-import { applyGameStateSnapshotToScene } from "./ApplyGameStateSnapshot";
-import { applyGameStateUpdateToScene } from "./ApplyGameStateUpdate";
+} from "t-h-n-k";
+import { applyGameStateSnapshotToScene } from "client/ApplyGameStateSnapshot";
+import { applyGameStateUpdateToScene } from "client/ApplyGameStateUpdate";
 
 const logger = new gdjs.Logger("THNK - Client");
 const runClientTickPreEvent = (runtimeScene: gdjs.RuntimeScene) => {

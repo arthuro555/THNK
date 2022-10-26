@@ -1,14 +1,14 @@
-import { ClientInputMessage, ClientMessageContent } from "../t-h-n-k";
+import { ClientInputMessage, ClientMessageContent } from "t-h-n-k";
 import {
   sendGameStateUpdateMessageToAll,
   sendConnectionStartMessageTo,
   sendSceneSwitchMessageToAll,
   sendSceneResumeMessageToSome,
-} from "./ServerMessageSender";
-import { addSerializedMessageToTheQueue } from "./ClientMessagesQueue";
-import { getTickRate } from "../Settings";
-import { setupSceneAsServer } from "./SetupServerScene";
-import { ServerAdapter } from "../Adapter";
+} from "server/ServerMessageSender";
+import { addSerializedMessageToTheQueue } from "server/ClientMessagesQueue";
+import { getTickRate } from "utils/Settings";
+import { setupSceneAsServer } from "server/SetupServerScene";
+import { ServerAdapter } from "adapters/Adapter";
 
 const logger = new gdjs.Logger("THNK - Server");
 let timer = 0;

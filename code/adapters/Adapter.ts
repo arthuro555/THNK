@@ -1,10 +1,10 @@
-import { setConnectionState } from "./client/ClientConnectionState";
+import { setConnectionState } from "client/ClientConnectionState";
 import {
   ClientMessage,
   ServerMessage,
   ByteBuffer,
   type Builder,
-} from "./t-h-n-k";
+} from "t-h-n-k";
 import { inflateRaw, deflateRaw } from "pako";
 
 const decompress = (data: Uint8Array): Uint8Array =>

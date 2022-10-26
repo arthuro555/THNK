@@ -1,4 +1,4 @@
-/// <reference path="../global.d.ts"/>
+/// <reference path="../types/global.d.ts"/>
 import type {
   geckos as GeckosType,
   GeckosServer,

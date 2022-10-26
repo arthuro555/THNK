@@ -1,6 +1,5 @@
-import { Builder, GameStateSnapshot } from "../t-h-n-k";
-import { CreatedObject } from "../t-h-n-k/created-object";
-import { packVariable } from "../VariablePacker";
+import { Builder, GameStateSnapshot } from "t-h-n-k";
+import { packVariable } from "utils/VariablePacker";
 
 export const makeSceneSnapshot = (
   builder: Builder,

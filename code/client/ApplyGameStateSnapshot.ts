@@ -1,6 +1,6 @@
-import { GameStateSnapshot } from "../t-h-n-k";
-import { deserializeObject } from "./ObjectDeserializer";
-import { unpackVariable } from "../VariablePacker";
+import { GameStateSnapshot } from "t-h-n-k";
+import { deserializeObject } from "client/ObjectDeserializer";
+import { unpackVariable } from "utils/VariablePacker";
 
 export const applyGameStateSnapshotToScene = (
   gameState: GameStateSnapshot,

@@ -1,4 +1,4 @@
-import { VariableTypes, CollectionOperationType, Variable } from "../t-h-n-k";
+import { VariableTypes, CollectionOperationType, Variable } from "t-h-n-k";
 
 export const deserializeVariable = (
   variable: gdjs.Variable,

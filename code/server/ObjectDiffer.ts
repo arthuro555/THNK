@@ -1,4 +1,4 @@
-import { type Builder, GameObject, ObjState } from "../t-h-n-k";
+import { type Builder, GameObject, ObjState } from "t-h-n-k";
 
 export const diffObject = (
   builder: Builder,

@@ -1,5 +1,4 @@
-import { Builder, GameStateDiff } from "../t-h-n-k";
-import { CreatedObject } from "../t-h-n-k/created-object";
+import { Builder, GameStateDiff, CreatedObject } from "t-h-n-k";
 
 export const diffScene = (
   builder: Builder,

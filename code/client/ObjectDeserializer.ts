@@ -1,6 +1,6 @@
-import { GameObject } from "../t-h-n-k";
-import { unpackVariable } from "../VariablePacker";
-import { deserializeVariable } from "./VariableDeserializer";
+import { GameObject } from "t-h-n-k";
+import { unpackVariable } from "utils/VariablePacker";
+import { deserializeVariable } from "client/VariableDeserializer";
 
 export const deserializeObject = (
   gameObject: GameObject,

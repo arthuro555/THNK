@@ -1,5 +1,5 @@
-import type { ClientAdapter } from "../Adapter";
-import { ClientObjectsRegistery } from "./ClientObjectsRegistery";
+import type { ClientAdapter } from "adapters/Adapter";
+import { ClientObjectsRegistery } from "client/ClientObjectsRegistery";
 
 export class THNKClientContext {
   readonly adapter: ClientAdapter;

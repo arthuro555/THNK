@@ -1,5 +1,5 @@
-import { switchPlayerContext } from "../PlayerContext";
-import { unpackVariable } from "../VariablePacker";
+import { switchPlayerContext } from "server/PlayerContext";
+import { unpackVariable } from "utils/VariablePacker";
 
 interface Message {
   initiatorUserID: string;

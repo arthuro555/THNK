@@ -1,10 +1,9 @@
-import { type ClientAdapter } from "../Adapter";
-import { ServerMessage, ServerMessageContent } from "../t-h-n-k";
-import { ConnectionStartMessage } from "../t-h-n-k/connection-start-message";
-import { applyGameStateSnapshotToScene } from "./ApplyGameStateSnapshot";
-import { sendConnectionRequest } from "./ClientMessageSender";
-import { setConnectionState } from "./ClientConnectionState";
-import { THNKClientContext } from "./THNKClientContext";
+import { type ClientAdapter } from "adapters/Adapter";
+import { ServerMessage, ServerMessageContent, ConnectionStartMessage } from "t-h-n-k";
+import { applyGameStateSnapshotToScene } from "client/ApplyGameStateSnapshot";
+import { sendConnectionRequest } from "client/ClientMessageSender";
+import { setConnectionState } from "client/ClientConnectionState";
+import { THNKClientContext } from "client/THNKClientContext";
 
 const logger = new gdjs.Logger("THNK - Client");
 const fail = (reason: string) => {

@@ -1,4 +1,4 @@
-import type { ServerAdapter } from "../Adapter";
+import type { ServerAdapter } from "adapters/Adapter";
 import {
   Builder,
   GameStateUpdateMessage,
@@ -7,9 +7,9 @@ import {
   ConnectionStartMessage,
   SceneSwitchMessage,
   ResumePreviousSceneMessage,
-} from "../t-h-n-k";
-import { makeSceneSnapshot } from "./MakeSceneSnaphsot";
-import { diffScene } from "./SceneDiffer";
+} from "t-h-n-k";
+import { makeSceneSnapshot } from "server/MakeSceneSnaphsot";
+import { diffScene } from "server/SceneDiffer";
 
 export const sendConnectionStartMessageTo = (
   userID: string,

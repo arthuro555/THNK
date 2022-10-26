@@ -1,10 +1,10 @@
 import {
+  Builder,
   Variable,
   CollectionOperation,
   CollectionOperationType,
   VariableTypes,
-} from "../t-h-n-k";
-import type { Builder } from "../t-h-n-k";
+} from "t-h-n-k";
 
 /**
  * A modified {@link gdjs.Variable} that keeps track of all modifications that were made to it.
@@ -308,5 +308,11 @@ export class SyncedVariable extends gdjs.Variable {
     );
     Variable.addOperations(builder, operationsOffset);
     return Variable.endVariable(builder);
+  }
+
+  serializeToBinary() {
+    const builder = new Builder(64);
+    builder.finish(this.serialize(builder));
+    return builder.asUint8Array();
   }
 }

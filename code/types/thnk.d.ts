@@ -1,9 +1,9 @@
-import { ClientAdapter, ServerAdapter } from "./Adapter";
-import { ClientObjectsRegistery } from "./client/ClientObjectsRegistery";
-import { THNKClientContext } from "./client/THNKClientContext";
-import { ServerObjectsRegistery } from "./server/ServerObjectsRegistery";
-import { SyncedVariable } from "./server/SyncedVariable";
-import { THNKServerContext } from "./server/THNKServerContext";
+import { ClientAdapter, ServerAdapter } from "adapters/Adapter";
+import { ClientObjectsRegistery } from "client/ClientObjectsRegistery";
+import { THNKClientContext } from "client/THNKClientContext";
+import { ServerObjectsRegistery } from "server/ServerObjectsRegistery";
+import { SyncedVariable } from "server/SyncedVariable";
+import { THNKServerContext } from "server/THNKServerContext";
 
 declare global {
   namespace gdjs {
