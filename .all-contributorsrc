@@ -1,0 +1,62 @@
+{
+  "projectName": "THNK",
+  "projectOwner": "arthuro555",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commitConvention": "none",
+  "contributors": [
+    {
+      "login": "arthuro555",
+      "name": "Arthur Pacaud",
+      "avatar_url": "https://avatars.githubusercontent.com/u/19349038?v=4",
+      "profile": "https://github.com/arthuro555",
+      "contributions": [
+        "maintenance",
+        "code",
+        "doc",
+        "blog"
+      ]
+    },
+    {
+      "name": "Ko-fi contributors",
+      "avatar_url": "https://storage.ko-fi.com/cdn/brandasset/kofi_s_logo_nolabel.png",
+      "profile": "https://ko-fi.com/arthuro555",
+      "contributions": [
+        "financial"
+      ]
+    },
+    {
+      "login": "MyNameIsRinax",
+      "name": "Rinax",
+      "avatar_url": "https://avatars.githubusercontent.com/u/40387061?v=4",
+      "profile": "https://github.com/MyNameIsRinax",
+      "contributions": [
+        "bug"
+      ]
+    },
+    {
+      "login": "Midhil457",
+      "name": "Leo_Red",
+      "avatar_url": "https://avatars.githubusercontent.com/u/73597906?v=4",
+      "profile": "https://github.com/Midhil457",
+      "contributions": [
+        "design"
+      ]
+    },
+    {
+      "login": "Add00",
+      "name": "Add00",
+      "avatar_url": "https://avatars.githubusercontent.com/u/60050879?v=4",
+      "profile": "https://github.com/Add00",
+      "contributions": [
+        "code"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "linkToUsage": false
+}

@@ -10,6 +10,33 @@ An authoritative multiplayer games framework for the FLOSS engine GDevelop.
 - [💖 Support the project](https://ko-fi.com/arthuro555)
 - [📄 Documentation](https://thnk.arthuro555.com/docs/getting-started/)
 
+## Contributors
+
+Thanks to all the contributors to THNK! Here is the full list of all contribitors of all kinds to the project: 
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+[![All Contributors](https://img.shields.io/badge/all_contributors-5-orange.svg?style=flat-square)](#contributors-)
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tbody>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/arthuro555"><img src="https://avatars.githubusercontent.com/u/19349038?v=4?s=100" width="100px;" alt="Arthur Pacaud"/><br /><sub><b>Arthur Pacaud</b></sub></a><br /><a href="#maintenance-arthuro555" title="Maintenance">🚧</a> <a href="https://github.com/arthuro555/THNK/commits?author=arthuro555" title="Code">💻</a> <a href="https://github.com/arthuro555/THNK/commits?author=arthuro555" title="Documentation">📖</a> <a href="#blog-arthuro555" title="Blogposts">📝</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://ko-fi.com/arthuro555"><img src="https://storage.ko-fi.com/cdn/brandasset/kofi_s_logo_nolabel.png?s=100" width="100px;" alt="Ko-fi contributors"/><br /><sub><b>Ko-fi contributors</b></sub></a><br /><a href="#financial" title="Financial">💵</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/MyNameIsRinax"><img src="https://avatars.githubusercontent.com/u/40387061?v=4?s=100" width="100px;" alt="Rinax"/><br /><sub><b>Rinax</b></sub></a><br /><a href="https://github.com/arthuro555/THNK/issues?q=author%3AMyNameIsRinax" title="Bug reports">🐛</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/Midhil457"><img src="https://avatars.githubusercontent.com/u/73597906?v=4?s=100" width="100px;" alt="Leo_Red"/><br /><sub><b>Leo_Red</b></sub></a><br /><a href="#design-Midhil457" title="Design">🎨</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/Add00"><img src="https://avatars.githubusercontent.com/u/60050879?v=4?s=100" width="100px;" alt="Add00"/><br /><sub><b>Add00</b></sub></a><br /><a href="https://github.com/arthuro555/THNK/commits?author=Add00" title="Code">💻</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
 ## Contributing
 
 ### Installing
