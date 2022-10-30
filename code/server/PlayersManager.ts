@@ -19,6 +19,10 @@ export class PlayerManager {
     this.disconnectionsQueue.push(id);
   }
 
+  alreadyHas(id: string): boolean {
+    return this.players.has(id);
+  }
+
   popConnection() {
     if (this.connectionsQueue.length) {
       switchPlayerContext(this.connectionsQueue.shift()!);

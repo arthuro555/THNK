@@ -22,6 +22,8 @@ const runServerTickPreEvent = (runtimeScene: gdjs.RuntimeScene) => {
       const messageType = message.contentType();
       switch (messageType) {
         case ClientMessageContent.ConnectionRequestMessage:
+          if (runtimeScene.thnkServer.playerManager.alreadyHas(userID))
+            continue;
           sendConnectionStartMessageTo(userID, adapter, runtimeScene);
           runtimeScene.thnkServer.playerManager._onConnect(userID);
           continue;
