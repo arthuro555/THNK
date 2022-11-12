@@ -46,6 +46,15 @@
       "contributions": [
         "design"
       ]
+    },
+    {
+      "login": "Entr0py404",
+      "name": "Tim",
+      "avatar_url": "https://avatars.githubusercontent.com/u/75917656?v=4",
+      "profile": "https://github.com/Entr0py404",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
