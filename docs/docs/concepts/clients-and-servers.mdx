@@ -1,5 +1,5 @@
 ---
-description: Learn everythong about THNK servers and clients, and how they work together!
+description: Learn everything about THNK servers and clients, and how they work together!
 sidebar_position: 1
 ---
 
@@ -13,20 +13,20 @@ A THNK game is always split in two parts: the server and client. They are differ
 
 THNK is authoritative, which means that only one instance of the game runs the game logic. This instance is the server. The server will then send to every client the new positions of the objects, the variables, etc. All of this data is called the game state.
 
-The server can be provided as different entities: it can be the local PC in singleplayer, a player's game instance, a player's dedicated game server, game servers you provide for your players...
+The server can be provided as different entities: it can be the local PC in single-player, a player's game instance, a player's dedicated game server, game servers you provide for your players...
 
-Unless the server is also a client (e.g. if you start a scene as a THNK server on a normal build of the game), the server will not run the client code. Server code is always ran on the server.
+Unless the server is also a client (e.g. if you start a scene as a THNK server on a normal build of the game), the server will not run the client code. Server code always runs on the server.
 
 ## Clients
 
-A client is a game instance connected to a server. It does never runs server code, but always runs the client code. The client's responsibilities include:
+A client is a game instance connected to a server. It never runs server code, but always runs the client code. The client's responsibilities include:
 
-1. Apparence related events (animations, camera, juice, HUD, menus...)
+1. Appearance related events (animations, camera, juice, HUD, menus...)
 2. Player input (key presses to move the character, actions in menus, sending a message in chat...)
 
-A client cannot falsify the game state that the other players interact with, since all actions and game state synchronization are actually performed by the server. This makes cheating hard and unlikely for your game. Of course, if the server gives too much control on the player input, the protection all falls appart! Keep the client commands simple and as much controlled by the server as possible.
+A client cannot falsify the game state that the other players interact with, since all actions and game state synchronization are actually performed by the server. This makes cheating hard and unlikely for your game. Of course, if the server gives too much control over the player input, the protection all falls apart! Keep the client commands simple and as much controlled by the server as possible.
 
-## Interation between server and client
+## Iteration between server and client
 
 The client and server communicate differently. The client communicates with the server by sending it _commands_, and the server answers with _game state_.
 
@@ -34,11 +34,11 @@ The typical flow looks like this:
 
 <Diagram />
 
-The player, by interacting with the game, produces commands. The server regularely
+The player, by interacting with the game, produces commands. The server regularly
 runs the server events, a server tick. Within it, any clients commands may be processed.
 At the end of the tick, the THNK server creates a patch describing the differences
 in the game state between before and after the server tick, and sends it to all clients.
 The client applies the patch to its local copy of the game state, thereby changing
-the objects positions and variables's values as the server code ordered.
+the objects positions and variables values as the server code ordered.
 
-The server doesn't has commands it can send the player back, only state. So if you want to make some data only available on request because it is fairly big, you can do a request-response system by sending a command to the server, and then waiting for it to respond with the requested information with the next game state update as a player-only state variable.
+The server doesn't have commands it can send the player back, only state. So if you want to make some data only available on request because it is fairly big, you can do a request-response system by sending a command to the server, and then waiting for it to respond with the requested information with the next game state update as a player-only state variable.
