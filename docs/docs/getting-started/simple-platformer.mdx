@@ -40,7 +40,7 @@ When you add events to your game, you must always ask yourself a few questions:
 
 Here, player animations:
 
-- Uses the position of players visible on-screen (to determine if they are moving or not), information that the client has anyways
+- Uses the position of players visible on-screen (to determine if they are moving or not), information that the client has anyway
 - Only affects how the local game looks like, not the games of other players
 
 Therefore, it should be in the client section!
@@ -60,7 +60,7 @@ Technically, you do not _need_ to have animations as client events, but it is in
 
 1. This is bad for bandwidth - each time an animation would change, the change would have to be sent to the clients. With a lot of objects and clients, this can quickly overload the network over transmitting something that the client in a way already knows, as it can infer it from the movement of other objects already. You should always try to reduce the communication between client and server to the minimum to avoid issues on lower speed connections.
 
-2. This might make animations not match what is displayed. Since the server would handle the animations, the animations would only be updated on server ticks, which may be set at a lower rate than the rendering framerate. For a few frames, the animation might not match what you would expect until the server sends an update.
+2. This might make animations not match what is displayed. Since the server would handle the animations, the animations would only be updated on server ticks, which may be set at a lower rate than the rendering frame rate. For a few frames, the animation might not match what you would expect until the server sends an update.
 
 :::
 
@@ -68,7 +68,7 @@ Technically, you do not _need_ to have animations as client events, but it is in
 
 ### Giving each client a player object
 
-Ok, now we have a platformer with animations. Let's make it multiplayer-ready! First, we'll need to ensure each player has their own player character. To do so, it's simple: create an object when a client connects, and delete it when it disconnects. Connections and disconnections are core THNK conditions. You'll also want to _link the object to the player_: That will allow to know what instance belongs to which player. You'll need it to know which instance of the platformer character to delete when a player leaves.
+Ok, now we have a platformer with animations. Let's make it multiplayer-ready! First, we'll need to ensure each player has their own player character. To do so, it's simple: create an object when a client connects, and delete it when it disconnects. Connections and disconnections are core THNK conditions. You'll also want to _link the object to the player_: That will allow knowing what instance belongs to which player. You'll need it to know which instance of the platformer character to delete when a player leaves.
 
 :::info
 
@@ -86,7 +86,7 @@ Since we want the clients to be able to see the player objects, we need that obj
 
 ### Adding player controls for the clients
 
-While the game might work with the default controls when testing in singleplayer, it needs a few adjustments to work online. The reason it works in singleplayer is because there, the game is the server, and the server can do whatever it wants. But when connecting clients, the platformer behaviors on the client will not be able to move the objects, since _only the server is allowed to move objects,_ **or change the game state generally**. Therefore, instead of letting the platformer behavior handle everything, we need to get the inputs and _send them to the server_. The server will then simulate key presses on behalf of the client on the platformer character of the player object that belongs to that player.
+While the game might work with the default controls when testing in single-player, it needs a few adjustments to work online. The reason it works in single-player is that there, the game is the server, and the server can do whatever it wants. But when connecting clients, the platformer behaviors on the client will not be able to move the objects, since _only the server is allowed to move objects,_ **or change the game state generally**. Therefore, instead of letting the platformer behavior handle everything, we need to get the inputs and _send them to the server_. The server will then simulate key presses on behalf of the client on the platformer character of the player object that belongs to that player.
 
 Therefore, in THNK, all interactions with the game, from player movement to using an item in the inventory, needs to be done as a command from the client to the server. It is then the server's job to validate and process the command, updating the game state accordingly for everyone to see.
 
@@ -98,7 +98,7 @@ Sending a command from the client and receiving it on the server can be done wit
 
 :::note
 
-You might have noticed that the "Pick object linked to player" doesn't ask you which player's objects it should pick. That is because THNK has _player picking_. When using a THNK condition (on player connected, on player disconnected, on player message, etc), the player that initiated this condition will be picked, and other THNK actions like "Pick objects linked to a player" will use this picked player.
+You might have noticed that the "Pick object linked to player" doesn't ask you which player's objects it should pick. That is because THNK has _player picking_. When using a THNK condition (on player connected, on player disconnected, on player message, etc.), the player that initiated this condition will be picked, and other THNK actions like "Pick objects linked to a player" will use this picked player.
 
 If you wish to target a player manually, you can get the currently picked player's ID, and change the picked the player to that player ID later, for THNK actions to target this player.
 
@@ -112,16 +112,16 @@ We have those events so far:
 
 They may technically work, but... they have a few issues.
 
-Receving events in a normal event is more readable, but it only allows to process one message per server tick, which can cause issues when more player join. To handle all messages received in a single server tick, use a while event instead:
+Receiving events in a normal event is more readable, but it only allows to process one message per server tick, which can cause issues when more player join. To handle all messages received in a single server tick, use a while event instead:
 
-![Transfering the conditions and action from a standard event into a while event](./platformer-gifs/while.gif "While event underrated smh")
+![Transferring the conditions and action from a standard event into a while event](./platformer-gifs/while.gif "While event underrated smh")
 
 The second issue is that we shouldn't be using messages like this. When sending messages, you should always keep a few things in mind:
 
 1. The connection may be instable, causing messages to be sometimes delayed
 2. The traffic between server and client should be as minimal as possible, as to not use more bandwidth than available
 
-Those events are sending every frame where a key is pressed a ton of inputs to the serve, taking a lot of bandwidth! Additionally, what if the connection is unstable? If the server receives only every second or third tick a message, then as far as the server know, it is as if the player keeps on pressing and unpressing the button, where in fact they are still holding it...
+Those events are sending every frame where a key is pressed a ton of inputs to the serve, taking a lot of bandwidth! Additionally, what if the connection is instable? If the server receives only every second or third tick a message, then as far as the server know, it is as if the player keeps on pressing and unpressing the button, where in fact they are still holding it...
 
 To fix that, let's take another approach: We'll only send one message when pressing and releasing the button. That way, we send way less messages, and if the connection is instable, the server will continue using the same inputs as the last one it received from the client.
 
