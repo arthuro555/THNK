@@ -22,4 +22,4 @@ This command starts a local development server and opens it up in a browser wind
 
 ### Creating pages
 
-Creating and editing pages is as simple as editing markdown files in the `docs` folder. To create a new page simply make an empty text file, rename it to end in .md, and start writing!
+Creating and editing pages is as simple as editing markdown files in the `docs` folder. To create a new page, simply make an empty text file, rename it to end in .md, and start writing!
