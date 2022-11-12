@@ -1,6 +1,6 @@
 ---
 sidebar_position: 4
-description: In this last part of the getting started tutorial, we look at how to cnnect your players and play together online.
+description: In this last part of the getting started tutorial, we look at how to connect your players and play together online.
 keywords:
   [
     get started,

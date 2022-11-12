@@ -19,9 +19,9 @@ THNK is a GDevelop framework, so you will need to have GDevelop downloaded. It i
 
 ## Installation
 
-To get started with THNK, the first step is to download the core THNK extension. Currently, it is not available yet in the extention gallery, and has to be installed manually.
+To get started with THNK, the first step is to download the core THNK extension. Currently, it is not available yet in the extension gallery, and has to be installed manually.
 
-To do so, download the [latest release of THNK from github](https://github.com/arthuro555/THNK/releases) (or you can [get the latest nightly build](https://raw.githubusercontent.com/arthuro555/THNK/master/extensions/THNK.json)).
+To do so, download the [latest release of THNK from GitHub](https://github.com/arthuro555/THNK/releases) (or you can [get the latest nightly build](https://raw.githubusercontent.com/arthuro555/THNK/master/extensions/THNK.json)).
 
 ![GIF showing how to download THNK](./install-gifs/dl-thnk.gif)
 

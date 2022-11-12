@@ -12,7 +12,7 @@ An authoritative multiplayer games framework for the FLOSS engine GDevelop.
 
 ## Contributors
 
-Thanks to all the contributors to THNK! Here is the full list of all contribitors of all kinds to the project: 
+Thanks to all the contributors to THNK! Here is the full list of all contributors of all kinds to the project: 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 [![All Contributors](https://img.shields.io/badge/all_contributors-5-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
@@ -68,9 +68,9 @@ There are a few main folders that you need to keep in mind while contributing:
 - `types` - GDJS type definitions. They were generated automatically with TSC.
 - `docs` - The docusaurus website and documentation.
 - `scripts` - A few scripts used for building.
-- `code` - Contains all of the THNK extension's typescript code. All imports are relative to this directory: `import "server";` would import `code/server`.
-  - `server` - All of the server-relevant code.
-  - `client` - All of the client-relevant code.
+- `code` - Contains all the THNK extension's typescript code. All imports are relative to this directory: `import "server";` would import `code/server`.
+  - `server` - All the server-relevant code.
+  - `client` - All the client-relevant code.
   - `adapters` - Contains the different adapters' implementations. 
   - `types` - Useful type definitions: `global.d.ts` defines the `THNK` global namespace and `thnk.d.ts` overrides GDevelop type definitions with the additional properties THNK adds.
-  - `utils` - Misc. code that is relevant for both server and client.
+  - `utils` - Misc. Code that is relevant for both server and client.

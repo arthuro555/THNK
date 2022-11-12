@@ -5,7 +5,7 @@ sidebar_position: 2
 
 # Adapters
 
-THNK by itself does not care about the networking itself, only about the multiplayer. Ironically though, the THNK core extension therefore only allows you to play your game in singleplayer. If you want to play it in multiplayer, you will have to plug an _adapter_ into THNK.
+THNK by itself does not care about the networking itself, only about the multiplayer. Ironically, though, the THNK core extension therefore only allows you to play your game in single-player. If you want to play it in multiplayer, you will have to plug an _adapter_ into THNK.
 
 An adapter tells THNK how to communicate with servers or clients in a specific way. You can theoretically build your own via JavaScript, but THNK provides a few official adapter extensions that should cover all your needs.
 
@@ -19,7 +19,7 @@ P2P is not meant for MMOs! It leaks one's IP address, and that is _by design_. Y
 
 The P2P adapter simply allows a THNK game to be hosted onto your P2P connection, and to connect to servers using their P2P ID.
 
-To use it, you need to first connect your game to a broker server. It is up to you wehter to use the default one or a custom one - THNK works with either. Then, you can use the actions to host a server. When hosting the server, give a way to copy your P2P ID, for example with the text input object. Finally, you can use the connection action to connect as a client to a P2P server using the server's ID.
+To use it, you need to first connect your game to a broker server. It is up to you whether to use the default one or a custom one - THNK works with either. Then, you can use the actions to host a server. When hosting the server, give a way to copy your P2P ID, for example with the text input object. Finally, you can use the connection action to connect as a client to a P2P server using the server's ID.
 
 ## Geckos.io Adapter
 
