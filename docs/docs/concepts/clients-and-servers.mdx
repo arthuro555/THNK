@@ -26,7 +26,7 @@ A client is a game instance connected to a server. It never runs server code, bu
 
 A client cannot falsify the game state that the other players interact with, since all actions and game state synchronization are actually performed by the server. This makes cheating hard and unlikely for your game. Of course, if the server gives too much control over the player input, the protection all falls apart! Keep the client commands simple and as much controlled by the server as possible.
 
-## Iteration between server and client
+## Interaction between server and client
 
 The client and server communicate differently. The client communicates with the server by sending it _commands_, and the server answers with _game state_.
 
