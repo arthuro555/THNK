@@ -7,7 +7,7 @@ keywords:
 
 # Creating a THNK scene
 
-THNK doesn't have a lot of requirements for yu to create a scene it can work with; All you got to do is separate client code from server code.
+THNK doesn't have a lot of requirements for you to create a scene it can work with; All you got to do is separate client code from server code.
 
 :::tip Remember!
 
@@ -17,7 +17,7 @@ THNK doesn't have a lot of requirements for yu to create a scene it can work wit
 
 :::
 
-The most basic valid THNK scene looks like this:
+The most basic, valid THNK scene looks like this:
 
 ![A simple scene with a "Start server code" and "Start client code" conditions in separate events](img/base-THNK-events.png)
 
@@ -26,7 +26,7 @@ The most basic valid THNK scene looks like this:
 Every THNK scene must respect three rules:
 
 1. Code needs to be under either a client or server condition. Group and comments are fine, but actual events cannot be
-2. There can be only 1 server and 1 client code condition. Use subevents instead of repeating the condition.
+2. There can be only 1 server and 1 client code condition. Use sub-events instead of repeating the condition.
 3. The client code must always go before the server code.
 
 While it won't break your game immediately to disrespect those rules, they can lead to unexpected behavior and bugs that will be hard for you to diagnose and fix.
