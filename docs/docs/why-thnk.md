@@ -39,7 +39,7 @@ THNK by itself doesn't make your game multiplayer games per se, by default it st
 The real magic of THNK lies in its numerous adapter extensions. An adapter extension allows you to launch a server or client for a specific networking backend in 1 action. The currently available adapters include:
 
 - P2P (World-Wide LAN-like experience)
-- Web Sockets (True LAN experience) (coming soon!)
+- Geckos.io (True LAN experience)
 - Split-screen (coming soon!)
 
 This allows for a variety of types of multiplayer to be implemented without any efforts in mere minutes!
