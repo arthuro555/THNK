@@ -1,5 +1,7 @@
 # 🤔 THNK
 
+![The THNK Framework Banner](./banner.png "He do be thonkin")
+
 An authoritative multiplayer games framework for the FLOSS engine GDevelop.
 
 ## Links
@@ -12,7 +14,8 @@ An authoritative multiplayer games framework for the FLOSS engine GDevelop.
 
 ## Contributors
 
-Thanks to all the contributors to THNK! Here is the full list of all contributors of all kinds to the project: 
+Thanks to all the contributors to THNK! Here is the full list of all contributors of all kinds to the project:
+
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 [![All Contributors](https://img.shields.io/badge/all_contributors-5-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
@@ -23,11 +26,11 @@ Thanks to all the contributors to THNK! Here is the full list of all contributor
 <table>
   <tbody>
     <tr>
-      <td align="center"><a href="https://github.com/arthuro555"><img src="https://avatars.githubusercontent.com/u/19349038?v=4?s=100" width="100px;" alt="Arthur Pacaud"/><br /><sub><b>Arthur Pacaud</b></sub></a><br /><a href="#maintenance-arthuro555" title="Maintenance">🚧</a> <a href="https://github.com/arthuro555/THNK/commits?author=arthuro555" title="Code">💻</a> <a href="https://github.com/arthuro555/THNK/commits?author=arthuro555" title="Documentation">📖</a> <a href="#blog-arthuro555" title="Blogposts">📝</a></td>
-      <td align="center"><a href="https://ko-fi.com/arthuro555"><img src="https://storage.ko-fi.com/cdn/brandasset/kofi_s_logo_nolabel.png?s=100" width="100px;" alt="Ko-fi contributors"/><br /><sub><b>Ko-fi contributors</b></sub></a><br /><a href="#financial" title="Financial">💵</a></td>
-      <td align="center"><a href="https://github.com/MyNameIsRinax"><img src="https://avatars.githubusercontent.com/u/40387061?v=4?s=100" width="100px;" alt="Rinax"/><br /><sub><b>Rinax</b></sub></a><br /><a href="https://github.com/arthuro555/THNK/issues?q=author%3AMyNameIsRinax" title="Bug reports">🐛</a></td>
-      <td align="center"><a href="https://github.com/Midhil457"><img src="https://avatars.githubusercontent.com/u/73597906?v=4?s=100" width="100px;" alt="Leo_Red"/><br /><sub><b>Leo_Red</b></sub></a><br /><a href="#design-Midhil457" title="Design">🎨</a></td>
-      <td align="center"><a href="https://github.com/Entr0py404"><img src="https://avatars.githubusercontent.com/u/75917656?v=4?s=100" width="100px;" alt="Tim"/><br /><sub><b>Tim</b></sub></a><br /><a href="https://github.com/arthuro555/THNK/commits?author=Entr0py404" title="Documentation">📖</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://ko-fi.com/arthuro555"><img src="https://storage.ko-fi.com/cdn/brandasset/kofi_s_logo_nolabel.png?s=100" width="100px;" alt="Ko-fi contributors"/><br /><sub><b>Ko-fi contributors</b></sub></a><br /><a href="#financial" title="Financial">💵</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/arthuro555"><img src="https://avatars.githubusercontent.com/u/19349038?v=4?s=100" width="100px;" alt="Arthur Pacaud"/><br /><sub><b>Arthur Pacaud</b></sub></a><br /><a href="#maintenance-arthuro555" title="Maintenance">🚧</a> <a href="https://github.com/arthuro555/THNK/commits?author=arthuro555" title="Code">💻</a> <a href="https://github.com/arthuro555/THNK/commits?author=arthuro555" title="Documentation">📖</a> <a href="#blog-arthuro555" title="Blogposts">📝</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/MyNameIsRinax"><img src="https://avatars.githubusercontent.com/u/40387061?v=4?s=100" width="100px;" alt="Rinax"/><br /><sub><b>Rinax</b></sub></a><br /><a href="https://github.com/arthuro555/THNK/issues?q=author%3AMyNameIsRinax" title="Bug reports">🐛</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/Midhil457"><img src="https://avatars.githubusercontent.com/u/73597906?v=4?s=100" width="100px;" alt="Leo_Red"/><br /><sub><b>Leo_Red</b></sub></a><br /><a href="#design-Midhil457" title="Design">🎨</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/Entr0py404"><img src="https://avatars.githubusercontent.com/u/75917656?v=4?s=100" width="100px;" alt="Tim"/><br /><sub><b>Tim</b></sub></a><br /><a href="https://github.com/arthuro555/THNK/commits?author=Entr0py404" title="Documentation">📖</a></td>
     </tr>
   </tbody>
 </table>
@@ -58,7 +61,7 @@ Before submitting a PR, make sure that your code builds & fully functions within
 Run `yarn ts && yarn test` to run both checks.
 Make sure the extensions in `extensions` are properly generated with the latest version of your code. In case of doubts, run `yarn build` again before committing.
 
-### Understanding the file structure 
+### Understanding the file structure
 
 There are a few main folders that you need to keep in mind while contributing:
 
@@ -71,6 +74,6 @@ There are a few main folders that you need to keep in mind while contributing:
 - `code` - Contains all the THNK extension's typescript code. All imports are relative to this directory: `import "server";` would import `code/server`.
   - `server` - All the server-relevant code.
   - `client` - All the client-relevant code.
-  - `adapters` - Contains the different adapters' implementations. 
+  - `adapters` - Contains the different adapters' implementations.
   - `types` - Useful type definitions: `global.d.ts` defines the `THNK` global namespace and `thnk.d.ts` overrides GDevelop type definitions with the additional properties THNK adds.
   - `utils` - Misc. Code that is relevant for both server and client.

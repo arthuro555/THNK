@@ -10,6 +10,14 @@
   "commitConvention": "none",
   "contributors": [
     {
+      "name": "Ko-fi contributors",
+      "avatar_url": "https://storage.ko-fi.com/cdn/brandasset/kofi_s_logo_nolabel.png",
+      "profile": "https://ko-fi.com/arthuro555",
+      "contributions": [
+        "financial"
+      ]
+    },
+    {
       "login": "arthuro555",
       "name": "Arthur Pacaud",
       "avatar_url": "https://avatars.githubusercontent.com/u/19349038?v=4",
@@ -19,14 +27,6 @@
         "code",
         "doc",
         "blog"
-      ]
-    },
-    {
-      "name": "Ko-fi contributors",
-      "avatar_url": "https://storage.ko-fi.com/cdn/brandasset/kofi_s_logo_nolabel.png",
-      "profile": "https://ko-fi.com/arthuro555",
-      "contributions": [
-        "financial"
       ]
     },
     {
