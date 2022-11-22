@@ -8,11 +8,46 @@
   text-align: center;
   position: relative;
   overflow: hidden;
+  background-image: url(/img/banner.svg);
+  background-size: cover;
+  background-position: center;
 }
 
 @media screen and (max-width: 996px) {
   .heroBanner {
     padding: 2rem;
+  }
+}
+
+.heroLogo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 6%;
+  padding-right: 6%;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+@font-face {
+  font-family: "Nunito";
+  src: url("/Nunito-Black.ttf") format("truetype");
+}
+
+.heroText {
+  color: black;
+}
+
+.heroHeaderText {
+  font-family: "Nunito";
+  font-size: 18vh;
+  margin-bottom: 0;
+}
+
+@media screen and (max-width: 570px) {
+  .heroHeaderText {
+    margin-top: -3vh;
+    font-size: 12vh;
   }
 }
 

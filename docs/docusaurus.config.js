@@ -34,6 +34,80 @@ const config = {
   onBrokenMarkdownLinks: "warn",
   favicon: "img/favicon.ico",
   trailingSlash: true,
+  headTags: [
+    {
+      tagName: "link",
+      attributes: {
+        rel: "apple-touch-icon",
+        sizes: "180x180",
+        href: "/apple-touch-icon.png",
+      },
+    },
+    {
+      tagName: "link",
+      attributes: {
+        rel: "icon",
+        type: "image/png",
+        sizes: "32x32",
+        href: "/favicon-32x32.png",
+      },
+    },
+    {
+      tagName: "link",
+      attributes: {
+        rel: "icon",
+        type: "image/png",
+        sizes: "16x16",
+        href: "/favicon-16x16.png",
+      },
+    },
+    {
+      tagName: "link",
+      attributes: {
+        rel: "manifest",
+        href: "/site.webmanifest",
+      },
+    },
+    {
+      tagName: "meta",
+      attributes: { name: "apple-mobile-web-app-capable", content: "yes" },
+    },
+    {
+      tagName: "meta",
+      attributes: {
+        name: "apple-mobile-web-app-title",
+        content: "THNK",
+      },
+    },
+    {
+      tagName: "meta",
+      attributes: {
+        name: "application-name",
+        content: "THNK",
+      },
+    },
+    {
+      tagName: "meta",
+      attributes: {
+        name: "msapplication-TileColor",
+        content: "#ffc40d",
+      },
+    },
+    {
+      tagName: "meta",
+      attributes: {
+        name: "msapplication-TileImage",
+        content: "/mstile-144x144.png",
+      },
+    },
+    {
+      tagName: "meta",
+      attributes: {
+        name: "theme-color",
+        content: "#ffc40d",
+      },
+    },
+  ],
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
@@ -95,7 +169,7 @@ const config = {
         title: "THNK",
         logo: {
           alt: "THNK Logo",
-          src: "img/thnk.png",
+          src: "img/thnk.svg",
           width: 32,
           height: 32,
         },
@@ -151,11 +225,12 @@ const config = {
         darkTheme: darkCodeTheme,
       },
       zoom: {
+        selector: "img:not(.nozoom)",
         background: {
-          light: 'rgb(255, 255, 255)',
-          dark: 'rgb(50, 50, 50)'
+          light: "rgb(255, 255, 255)",
+          dark: "rgb(50, 50, 50)",
         },
-      }
+      },
     }),
 };
 
