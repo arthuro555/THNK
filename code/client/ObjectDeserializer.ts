@@ -1,4 +1,4 @@
-import { GameObject } from "t-h-n-k";
+import { ByteBuffer, GameObject, Variable } from "t-h-n-k";
 import { unpackVariable } from "utils/VariablePacker";
 import { deserializeVariable } from "client/VariableDeserializer";
 
@@ -27,11 +27,11 @@ export const deserializeObject = (
     {
       // TODO Remove once optional scalars are fixed
       //┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅//╶┐
-      if (objState.setXTo0()) obj.setX(0);           // │
-      if (objState.setYTo0()) obj.setY(0);           // │
-      if (objState.setHeightTo0()) obj.setHeight(0); // │
-      if (objState.setWidthTo0()) obj.setWidth(0);   // │
-      if (objState.setAngleTo0()) obj.setAngle(0);   // │
+      if (objState.setXTo0()) obj.setX(0);            // │
+      if (objState.setYTo0()) obj.setY(0);            // │
+      if (objState.setHeightTo0()) obj.setHeight(0);  // │
+      if (objState.setWidthTo0()) obj.setWidth(0);    // │
+      if (objState.setAngleTo0()) obj.setAngle(0);    // │
       //┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅//╶┘
     }
 
@@ -39,13 +39,13 @@ export const deserializeObject = (
     {
       // TODO Use a boolean once it becomes possible
       //┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅//╶┐
-      const visibility = objState.visible();                        // │
+      const visibility = objState.visible();                         // │
       if (visibility !== null) obj.hide(visibility === 1);           // │
                                                                      // │
-      const flippedX = objState.flippedX();                         // │
+      const flippedX = objState.flippedX();                          // │
       if (flippedX !== null && obj.flipX) obj.flipX(flippedX === 1); // │
                                                                      // │
-      const flippedY = objState.flippedY();                         // │
+      const flippedY = objState.flippedY();                          // │
       if (flippedY !== null && obj.flipY) obj.flipY(flippedY === 1); // │
       //┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅//╶┘
     }
@@ -68,9 +68,13 @@ export const deserializeObject = (
   }
 
   const stateVariable = obj.getVariables().get("State");
-  const variables = gameObject.variables();
-  if (variables) deserializeVariable(stateVariable, variables);
-  else {
+  const variables = gameObject.publicStateDiffArray();
+  if (variables) {
+    deserializeVariable(
+      stateVariable,
+      Variable.getRootAsVariable(new ByteBuffer(variables))
+    );
+  } else {
     const packedVariables = gameObject.packedVariablesArray();
     if (packedVariables) unpackVariable(stateVariable, packedVariables);
   }

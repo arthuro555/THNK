@@ -1,0 +1,19 @@
+include "Variables.fbs";
+
+namespace THNK;
+
+table CreatedObject {
+  id: ushort;
+  name: string (required);
+}
+
+table Scene {
+  /// Preserialized Variable visible by everyone
+  publicStateVariable: [ubyte];
+  /// The objects a single player can see
+  objects: [GameObject];
+  /// A variable containing state for a single player
+  privateStateVariable: Variable;
+  created_objects: [CreatedObject];
+  deleted_objects: [ushort];
+}

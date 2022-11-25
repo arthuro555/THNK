@@ -1,11 +1,12 @@
-import "./ServerLifetimeFunctions";
+import "server/ServerLifetimeFunctions";
 
 import {
   popMessage,
   addRawMessageToTheQueue,
   popConnection,
   popDisconnection,
-} from "./ClientMessagesQueue";
+} from "server/ClientMessagesQueue";
+
 const events = {
   popMessage,
   addRawMessageToTheQueue,
@@ -14,4 +15,4 @@ const events = {
 };
 export { events };
 
-export { startServer } from "./StartServer";
+export { startServer } from "server/StartServer";

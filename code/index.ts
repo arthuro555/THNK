@@ -1,8 +1,8 @@
-export * as server from "./server";
-export * as client from "./client";
-export { ClientAdapter, ServerAdapter } from "./adapters/Adapter";
-export * as settings from "./utils/Settings";
-export * as players from "./server/PlayerContext";
+export * as server from "server";
+export * as client from "client";
+export { ClientAdapter, ServerAdapter } from "adapters/Adapter";
+export * as settings from "utils/Settings";
+export * as players from "server/PlayerContext";
 
 // A sort of polyfill to unify the different text objects get/set APIs.
 {

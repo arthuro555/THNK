@@ -1,4 +1,4 @@
-import "../tests-utils/gdjs-mock";
+import "tests-utils/gdjs-mock";
 import { SyncedVariable } from "server/SyncedVariable";
 import { deserializeVariable } from "client/VariableDeserializer";
 import { Variable, Builder, ByteBuffer } from "t-h-n-k";

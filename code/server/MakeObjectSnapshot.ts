@@ -23,7 +23,7 @@ export const makeObjectSnapshot = (
   if (obj.getY() === 0) ObjState.addSetYTo0(builder, true);
   if (obj.getHeight() === 0) ObjState.addSetHeightTo0(builder, true);
   if (obj.getWidth() === 0) ObjState.addSetWidthTo0(builder, true);
-  if (obj.getWidth() === 0) ObjState.addSetAngleTo0(builder, true);
+  if (obj.getAngle() === 0) ObjState.addSetAngleTo0(builder, true);
   //┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅
 
   if (obj.getZOrder() <= 65_535) {

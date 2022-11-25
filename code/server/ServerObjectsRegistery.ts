@@ -1,6 +1,5 @@
 import type { Builder } from "t-h-n-k";
 import { makeObjectSnapshot } from "server/MakeObjectSnapshot";
-import { diffObject } from "server/ObjectDiffer";
 import { SyncedVariable } from "server/SyncedVariable";
 
 const logger = new gdjs.Logger("THNK - Objects replication");
@@ -49,17 +48,6 @@ export class ServerObjectsRegistery {
     this.deletedObjects.add(obj.thnkID);
     // Delete the object from created objects in case it was created the same frame so that no ghost object is created.
     this.createdObjects.delete(obj.thnkID);
-  }
-
-  diffObjects(builder: Builder): number[] {
-    const diffs: number[] = [];
-
-    for (const obj of this.registeredObjects.values()) {
-      const diff = diffObject(builder, obj);
-      if (diff) diffs.push(diff);
-    }
-
-    return diffs;
   }
 
   createObjectsSnapshot(builder: Builder): number[] {

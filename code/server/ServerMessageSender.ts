@@ -9,7 +9,7 @@ import {
   ResumePreviousSceneMessage,
 } from "t-h-n-k";
 import { makeSceneSnapshot } from "server/MakeSceneSnaphsot";
-import { diffScene } from "server/SceneDiffer";
+import type { Snapshot } from "server/SnaphsotManager";
 
 export const sendConnectionStartMessageTo = (
   userID: string,
@@ -38,19 +38,21 @@ export const sendConnectionStartMessageTo = (
 
 export const sendGameStateUpdateMessageToAll = (
   adapter: ServerAdapter,
-  runtimeScene: gdjs.RuntimeScene
+  snapshot: Snapshot
 ) => {
   const builder = new Builder(256);
-  const gameStateDiffOffset = diffScene(builder, runtimeScene);
+  const snapshotOffset = snapshot.serialize(builder);
+  if (!snapshotOffset) return;
+  GameStateUpdateMessage.startGameStateUpdateMessage(builder);
+  GameStateUpdateMessage.addScene(builder, snapshotOffset);
+  const gameStateUpdateMessageOffset =
+    GameStateUpdateMessage.endGameStateUpdateMessage(builder);
   adapter.sendServerMessageToAll(
     builder,
     ServerMessage.createServerMessage(
       builder,
       ServerMessageContent.GameStateUpdateMessage,
-      GameStateUpdateMessage.createGameStateUpdateMessage(
-        builder,
-        gameStateDiffOffset
-      )
+      gameStateUpdateMessageOffset
     )
   );
 };

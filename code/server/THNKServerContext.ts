@@ -2,6 +2,7 @@ import type { ServerAdapter } from "adapters/Adapter";
 import { PlayerManager } from "server/PlayersManager";
 import { ServerObjectsRegistery } from "server/ServerObjectsRegistery";
 import type { SyncedVariable } from "server/SyncedVariable";
+import { SnapshotsManager } from "server/SnaphsotManager";
 
 export class THNKServerContext {
   /** The adapter used by the scene to get new messages from the client. */
@@ -16,6 +17,8 @@ export class THNKServerContext {
   runServerCode: boolean = true;
   /** List of users that already know this scene, used when unpausing a scene to only send a snapshot to those who do not have it in memory already. */
   previouslyConnectedUsers?: Set<string>;
+  /** Stores snapshots of the diffs of a hanful of previous frames. */
+  snapshotsManager = new SnapshotsManager();
 
   constructor(adapter: ServerAdapter, syncedVariable: SyncedVariable) {
     this.adapter = adapter;

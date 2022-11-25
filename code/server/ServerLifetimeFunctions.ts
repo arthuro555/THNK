@@ -65,11 +65,12 @@ const runServerTickPostEvent = (runtimeScene: gdjs.RuntimeScene) => {
     return;
   runtimeScene.thnkServer.runServerCode = false;
 
+  const { snapshotsManager } = runtimeScene.thnkServer;
+  const snapshot = snapshotsManager.createSnapshot(runtimeScene);
+
   // Send a diff of the scene to all clients now that the game logic has ran.
-  sendGameStateUpdateMessageToAll(
-    runtimeScene.thnkServer.adapter,
-    runtimeScene
-  );
+  if (snapshot)
+    sendGameStateUpdateMessageToAll(runtimeScene.thnkServer.adapter, snapshot);
 };
 
 let sceneSwitch: { adapter: ServerAdapter; isPause: boolean } | null = null;

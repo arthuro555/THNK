@@ -1,8 +1,8 @@
-import "./ClientLifetimeFunctions";
+import "client/ClientLifetimeFunctions";
 
-import { sendClientMessage } from "./ClientMessageSender";
+import { sendClientMessage } from "client/ClientMessageSender";
 const messages = { sendClientMessage };
 export { messages };
 
-export { getConnectionState } from "./ClientConnectionState";
-export { startClient } from "./StartClient";
+export { getConnectionState } from "client/ClientConnectionState";
+export { startClient } from "client/StartClient";

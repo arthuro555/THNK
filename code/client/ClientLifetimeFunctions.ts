@@ -5,7 +5,7 @@ import {
   ServerMessageContent,
 } from "t-h-n-k";
 import { applyGameStateSnapshotToScene } from "client/ApplyGameStateSnapshot";
-import { applyGameStateUpdateToScene } from "client/ApplyGameStateUpdate";
+import { applySceneUpdateToScene } from "client/ApplySceneUpdate";
 
 const logger = new gdjs.Logger("THNK - Client");
 const runClientTickPreEvent = (runtimeScene: gdjs.RuntimeScene) => {
@@ -23,8 +23,8 @@ const runClientTickPreEvent = (runtimeScene: gdjs.RuntimeScene) => {
         const gameStateUpdateMessage = message.content(
           new GameStateUpdateMessage()
         ) as GameStateUpdateMessage;
-        const gameState = gameStateUpdateMessage.newState();
-        if (gameState) applyGameStateUpdateToScene(gameState, runtimeScene);
+        const scene = gameStateUpdateMessage.scene();
+        if (scene) applySceneUpdateToScene(scene, runtimeScene);
         continue;
       case ServerMessageContent.SceneSwitchMessage:
         const sceneSwitchMessage = message.content(

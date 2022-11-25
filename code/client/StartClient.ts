@@ -1,5 +1,9 @@
 import { type ClientAdapter } from "adapters/Adapter";
-import { ServerMessage, ServerMessageContent, ConnectionStartMessage } from "t-h-n-k";
+import {
+  ServerMessage,
+  ServerMessageContent,
+  ConnectionStartMessage,
+} from "t-h-n-k";
 import { applyGameStateSnapshotToScene } from "client/ApplyGameStateSnapshot";
 import { sendConnectionRequest } from "client/ClientMessageSender";
 import { setConnectionState } from "client/ClientConnectionState";

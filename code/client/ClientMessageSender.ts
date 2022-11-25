@@ -1,12 +1,12 @@
-import { type ClientAdapter } from "../adapters/Adapter";
+import { type ClientAdapter } from "adapters/Adapter";
 import {
   Builder,
   ClientInputMessage,
   ClientMessage,
   ClientMessageContent,
   ConnectionRequestMessage,
-} from "../t-h-n-k";
-import { packVariable } from "../utils/VariablePacker";
+} from "t-h-n-k";
+import { packVariable } from "utils/VariablePacker";
 
 export const sendConnectionRequest = (
   adapter: ClientAdapter,
