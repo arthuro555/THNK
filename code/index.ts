@@ -17,5 +17,9 @@ export * as players from "server/PlayerContext";
       gdjs.BitmapTextRuntimeObject.prototype.getText;
     gdjs.BitmapTextRuntimeObject.prototype.setString =
       gdjs.BitmapTextRuntimeObject.prototype.setText;
+    gdjs.BitmapTextRuntimeObject.prototype.getColor =
+      gdjs.BitmapTextRuntimeObject.prototype.getTint;
+    gdjs.BitmapTextRuntimeObject.prototype.setColor =
+      gdjs.BitmapTextRuntimeObject.prototype.setTint;
   }
 }

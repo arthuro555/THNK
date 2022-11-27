@@ -6,6 +6,7 @@ import {
   CreatedObject,
 } from "t-h-n-k";
 import { getTickRate } from "utils/Settings";
+import { serializeRGB } from "./SerializeRGB";
 
 export class SnapshotsManager {
   /** The number of diffs to keep */
@@ -162,6 +163,7 @@ class ObjectSnapshot {
   opacity?: number;
   animation?: number;
   string?: string;
+  color?: string;
 
   private constructor(id: number, aabb: gdjs.AABB) {
     this.id = id;
@@ -239,6 +241,12 @@ class ObjectSnapshot {
       diff.string = obj.getString();
     }
 
+    if (obj.getColor && obj.getColor() !== obj.prevColor) {
+      obj.prevColor = obj.getColor();
+      diff.propertyChanged = true;
+      diff.color = obj.getColor();
+    }
+
     if (obj.getAnimation && obj.getAnimation() !== obj.prevAnimation) {
       obj.prevAnimation = obj.getAnimation();
       diff.propertyChanged = true;
@@ -313,6 +321,9 @@ class ObjectSnapshot {
         ObjState.addAnimation(builder, this.animation + 1);
 
       if (str) ObjState.addText(builder, str);
+
+      if (this.color !== undefined)
+        ObjState.addTint(builder, serializeRGB(builder, this.color));
     }
 
     const objState = this.propertyChanged

@@ -1,5 +1,11 @@
 namespace THNK;
 
+struct RGB {
+  r: ushort;
+  g: ushort;
+  b: ushort;
+}
+
 table ObjState {
   x: float = null;
   y: float = null;
@@ -7,6 +13,8 @@ table ObjState {
   width: float = null;
   angle: float = null;
   scale: float = null;
+
+  tint: RGB;
 
   // TODO Remove once optional scalars are fixed
   //┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅┅//╶┐

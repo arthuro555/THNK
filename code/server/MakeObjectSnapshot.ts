@@ -1,5 +1,6 @@
 import { type Builder, GameObject, ObjState } from "t-h-n-k";
 import { packVariable } from "utils/VariablePacker";
+import { serializeRGB } from "./SerializeRGB";
 
 export const makeObjectSnapshot = (
   builder: Builder,
@@ -56,6 +57,9 @@ export const makeObjectSnapshot = (
       obj.getAnimation() + 1 // TODO: Remove 1 offset once optional scalars are fixed
     );
   }
+
+  if (obj.getColor)
+    ObjState.addTint(builder, serializeRGB(builder, obj.getColor()));
 
   if (textOffset) ObjState.addText(builder, textOffset);
 

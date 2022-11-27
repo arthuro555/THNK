@@ -1,6 +1,8 @@
-import { ByteBuffer, GameObject, Variable } from "t-h-n-k";
+import { ByteBuffer, GameObject, RGB, Variable } from "t-h-n-k";
 import { unpackVariable } from "utils/VariablePacker";
 import { deserializeVariable } from "client/VariableDeserializer";
+
+const STATIC_rgb: RGB = new RGB();
 
 export const deserializeObject = (
   gameObject: GameObject,
@@ -65,6 +67,11 @@ export const deserializeObject = (
 
     const text = objState.text();
     if (text !== null && obj.setString) obj.setString(text);
+
+    if (obj.setColor) {
+      const rgb = objState.tint();
+      if (rgb) obj.setColor(`${rgb.r()};${rgb.g()};${rgb.b()}`);
+    }
   }
 
   const stateVariable = obj.getVariables().get("State");

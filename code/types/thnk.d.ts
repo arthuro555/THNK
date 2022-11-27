@@ -32,6 +32,7 @@ declare global {
       prevVisibility: boolean;
       prevAnimation: number;
       prevText: string;
+      prevColor: string;
 
       // Helper declarations to check for presence of methods present on subclasses
       getScale?: () => number;
@@ -42,6 +43,8 @@ declare global {
       flipX?: (value: boolean) => void;
       isFlippedY?: () => boolean;
       flipY?: (value: boolean) => void;
+      getColor?: () => string;
+      setColor?: (value: string) => void;
       getAnimation?: () => number;
       setAnimation?: (value: number) => void;
       getString?: () => string;
