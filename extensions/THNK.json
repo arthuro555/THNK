@@ -1,7 +1,6 @@
 {
   "author": "",
   "category": "Network",
-  "description": "# The THNK Framework\n\nNote: This preview build is a Minimally Viable Prototype ( not a Mostly Viable prototype :P ), and is therefore highly unstable.\nThe API, protocol, concepts, everything, will probably be changed at some point, and may be full of bugs. Use at your own risk!\n\nThe THNK Framework is a framework for building authoritative multiplayer games in GDevelop.",
   "extensionNamespace": "",
   "fullName": "THNK framework - Preview",
   "helpPath": "https://thnk.arthuro555.com/docs/getting-started/",
@@ -10,6 +9,7 @@
   "previewIconUrl": "https://resources.gdevelop-app.com/assets/Icons/Glyphster Pack/Master/SVG/Videogames/Videogames_online_gaming_games_joystick_connect_globe.svg",
   "shortDescription": "A framework too build authoritative multiplayer games. This is a preview version of the THNK Framework.",
   "version": "1.0.0-minimal-prototype",
+  "description": "# The THNK Framework\n\nNote: This preview build is a Minimally Viable Prototype ( not a Mostly Viable prototype :P ), and is therefore highly unstable.\nThe API, protocol, concepts, everything, will probably be changed at some point, and may be full of bugs. Use at your own risk!\n\nThe THNK Framework is a framework for building authoritative multiplayer games in GDevelop.",
   "tags": [
     "multiplayer",
     "arthuro",
@@ -27,12 +27,9 @@
   "dependencies": [],
   "eventsFunctions": [
     {
-      "description": "",
       "fullName": "",
       "functionType": "Action",
-      "group": "",
       "name": "onFirstSceneLoaded",
-      "private": false,
       "sentence": "",
       "events": [
         {
@@ -47,10 +44,8 @@
       "objectGroups": []
     },
     {
-      "description": "",
       "fullName": "",
       "functionType": "Action",
-      "group": "",
       "name": "___Lifetime_Functions___",
       "private": true,
       "sentence": "",
@@ -220,23 +215,13 @@
       ],
       "parameters": [
         {
-          "codeOnly": false,
-          "defaultValue": "",
           "description": "The remote scene name",
-          "longDescription": "",
           "name": "remote_scene_name",
-          "optional": false,
-          "supplementaryInformation": "",
           "type": "string"
         },
         {
-          "codeOnly": false,
-          "defaultValue": "",
           "description": "The name of the scene the remote scene should be based on",
-          "longDescription": "",
           "name": "base_scene_name",
-          "optional": false,
-          "supplementaryInformation": "",
           "type": "sceneName"
         }
       ],
@@ -312,13 +297,8 @@
       ],
       "parameters": [
         {
-          "codeOnly": false,
-          "defaultValue": "",
           "description": "The remote scene name",
-          "longDescription": "",
           "name": "remote_scene_name",
-          "optional": false,
-          "supplementaryInformation": "",
           "type": "string"
         }
       ],
@@ -365,10 +345,8 @@
       "objectGroups": []
     },
     {
-      "description": "",
       "fullName": "",
       "functionType": "Action",
-      "group": "",
       "name": "___Client___",
       "private": true,
       "sentence": "",
@@ -382,7 +360,6 @@
       "functionType": "Condition",
       "group": "Client",
       "name": "IsServer",
-      "private": false,
       "sentence": "A server is running on this client",
       "events": [
         {
@@ -400,9 +377,7 @@
       "description": "Triggers if the current scene is in singleplayer mode. When switching to a scene normally (without connecting to a remote scene), the game runs in this mode and doesn't run any netcode, while still emulating the THNK framework to allow the game to run as it would otherwise. This condition can be used to disable features that only make sense in multiplayer, like a chat, in the case the game is not being played in multiplayer.",
       "fullName": "Is singleplayer?",
       "functionType": "Condition",
-      "group": "",
       "name": "IsSinglePlayer",
-      "private": false,
       "sentence": "Scene running in singleplayer mode",
       "events": [
         {
@@ -422,7 +397,6 @@
       "functionType": "Condition",
       "group": "Client",
       "name": "StartClientCode",
-      "private": false,
       "sentence": "Currently running on the client",
       "events": [
         {
@@ -442,7 +416,6 @@
       "functionType": "Condition",
       "group": "Client",
       "name": "ConnectingToServer",
-      "private": false,
       "sentence": "Connecting to server",
       "events": [
         {
@@ -505,6 +478,9 @@
           "comment2": ""
         }
       ],
+      "expressionType": {
+        "type": "string"
+      },
       "parameters": [],
       "objectGroups": []
     },
@@ -514,7 +490,6 @@
       "functionType": "StringExpression",
       "group": "Client",
       "name": "PlayerID",
-      "private": false,
       "sentence": "",
       "events": [
         {
@@ -531,6 +506,9 @@
           "comment2": ""
         }
       ],
+      "expressionType": {
+        "type": "string"
+      },
       "parameters": [],
       "objectGroups": []
     },
@@ -540,7 +518,6 @@
       "functionType": "Action",
       "group": "Client",
       "name": "SendMessage",
-      "private": false,
       "sentence": "Send message _PARAM1_ to the server (extra data: _PARAM2_)",
       "events": [
         {
@@ -553,33 +530,21 @@
       ],
       "parameters": [
         {
-          "codeOnly": false,
-          "defaultValue": "",
           "description": "The message name",
-          "longDescription": "",
           "name": "message",
-          "optional": false,
-          "supplementaryInformation": "",
           "type": "string"
         },
         {
-          "codeOnly": false,
-          "defaultValue": "",
           "description": "(Optional) A variable with extra data for the server",
-          "longDescription": "",
           "name": "extra_data",
-          "optional": false,
-          "supplementaryInformation": "",
           "type": "scenevar"
         }
       ],
       "objectGroups": []
     },
     {
-      "description": "",
       "fullName": "",
       "functionType": "Action",
-      "group": "",
       "name": "___Server___",
       "private": true,
       "sentence": "",
@@ -593,7 +558,6 @@
       "functionType": "Condition",
       "group": "Server",
       "name": "StartServerCode",
-      "private": false,
       "sentence": "Server code should run",
       "events": [
         {
@@ -613,7 +577,6 @@
       "functionType": "Action",
       "group": "Server",
       "name": "SetServerTickRate",
-      "private": false,
       "sentence": "Set server target TPS to _PARAM1_",
       "events": [
         {
@@ -631,13 +594,8 @@
       ],
       "parameters": [
         {
-          "codeOnly": false,
-          "defaultValue": "",
           "description": "The new TPS target",
-          "longDescription": "",
           "name": "TargetTPS",
-          "optional": false,
-          "supplementaryInformation": "",
           "type": "expression"
         }
       ],
@@ -649,7 +607,6 @@
       "functionType": "Action",
       "group": "Server/Player",
       "name": "PickPlayerByID",
-      "private": false,
       "sentence": "Set the picked player to _PARAM1_",
       "events": [
         {
@@ -662,13 +619,8 @@
       ],
       "parameters": [
         {
-          "codeOnly": false,
-          "defaultValue": "",
           "description": "The ID of the picked player",
-          "longDescription": "",
           "name": "PlayerID",
-          "optional": false,
-          "supplementaryInformation": "",
           "type": "string"
         }
       ],
@@ -680,7 +632,6 @@
       "functionType": "StringExpression",
       "group": "Server/Player",
       "name": "PickedPlayer",
-      "private": false,
       "sentence": "",
       "events": [
         {
@@ -691,6 +642,9 @@
           "eventsSheetExpanded": false
         }
       ],
+      "expressionType": {
+        "type": "string"
+      },
       "parameters": [],
       "objectGroups": []
     },
@@ -700,7 +654,6 @@
       "functionType": "Action",
       "group": "Server/Player",
       "name": "LinkObjectToPlayer",
-      "private": false,
       "sentence": "Link _PARAM1_ to the current player",
       "events": [
         {
@@ -713,13 +666,8 @@
       ],
       "parameters": [
         {
-          "codeOnly": false,
-          "defaultValue": "",
           "description": "The object to link to the current player",
-          "longDescription": "",
           "name": "Object",
-          "optional": false,
-          "supplementaryInformation": "",
           "type": "objectList"
         }
       ],
@@ -731,7 +679,6 @@
       "functionType": "Condition",
       "group": "Server/Player",
       "name": "UseLinkedObjects",
-      "private": false,
       "sentence": "Pick instances of _PARAM1_ linked to the player",
       "events": [
         {
@@ -744,13 +691,8 @@
       ],
       "parameters": [
         {
-          "codeOnly": false,
-          "defaultValue": "",
           "description": "The object to pick linked instances for",
-          "longDescription": "",
           "name": "Object",
-          "optional": false,
-          "supplementaryInformation": "",
           "type": "objectList"
         }
       ],
@@ -762,7 +704,6 @@
       "functionType": "Condition",
       "group": "Server/Remote Scene Lifetime",
       "name": "OnMessage",
-      "private": false,
       "sentence": "Client sent message _PARAM1_ (extra data: _PARAM2_)",
       "events": [
         {
@@ -775,23 +716,13 @@
       ],
       "parameters": [
         {
-          "codeOnly": false,
-          "defaultValue": "",
           "description": "The name of the message",
-          "longDescription": "",
           "name": "message",
-          "optional": false,
-          "supplementaryInformation": "",
           "type": "string"
         },
         {
-          "codeOnly": false,
-          "defaultValue": "",
           "description": "(Optional) A variable with extra data from the client",
-          "longDescription": "",
           "name": "extra_data",
-          "optional": false,
-          "supplementaryInformation": "",
           "type": "scenevar"
         }
       ],
@@ -803,7 +734,6 @@
       "functionType": "Condition",
       "group": "Server/Remote Scene Lifetime",
       "name": "OnClientConnect",
-      "private": false,
       "sentence": "A client has connected",
       "events": [
         {
@@ -868,7 +798,6 @@
       "functionType": "Condition",
       "group": "Server/Remote Scene Lifetime",
       "name": "OnClientDisconnect",
-      "private": false,
       "sentence": "A client has disconnected",
       "events": [
         {
@@ -891,12 +820,9 @@
       "objectType": "",
       "eventsFunctions": [
         {
-          "description": "",
           "fullName": "",
           "functionType": "Action",
-          "group": "",
           "name": "doStepPreEvents",
-          "private": false,
           "sentence": "",
           "events": [
             {
@@ -928,7 +854,7 @@
               "events": [
                 {
                   "type": "BuiltinCommonInstructions::JsCode",
-                  "inlineCode": "if (runtimeScene.thnkServer)\n    runtimeScene.thnkServer.objectsRegistery.registerObject(objects[0]);\n\nif (runtimeScene.thnkClient && typeof objects[0].thnkID !== \"number\")\n    // Object was not created by the server but the game is in client mode, delete it.\n    objects[0].deleteFromScene(runtimeScene);\n",
+                  "inlineCode": "if (runtimeScene.thnkServer)\n    runtimeScene.thnkServer.objectsRegistery.registerObject(objects[0]);\n\nif (runtimeScene.thnkClient && typeof objects[0].thnkID !== \"number\") {\n    // Object was not created by the server but the game is in client mode, delete it.\n    objects[0].deleteFromScene(runtimeScene);\n\n    // Workaround a GDevelop bug that creates a ghost object when deleting an object at the beginning of the scene\n    if (runtimeScene.getTimeManager().isFirstFrame()) {\n        runtimeScene.getAsyncTasksManager().addTask(new gdjs.ResolveTask(), () => {\n            objects[0].onDestroyFromScene(runtimeScene);\n        });\n    }\n}\n",
                   "parameterObjects": "Object",
                   "useStrict": true,
                   "eventsSheetExpanded": false
@@ -938,22 +864,13 @@
           ],
           "parameters": [
             {
-              "codeOnly": false,
-              "defaultValue": "",
               "description": "Object",
-              "longDescription": "",
               "name": "Object",
-              "optional": false,
-              "supplementaryInformation": "",
               "type": "object"
             },
             {
-              "codeOnly": false,
-              "defaultValue": "",
               "description": "Behavior",
-              "longDescription": "",
               "name": "Behavior",
-              "optional": false,
               "supplementaryInformation": "THNK::SynchronizedObject",
               "type": "behavior"
             }
@@ -961,12 +878,9 @@
           "objectGroups": []
         },
         {
-          "description": "",
           "fullName": "",
           "functionType": "Action",
-          "group": "",
           "name": "onDestroy",
-          "private": false,
           "sentence": "",
           "events": [
             {
@@ -979,22 +893,13 @@
           ],
           "parameters": [
             {
-              "codeOnly": false,
-              "defaultValue": "",
               "description": "Object",
-              "longDescription": "",
               "name": "Object",
-              "optional": false,
-              "supplementaryInformation": "",
               "type": "object"
             },
             {
-              "codeOnly": false,
-              "defaultValue": "",
               "description": "Behavior",
-              "longDescription": "",
               "name": "Behavior",
-              "optional": false,
               "supplementaryInformation": "THNK::SynchronizedObject",
               "type": "behavior"
             }
@@ -1002,7 +907,8 @@
           "objectGroups": []
         }
       ],
-      "propertyDescriptors": []
+      "propertyDescriptors": [],
+      "sharedPropertyDescriptors": []
     }
   ],
   "eventsBasedObjects": []
