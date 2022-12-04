@@ -69,20 +69,34 @@ export const deserializeObject = (
     if (text !== null && obj.setString) obj.setString(text);
 
     if (obj.setColor) {
-      const rgb = objState.tint();
+      const rgb = objState.tint(STATIC_rgb);
       if (rgb) obj.setColor(`${rgb.r()};${rgb.g()};${rgb.b()}`);
     }
   }
 
-  const stateVariable = obj.getVariables().get("State");
-  const variables = gameObject.publicStateDiffArray();
-  if (variables) {
+  const publicStateVariable = obj.getVariables().get("State");
+  const publicStateDiff = gameObject.publicStateDiffArray();
+  if (publicStateDiff) {
     deserializeVariable(
-      stateVariable,
-      Variable.getRootAsVariable(new ByteBuffer(variables))
+      publicStateVariable,
+      Variable.getRootAsVariable(new ByteBuffer(publicStateDiff))
     );
   } else {
-    const packedVariables = gameObject.packedVariablesArray();
-    if (packedVariables) unpackVariable(stateVariable, packedVariables);
+    const packedPublicState = gameObject.packedPublicStateArray();
+    if (packedPublicState)
+      unpackVariable(publicStateVariable, packedPublicState);
+  }
+
+  const privateStateVariable = obj.getVariables().get("PlayerState");
+  const privateStateDiff = gameObject.privateStateDiffArray();
+  if (privateStateDiff) {
+    deserializeVariable(
+      privateStateVariable,
+      Variable.getRootAsVariable(new ByteBuffer(privateStateDiff))
+    );
+  } else {
+    const packedPrivateState = gameObject.packedPrivateStateArray();
+    if (packedPrivateState)
+      unpackVariable(privateStateVariable, packedPrivateState);
   }
 };

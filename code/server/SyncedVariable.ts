@@ -20,13 +20,29 @@ export class SyncedVariable extends gdjs.Variable {
 
   static setupSyncedVariable(
     container: gdjs.VariablesContainer,
-    variableName: string = "State"
+    variableName: string
   ) {
     const syncedVariable = new SyncedVariable();
     if (container.has(variableName))
       gdjs.Variable.copy(container.get(variableName), syncedVariable);
     container.add(variableName, syncedVariable);
     return syncedVariable;
+  }
+
+  static setupStateVariables(container: gdjs.VariablesContainer) {
+    const publicStateVariable = SyncedVariable.setupSyncedVariable(
+      container,
+      "State"
+    );
+    const privateStateVariable = SyncedVariable.setupSyncedVariable(
+      container,
+      "PlayerState"
+    );
+    const teamStateVariable = SyncedVariable.setupSyncedVariable(
+      container,
+      "TeamState"
+    );
+    return { publicStateVariable, privateStateVariable, teamStateVariable };
   }
 
   reinitialize(varData?: VariableData | undefined) {
@@ -95,10 +111,41 @@ export class SyncedVariable extends gdjs.Variable {
     this.operations.push({ type: CollectionOperationType.clear });
     super.clearChildren();
   }
+
+  static _convertToSyncedVariable(v: gdjs.Variable): SyncedVariable {
+    const sv = v as SyncedVariable;
+    if (Object.getPrototypeOf(sv) !== SyncedVariable.prototype) {
+      Object.setPrototypeOf(sv, SyncedVariable.prototype);
+      sv.operations = [];
+      sv.dirty = true;
+
+      if (sv._type === "array") {
+        const len = sv._childrenArray.length;
+        for (let i = 0; i < len; i++) {
+          sv.operations.push({
+            type: CollectionOperationType.set,
+            targetName: i,
+            targetVariable: this._convertToSyncedVariable(sv._childrenArray[i]),
+          });
+        }
+      } else if (sv._type === "structure") {
+        for (const childName in sv._children) {
+          sv.operations.push({
+            type: CollectionOperationType.set,
+            targetName: childName,
+            targetVariable: this._convertToSyncedVariable(
+              sv._children[childName]
+            ),
+          });
+        }
+      }
+    }
+    return sv;
+  }
+
   addChild(childName: string, childVariable: gdjs.Variable): this {
     this.dirty = true;
-    if (Object.getPrototypeOf(childVariable) !== SyncedVariable.prototype)
-      Object.setPrototypeOf(childVariable, SyncedVariable.prototype);
+    childVariable = SyncedVariable._convertToSyncedVariable(childVariable);
     this.operations.push({
       type: CollectionOperationType.set,
       targetName: childName,

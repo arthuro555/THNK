@@ -19,7 +19,7 @@ export const sendConnectionStartMessageTo = (
   const builder = new Builder(512);
 
   const sceneNameOffset = builder.createString(runtimeScene.getName());
-  const sceneSnapshotOffset = makeSceneSnapshot(builder, runtimeScene);
+  const sceneSnapshotOffset = makeSceneSnapshot(builder, runtimeScene, userID);
 
   ConnectionStartMessage.startConnectionStartMessage(builder);
   ConnectionStartMessage.addSceneName(builder, sceneNameOffset);
@@ -36,18 +36,20 @@ export const sendConnectionStartMessageTo = (
   );
 };
 
-export const sendGameStateUpdateMessageToAll = (
+export const sendGameStateUpdateMessageTo = (
+  userID: string,
   adapter: ServerAdapter,
   snapshot: Snapshot
 ) => {
   const builder = new Builder(256);
-  const snapshotOffset = snapshot.serialize(builder);
+  const snapshotOffset = snapshot.serialize(builder, userID);
   if (!snapshotOffset) return;
   GameStateUpdateMessage.startGameStateUpdateMessage(builder);
   GameStateUpdateMessage.addScene(builder, snapshotOffset);
   const gameStateUpdateMessageOffset =
     GameStateUpdateMessage.endGameStateUpdateMessage(builder);
-  adapter.sendServerMessageToAll(
+  adapter.sendServerMessageTo(
+    userID,
     builder,
     ServerMessage.createServerMessage(
       builder,
@@ -85,29 +87,29 @@ export const sendSceneResumeMessageToSome = (
   adapter: ServerAdapter,
   sceneToResume?: gdjs.RuntimeScene
 ) => {
-  const builder = new Builder(512);
-
-  const sceneNameOffset = sceneToResume
-    ? builder.createString(sceneToResume.getName())
-    : null;
-  const sceneSnapshot = sceneToResume
-    ? makeSceneSnapshot(builder, sceneToResume)
-    : null;
-
-  ResumePreviousSceneMessage.startResumePreviousSceneMessage(builder);
-
-  if (sceneSnapshot && sceneNameOffset) {
-    ResumePreviousSceneMessage.addSnapshot(builder, sceneSnapshot);
-    ResumePreviousSceneMessage.addName(builder, sceneNameOffset);
-  }
-
-  const serverMessage = ServerMessage.createServerMessage(
-    builder,
-    ServerMessageContent.ResumePreviousSceneMessage,
-    ResumePreviousSceneMessage.endResumePreviousSceneMessage(builder)
-  );
-
   for (const userID of userIDs) {
+    const builder = new Builder(512);
+
+    const sceneNameOffset = sceneToResume
+      ? builder.createString(sceneToResume.getName())
+      : null;
+    const sceneSnapshot = sceneToResume
+      ? makeSceneSnapshot(builder, sceneToResume, userID)
+      : null;
+
+    ResumePreviousSceneMessage.startResumePreviousSceneMessage(builder);
+
+    if (sceneSnapshot && sceneNameOffset) {
+      ResumePreviousSceneMessage.addSnapshot(builder, sceneSnapshot);
+      ResumePreviousSceneMessage.addName(builder, sceneNameOffset);
+    }
+
+    const serverMessage = ServerMessage.createServerMessage(
+      builder,
+      ServerMessageContent.ResumePreviousSceneMessage,
+      ResumePreviousSceneMessage.endResumePreviousSceneMessage(builder)
+    );
+
     adapter.sendServerMessageTo(userID, builder, serverMessage);
   }
 };

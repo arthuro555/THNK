@@ -11,6 +11,10 @@ table GameObject {
   name: string;
 
   objState: ObjState;
+
   public_state_diff: [ubyte];
-  packed_variables: [ubyte];
+  private_state_diff: [ubyte];
+
+  packed_public_state: [ubyte];
+  packed_private_state: [ubyte];
 }

@@ -4,5 +4,6 @@ namespace THNK;
 
 table GameStateSnapshot {
   objects: [GameObject];
-  variables: [ubyte];
+  public_state_packed: [ubyte];
+  private_state_packed: [ubyte];
 }

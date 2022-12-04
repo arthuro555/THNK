@@ -39,7 +39,7 @@ export class ServerObjectsRegistery {
     this.registeredObjects.set(obj.thnkID, obj);
     this.createdObjects.set(obj.thnkID, obj.getName());
 
-    obj.stateVariable = SyncedVariable.setupSyncedVariable(obj.getVariables());
+    obj.stateVariables = SyncedVariable.setupStateVariables(obj.getVariables());
   }
 
   unregisterObject(obj: gdjs.RuntimeObject) {
@@ -50,11 +50,11 @@ export class ServerObjectsRegistery {
     this.createdObjects.delete(obj.thnkID);
   }
 
-  createObjectsSnapshot(builder: Builder): number[] {
+  createObjectsSnapshot(builder: Builder, forPlayer: string): number[] {
     const snapshots: number[] = [];
 
     for (const obj of this.registeredObjects.values()) {
-      snapshots.push(makeObjectSnapshot(builder, obj));
+      snapshots.push(makeObjectSnapshot(builder, obj, forPlayer));
     }
 
     return snapshots;

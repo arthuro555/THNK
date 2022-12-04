@@ -10,7 +10,7 @@ export const applySceneUpdateToScene = (
   if (!runtimeScene.thnkClient) return;
   const { objectsRegistery } = runtimeScene.thnkClient;
 
-  const encodedPublicStateVariable = sceneUpdate.publicStateVariableArray();
+  const encodedPublicStateVariable = sceneUpdate.publicStateDiffArray();
   if (encodedPublicStateVariable) {
     deserializeVariable(
       runtimeScene.getVariables().get("State"),
@@ -18,11 +18,11 @@ export const applySceneUpdateToScene = (
     );
   }
 
-  const privateStateVariable = sceneUpdate.privateStateVariable();
-  if (privateStateVariable) {
+  const encodedPrivateStateVariable = sceneUpdate.privateStateDiffArray();
+  if (encodedPrivateStateVariable) {
     deserializeVariable(
       runtimeScene.getVariables().get("PlayerState"),
-      privateStateVariable
+      Variable.getRootAsVariable(new ByteBuffer(encodedPrivateStateVariable))
     );
   }
 

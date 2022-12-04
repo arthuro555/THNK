@@ -1,6 +1,6 @@
 import { ClientInputMessage, ClientMessageContent } from "t-h-n-k";
 import {
-  sendGameStateUpdateMessageToAll,
+  sendGameStateUpdateMessageTo,
   sendConnectionStartMessageTo,
   sendSceneSwitchMessageToAll,
   sendSceneResumeMessageToSome,
@@ -58,6 +58,32 @@ const runServerTickPreEvent = (runtimeScene: gdjs.RuntimeScene) => {
     timer = 0;
     runtimeScene.thnkServer.runServerCode = true;
   }
+
+  // Copy the player-state for the server into the root player state variable.
+  // TODO: GET RID OF THIS CRAP ASAP WHEN CONTEXT ISOLATION IS ADDED
+  {
+    const serverID = runtimeScene.thnkServer.adapter.getServerID();
+
+    const copyServerPlayerStateIntoRootOfVariable = (
+      variable: gdjs.Variable
+    ) => {
+      const serverState = variable.getChild(serverID).getAllChildren();
+      for (const serverStateVariableName in serverState) {
+        variable.addChild(
+          serverStateVariableName,
+          serverState[serverStateVariableName]
+        );
+      }
+    };
+
+    const { privateStateVariable } = runtimeScene.thnkServer.stateVariables;
+    copyServerPlayerStateIntoRootOfVariable(privateStateVariable);
+    runtimeScene.thnkServer.objectsRegistery.forEach((obj) =>
+      copyServerPlayerStateIntoRootOfVariable(
+        obj.getVariables().get("PlayerState")
+      )
+    );
+  }
 };
 
 const runServerTickPostEvent = (runtimeScene: gdjs.RuntimeScene) => {
@@ -69,8 +95,14 @@ const runServerTickPostEvent = (runtimeScene: gdjs.RuntimeScene) => {
   const snapshot = snapshotsManager.createSnapshot(runtimeScene);
 
   // Send a diff of the scene to all clients now that the game logic has ran.
-  if (snapshot)
-    sendGameStateUpdateMessageToAll(runtimeScene.thnkServer.adapter, snapshot);
+  if (snapshot) {
+    for (const userID of runtimeScene.thnkServer.playerManager.connectedPlayers.values())
+      sendGameStateUpdateMessageTo(
+        userID,
+        runtimeScene.thnkServer.adapter,
+        snapshot
+      );
+  }
 };
 
 let sceneSwitch: { adapter: ServerAdapter; isPause: boolean } | null = null;

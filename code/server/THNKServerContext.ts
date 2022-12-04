@@ -4,11 +4,17 @@ import { ServerObjectsRegistery } from "server/ServerObjectsRegistery";
 import type { SyncedVariable } from "server/SyncedVariable";
 import { SnapshotsManager } from "server/SnaphsotManager";
 
+export interface StateVariables {
+  publicStateVariable: SyncedVariable;
+  privateStateVariable: SyncedVariable;
+  teamStateVariable: SyncedVariable;
+}
+
 export class THNKServerContext {
   /** The adapter used by the scene to get new messages from the client. */
   adapter: ServerAdapter;
   /** A reference to the `State` scene variable. */
-  syncedVariable: SyncedVariable;
+  stateVariables: StateVariables;
   /** The registery of synced objects. */
   objectsRegistery = new ServerObjectsRegistery();
   /** Component that manages player, their (dis)connections, their game snapshots... */
@@ -20,8 +26,8 @@ export class THNKServerContext {
   /** Stores snapshots of the diffs of a hanful of previous frames. */
   snapshotsManager = new SnapshotsManager();
 
-  constructor(adapter: ServerAdapter, syncedVariable: SyncedVariable) {
+  constructor(adapter: ServerAdapter, stateVariables: StateVariables) {
     this.adapter = adapter;
-    this.syncedVariable = syncedVariable;
+    this.stateVariables = stateVariables;
   }
 }

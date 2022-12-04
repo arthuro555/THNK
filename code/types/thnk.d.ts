@@ -3,7 +3,7 @@ import { ClientObjectsRegistery } from "client/ClientObjectsRegistery";
 import { THNKClientContext } from "client/THNKClientContext";
 import { ServerObjectsRegistery } from "server/ServerObjectsRegistery";
 import { SyncedVariable } from "server/SyncedVariable";
-import { THNKServerContext } from "server/THNKServerContext";
+import { StateVariables, THNKServerContext } from "server/THNKServerContext";
 
 declare global {
   namespace gdjs {
@@ -16,7 +16,7 @@ declare global {
       /** A 16-bit ID THNK uses to know which replicated object is which. */
       thnkID: number;
       /** A reference to the `State` variable of the object, if it is replicated and on the server. */
-      stateVariable: SyncedVariable;
+      stateVariables: StateVariables;
 
       // Previous values are stored to not send unecessary data
       prevX: number;

@@ -11,6 +11,7 @@
     "generate-protocol": "node ./scripts/generate-protocol.js",
     "build:thnk": "tsup ./code/index.ts --format esm --platform=browser --treeshake smallest --minify && tsup ./dist/index.mjs --format iife --platform=browser --global-name THNK --minify && node -e \"fs.promises.rm('./dist/index.mjs', {force:true})\"",
     "build:thnk:dev": "tsup ./code/index.ts --format iife --platform=browser --global-name THNK",
+    "build:protocol-debug": "tsup ./code/t-h-n-k/index.ts --format iife --platform=browser --global-name T",
     "build:adapters": "tsup ./code/adapters/*.ts --format iife && tsup ./code/adapters/geckos-server.ts --minify --format cjs",
     "build:extensions": "node ./scripts/generate-extensions.js",
     "build:clean": "node -e \"fs.promises.rm('./dist', {recursive:true,force:true})\"",

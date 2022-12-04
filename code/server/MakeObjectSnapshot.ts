@@ -4,7 +4,8 @@ import { serializeRGB } from "./SerializeRGB";
 
 export const makeObjectSnapshot = (
   builder: Builder,
-  obj: gdjs.RuntimeObject
+  obj: gdjs.RuntimeObject,
+  forPlayer: string
 ): number => {
   const textOffset = obj.getString
     ? builder.createSharedString(obj.getString())
@@ -65,12 +66,23 @@ export const makeObjectSnapshot = (
 
   const objStateOffset = ObjState.endObjState(builder);
 
-  const { stateVariable } = obj;
-  const variableOffset =
-    stateVariable.getChildrenCount() !== 0
-      ? GameObject.createPackedVariablesVector(
+  const { stateVariables } = obj;
+  const { publicStateVariable, privateStateVariable } = stateVariables;
+
+  const publicStateOffset =
+    publicStateVariable.getChildrenCount() !== 0
+      ? GameObject.createPackedPublicStateVector(
           builder,
-          packVariable(stateVariable)
+          packVariable(publicStateVariable)
+        )
+      : null;
+
+  const playerStateVariable = privateStateVariable.getChild(forPlayer);
+  const privateStateOffset =
+    playerStateVariable.getChildrenCount() !== 0
+      ? GameObject.createPackedPrivateStateVector(
+          builder,
+          packVariable(playerStateVariable)
         )
       : null;
 
@@ -80,6 +92,9 @@ export const makeObjectSnapshot = (
   GameObject.addId(builder, obj.thnkID);
   GameObject.addName(builder, name);
   GameObject.addObjState(builder, objStateOffset);
-  if (variableOffset) GameObject.addPackedVariables(builder, variableOffset);
+  if (publicStateOffset)
+    GameObject.addPackedPublicState(builder, publicStateOffset);
+  if (privateStateOffset)
+    GameObject.addPackedPrivateState(builder, privateStateOffset);
   return GameObject.endGameObject(builder);
 };

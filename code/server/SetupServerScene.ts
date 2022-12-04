@@ -10,13 +10,14 @@ export const setupSceneAsServer = (
   runtimeScene: gdjs.RuntimeScene,
   adapter: ServerAdapter
 ) => {
-  const syncedVariable = SyncedVariable.setupSyncedVariable(
-    runtimeScene.getVariables()
+  runtimeScene.thnkServer = new THNKServerContext(
+    adapter,
+    SyncedVariable.setupStateVariables(runtimeScene.getVariables())
   );
-  runtimeScene.thnkServer = new THNKServerContext(adapter, syncedVariable);
 
   // Unless "dedicated" is switched on, a server is always also a client to itself.
-  // Therefore, it should trigger a connection when connecting, at the server's start.
+  // Therefore, a connection should be triggered for the server's client manually,
+  // since it does not connect through the adapter to itself.
   if (!isDedicated())
     runtimeScene.thnkServer.playerManager._onConnect(adapter.getServerID());
 };

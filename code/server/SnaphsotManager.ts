@@ -37,6 +37,7 @@ export class SnapshotsManager {
 
 export class Snapshot {
   private sceneDiff?: SceneDiff;
+
   private constructor() {}
   static createDiff(runtimeScene: gdjs.RuntimeScene): Snapshot | null {
     const sceneDiff = SceneDiff.createDiff(runtimeScene);
@@ -45,7 +46,8 @@ export class Snapshot {
     snapshot.sceneDiff = sceneDiff;
     return snapshot;
   }
-  serialize(builder: Builder, forPlayer: string = "") {
+
+  serialize(builder: Builder, forPlayer: string) {
     return this.sceneDiff?.serialize(builder, forPlayer);
   }
 }
@@ -54,7 +56,9 @@ export class Snapshot {
  * Contains a snapshot of all changes in a scene since the last snapshot.
  */
 export class SceneDiff {
-  private sceneVariableDiff?: Uint8Array;
+  private publicStateVariableDiff?: Uint8Array;
+  private privateStateVariablesDiffs = new Map<string, Uint8Array>();
+  private teamStateVariablesDiffs = new Map<string, Uint8Array>();
   private readonly objectsDiff: Map<number, ObjectSnapshot> = new Map();
   private readonly deletedObjects = new Set<number>();
   private readonly createdObjects = new Map<number, string>();
@@ -68,11 +72,37 @@ export class SceneDiff {
       );
     }
 
-    const { syncedVariable, objectsRegistery } = thnkServer;
+    const { stateVariables, objectsRegistery } = thnkServer;
+    const {
+      publicStateVariable,
+      privateStateVariable,
+      teamStateVariable, // Not implemented yet
+    } = stateVariables;
+
     const diff = new SceneDiff();
 
-    if (syncedVariable.isDirty()) {
-      diff.sceneVariableDiff = syncedVariable.serializeToBinary();
+    if (publicStateVariable.isDirty()) {
+      diff.publicStateVariableDiff = publicStateVariable.serializeToBinary();
+    }
+
+    {
+      const children = privateStateVariable.getAllChildren();
+      for (const child in children)
+        if (children[child].isDirty())
+          diff.privateStateVariablesDiffs.set(
+            child,
+            children[child].serializeToBinary()
+          );
+    }
+
+    {
+      const children = teamStateVariable.getAllChildren();
+      for (const child in children)
+        if (children[child].isDirty())
+          diff.teamStateVariablesDiffs.set(
+            child,
+            children[child].serializeToBinary()
+          );
     }
 
     objectsRegistery.forEach((obj) => {
@@ -88,16 +118,21 @@ export class SceneDiff {
   }
 
   serialize(builder: Builder, forPlayer: string) {
-    const publicSceneVariable = this.sceneVariableDiff
-      ? Scene.createPublicStateVariableVector(builder, this.sceneVariableDiff)
+    const publicSceneVariable = this.publicStateVariableDiff
+      ? Scene.createPublicStateDiffVector(builder, this.publicStateVariableDiff)
+      : null;
+
+    const playerStateVariable = this.privateStateVariablesDiffs.get(forPlayer);
+    const privateSceneVariable = playerStateVariable
+      ? Scene.createPrivateStateDiffVector(builder, playerStateVariable)
       : null;
 
     // TODO - Only serialize objects that the player can see
     // TODO - Replace with Uint8Array
     const objectsDiffs: number[] = [];
     for (const obj of this.objectsDiff.values()) {
-      const serializedObjectOffset = obj.serialize(builder);
-      if (serializedObjectOffset) objectsDiffs.push(serializedObjectOffset);
+      if (obj.needsToBeSerialized(forPlayer))
+        objectsDiffs.push(obj.serialize(builder, forPlayer));
     }
     const objectsDiffsOffset = objectsDiffs.length
       ? Scene.createObjectsVector(builder, objectsDiffs)
@@ -131,7 +166,9 @@ export class SceneDiff {
 
     Scene.startScene(builder);
     if (publicSceneVariable)
-      Scene.addPublicStateVariable(builder, publicSceneVariable);
+      Scene.addPublicStateDiff(builder, publicSceneVariable);
+    if (privateSceneVariable)
+      Scene.addPrivateStateDiff(builder, privateSceneVariable);
     if (objectsDiffsOffset) Scene.addObjects(builder, objectsDiffsOffset);
     if (serializedObjectsToCreateOffset)
       Scene.addCreatedObjects(builder, serializedObjectsToCreateOffset);
@@ -147,7 +184,9 @@ class ObjectSnapshot {
   /** Regardless of changed values, an up-to-date AABB should always be present to check if the object is visible, as out of screen objects may not be synced. */
   aabb: gdjs.AABB;
 
-  objectVariableDiff?: Uint8Array;
+  publicStateVariableDiff?: Uint8Array;
+  privateStateVariablesDiffs = new Map<string, Uint8Array>();
+  teamStateVariablesDiffs = new Map<string, Uint8Array>();
 
   propertyChanged = false;
   x?: number;
@@ -253,18 +292,57 @@ class ObjectSnapshot {
       diff.animation = obj.getAnimation();
     }
 
-    if (obj.stateVariable.isDirty()) {
-      diff.objectVariableDiff = obj.stateVariable.serializeToBinary();
+    const {
+      publicStateVariable,
+      privateStateVariable,
+      teamStateVariable, // Not implemented yet
+    } = obj.stateVariables;
+
+    if (publicStateVariable.isDirty()) {
+      diff.publicStateVariableDiff = publicStateVariable.serializeToBinary();
+    }
+
+    {
+      const children = privateStateVariable.getAllChildren();
+      for (const child in children)
+        if (children[child].isDirty())
+          diff.privateStateVariablesDiffs.set(
+            child,
+            children[child].serializeToBinary()
+          );
+    }
+
+    {
+      const children = teamStateVariable.getAllChildren();
+      for (const child in children)
+        if (children[child].isDirty())
+          diff.teamStateVariablesDiffs.set(
+            child,
+            children[child].serializeToBinary()
+          );
     }
 
     // If it turns out nothing changed after all, return null to not store any diff.
-    if (diff.propertyChanged || diff.objectVariableDiff) return diff;
-    else return null;
+    if (
+      diff.propertyChanged ||
+      diff.publicStateVariableDiff ||
+      diff.privateStateVariablesDiffs.size ||
+      diff.teamStateVariablesDiffs.size
+    ) {
+      return diff;
+    } else return null;
   }
 
-  serialize(builder: Builder): number | null {
-    if (!this.propertyChanged && !this.objectVariableDiff) return null;
+  needsToBeSerialized(forPlayer: string) {
+    // Don't serialize an object if it has no notable change
+    return (
+      this.propertyChanged ||
+      this.publicStateVariableDiff ||
+      this.privateStateVariablesDiffs.has(forPlayer)
+    );
+  }
 
+  serialize(builder: Builder, forPlayer: string): number {
     const str =
       this.string !== undefined
         ? builder.createSharedString(this.string)
@@ -329,8 +407,17 @@ class ObjectSnapshot {
     const objState = this.propertyChanged
       ? ObjState.endObjState(builder)
       : null;
-    const publicStateDiff = this.objectVariableDiff
-      ? GameObject.createPublicStateDiffVector(builder, this.objectVariableDiff)
+
+    const publicStateDiff = this.publicStateVariableDiff
+      ? GameObject.createPublicStateDiffVector(
+          builder,
+          this.publicStateVariableDiff
+        )
+      : null;
+
+    const privateStateVariable = this.privateStateVariablesDiffs.get(forPlayer);
+    const privateStateDiff = privateStateVariable
+      ? GameObject.createPrivateStateDiffVector(builder, privateStateVariable)
       : null;
 
     GameObject.startGameObject(builder);
@@ -338,6 +425,8 @@ class ObjectSnapshot {
     if (objState) GameObject.addObjState(builder, objState);
     if (publicStateDiff)
       GameObject.addPublicStateDiff(builder, publicStateDiff);
+    if (privateStateDiff)
+      GameObject.addPrivateStateDiff(builder, privateStateDiff);
     return GameObject.endGameObject(builder);
   }
 }

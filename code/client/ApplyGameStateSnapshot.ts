@@ -9,9 +9,18 @@ export const applyGameStateSnapshotToScene = (
   if (!runtimeScene.thnkClient) return;
   const { objectsRegistery } = runtimeScene.thnkClient;
 
-  const rootVariable = gameState.variablesArray();
-  if (rootVariable)
-    unpackVariable(runtimeScene.getVariables().get("State"), rootVariable);
+  const publicStatePacked = gameState.publicStatePackedArray();
+  if (publicStatePacked) {
+    unpackVariable(runtimeScene.getVariables().get("State"), publicStatePacked);
+  }
+
+  const privateStatePacked = gameState.privateStatePackedArray();
+  if (privateStatePacked) {
+    unpackVariable(
+      runtimeScene.getVariables().get("PlayerState"),
+      privateStatePacked
+    );
+  }
 
   // Delete previous objects, as the snapshot expects to be applied to a blank state.
   objectsRegistery.clear();

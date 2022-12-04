@@ -3,26 +3,48 @@ import { packVariable } from "utils/VariablePacker";
 
 export const makeSceneSnapshot = (
   builder: Builder,
-  runtimeScene: gdjs.RuntimeScene
+  runtimeScene: gdjs.RuntimeScene,
+  forPlayer: string
 ): number => {
   if (!runtimeScene.thnkServer) return -1;
 
-  const { syncedVariable, objectsRegistery } = runtimeScene.thnkServer;
-  const variablesOffset =
-    syncedVariable.getChildrenCount() !== 0
-      ? GameStateSnapshot.createVariablesVector(
+  const { stateVariables, objectsRegistery } = runtimeScene.thnkServer;
+  const { publicStateVariable, privateStateVariable } = stateVariables;
+
+  const publicStateVariableOffset =
+    publicStateVariable.getChildrenCount() !== 0
+      ? GameStateSnapshot.createPublicStatePackedVector(
           builder,
-          packVariable(syncedVariable)
+          packVariable(publicStateVariable)
         )
       : null;
 
-  const objectsSnapshots = objectsRegistery.createObjectsSnapshot(builder);
+  const playerPrivateStateVariable = privateStateVariable.getChild(forPlayer);
+  const privateStateVariableOffset =
+    playerPrivateStateVariable.getChildrenCount() !== 0
+      ? GameStateSnapshot.createPrivateStatePackedVector(
+          builder,
+          packVariable(playerPrivateStateVariable)
+        )
+      : null;
+
+  const objectsSnapshots = objectsRegistery.createObjectsSnapshot(
+    builder,
+    forPlayer
+  );
   const objectsSnapshotsOffset = objectsSnapshots.length
     ? GameStateSnapshot.createObjectsVector(builder, objectsSnapshots)
     : null;
 
   GameStateSnapshot.startGameStateSnapshot(builder);
-  if (variablesOffset) GameStateSnapshot.addVariables(builder, variablesOffset);
+  if (publicStateVariableOffset)
+    GameStateSnapshot.addPublicStatePacked(builder, publicStateVariableOffset);
+  if (privateStateVariableOffset) {
+    GameStateSnapshot.addPrivateStatePacked(
+      builder,
+      privateStateVariableOffset
+    );
+  }
   if (objectsSnapshotsOffset)
     GameStateSnapshot.addObjects(builder, objectsSnapshotsOffset);
   return GameStateSnapshot.endGameStateSnapshot(builder);
