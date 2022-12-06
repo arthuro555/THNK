@@ -4,8 +4,7 @@ import type {
   GeckosServer,
   ServerChannel,
 } from "@geckos.io/server";
-import { async as StreamZip } from "node-stream-zip";
-import { FollowResponse, wrap } from "follow-redirects";
+import type { FollowResponse } from "follow-redirects";
 
 const getSomeNums = () =>
   Math.random()
@@ -38,25 +37,47 @@ THNK.GeckosServerAdapter = class GeckosServerAdapter extends (
       );
     }
 
-    const electronRequire = electronRemote.require as (
+    const electronRequire = electronRemote.require as <T>(
       moduleNameOrPath: string
-    ) => any;
+    ) => T;
 
     let geckos: typeof GeckosType | undefined;
     if (!runtimeScene.getGame().isPreview()) {
-      geckos = electronRequire("@geckos.io/server").geckos as typeof GeckosType;
+      geckos = electronRequire<{ geckos: typeof GeckosType }>(
+        "@geckos.io/server"
+      ).geckos;
     } else {
       // On previews we need to download a prebuilt version of the module as it is not pre-installed
-      const fs = electronRequire("fs") as typeof import("fs");
-      if (!fs.existsSync("./geckos-server")) {
-        console.info(`Geckos server not found, downloading it now!`);
+      const fs = electronRequire<typeof import("fs")>("fs");
+      const path = electronRequire<typeof import("path")>("path");
+      const { app } = electronRequire<{
+        app: { getPath: (type: "userData" | "temp") => string };
+      }>("electron");
+      //@ts-ignore
+      const { async: StreamZip } = await import("node-stream-zip");
+      //@ts-ignore
+      const { wrap } = await import("follow-redirects");
 
+      const geckosFolderPath = path.join(
+        app.getPath("userData"),
+        "geckos-server"
+      );
+      const geckosIndexPath = path.join(geckosFolderPath, "index.js");
+      if (!fs.existsSync(geckosIndexPath)) {
+        const https = electronRequire("https") as typeof import("https");
         const {
           https: { get },
-        } = wrap({ https: electronRequire("https") as typeof import("https") });
+        } = wrap({ https });
         const { pipeline } = electronRequire(
           "stream/promises"
         ) as typeof import("stream/promises");
+
+        console.info(`Geckos server not found, downloading it now!`);
+
+        const geckosDownloadPath = path.join(
+          app.getPath("temp"),
+          "geckos-server.zip"
+        );
 
         const response = (await new Promise((r) =>
           get(
@@ -65,19 +86,21 @@ THNK.GeckosServerAdapter = class GeckosServerAdapter extends (
           )
         )) as NodeJS.ReadStream;
 
-        await pipeline(response, fs.createWriteStream("./geckos-server.zip"));
+        await pipeline(response, fs.createWriteStream(geckosDownloadPath));
 
-        const zip = new StreamZip({ file: "./geckos-server.zip" });
+        const zip = new StreamZip({ file: geckosDownloadPath });
 
-        fs.mkdirSync("./geckos-server");
-        await zip.extract(null, "./geckos-server");
+        fs.mkdirSync(geckosFolderPath, { recursive: true });
+        await zip.extract(null, geckosFolderPath);
 
         await zip.close();
       }
-      geckos = electronRequire(
-        process.cwd() + "/geckos-server/index.js"
+
+      geckos = electronRequire<{ geckos: typeof GeckosType }>(
+        geckosIndexPath
       ).geckos;
     }
+
     if (!geckos) throw new Error("Geckos not found!");
 
     this.server = geckos({ label: "THNK" });
