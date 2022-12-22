@@ -3,6 +3,9 @@
   "private": true,
   "version": "1.0.0",
   "license": "MIT",
+  "workspaces": [
+    "code/*"
+  ],
   "scripts": {
     "postinstall": "npm run generate-protocol",
     "test": "jest",
