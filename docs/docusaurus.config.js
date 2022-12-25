@@ -28,7 +28,7 @@ const moreLinks = [
 const config = {
   title: "THNK",
   tagline: "The GDevelop Multiplayer Framework for everyone!",
-  url: "https://thnk.arthuro555.com",
+  url: "https://thnk.cloud",
   baseUrl: "/",
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
