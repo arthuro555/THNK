@@ -1,7 +1,10 @@
 /// <reference path="../types/global.d.ts"/>
 namespace THNK {
   const logger = new gdjs.Logger("THNK - Local Testing Adapter");
-  if(!globalThis.BroadcastChannel) logger.error("This browser does not support the local adapter - please try using another adapter! (Prepare for an error)");
+  if (!globalThis.BroadcastChannel)
+    logger.error(
+      "This browser does not support the local adapter - please try using another adapter! (Prepare for an error)"
+    );
   const bc = new BroadcastChannel("thnk-local-server");
   bc.addEventListener("messageerror", (e) =>
     logger.error("An error occured while sending a message!", e)
@@ -15,7 +18,8 @@ namespace THNK {
         for: string;
       }
     | { message: "msg-for-server"; data: Uint8Array; from: string }
-    | { message: "disconnect"; from: string };
+    | { message: "disconnect"; from: string }
+    | { message: "connect"; from: string };
 
   export class LocalClientAdapter extends THNK.ClientAdapter {
     private onBCMessage({ data }: MessageEvent<MessageTypes>) {
@@ -26,6 +30,7 @@ namespace THNK {
 
     async prepare(runtimeScene: gdjs.RuntimeScene): Promise<void> {
       bc.addEventListener("message", this.boundOnBCMessage);
+      bc.postMessage({ message: "connect", from: ownID } as MessageTypes);
     }
 
     close() {
@@ -46,6 +51,7 @@ namespace THNK {
     private onBCMessage({ data }: MessageEvent<MessageTypes>) {
       if (data.message === "msg-for-server")
         this.onMessage(data.from, data.data);
+      else if (data.message === "connect") this.onConnection(data.from);
       else if (data.message === "disconnect") this.onDisconnection(data.from);
     }
     private boundOnBCMessage = this.onBCMessage.bind(this);
