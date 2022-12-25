@@ -31,6 +31,7 @@ namespace THNK {
     async prepare(runtimeScene: gdjs.RuntimeScene): Promise<void> {
       bc.addEventListener("message", this.boundOnBCMessage);
       bc.postMessage({ message: "connect", from: ownID } as MessageTypes);
+      window.addEventListener("beforeunload", () => this.close());
     }
 
     close() {
@@ -58,6 +59,7 @@ namespace THNK {
 
     async prepare(): Promise<void> {
       bc.addEventListener("message", this.boundOnBCMessage);
+      window.addEventListener("beforeunload", () => this.close());
     }
 
     close() {

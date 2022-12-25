@@ -88,7 +88,8 @@ window.${thnkCode.slice(`"use strict";var `.length)}{`;
     localCode.replace(
       `var THNK;`,
       "if(!window.THNK)window.THNK={};let THNK=window.THNK;"
-    );
+    ) +
+    `if (new URL(location).searchParams.get("client")) THNK.client.startClient(runtimeScene, new THNK.LocalClientAdapter());`;
 
   fs.writeFileSync(extensionFile, JSON.stringify(localExt, null, 2));
 }
