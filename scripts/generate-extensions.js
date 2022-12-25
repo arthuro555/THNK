@@ -28,7 +28,10 @@ window.${thnkCode.slice(`"use strict";var `.length)}{`;
 
   p2pExt.eventsFunctions[0].events[0].inlineCode =
     `// Load THNK P2P Adapter (https://github.com/arthuro555/THNK)\n` +
-    p2pCode.replace(`var THNK;`, "const THNK = window.THNK;");
+    p2pCode.replace(
+      `var THNK;`,
+      "if(!window.THNK)window.THNK={};let THNK=window.THNK;"
+    );
 
   fs.writeFileSync(
     extensionsPath + "THNK_P2P.json",
@@ -72,4 +75,20 @@ window.${thnkCode.slice(`"use strict";var `.length)}{`;
     extensionsPath + "THNK_GeckosClient.json",
     JSON.stringify(geckosClientExt, null, 2)
   );
+}
+
+{
+  const extensionFile = extensionsPath + "THNK_Local.json";
+  const localCode = fs.readFileSync(distPath + "local.global.js").toString();
+  /** @type {{eventsFunctions: { name: string, events: { type: string, inlineCode: string }[] }[]}} */
+  const localExt = JSON.parse(fs.readFileSync(extensionFile).toString());
+
+  localExt.eventsFunctions[0].events[0].inlineCode =
+    `// Load THNK Local Adapter (https://github.com/arthuro555/THNK)\n` +
+    localCode.replace(
+      `var THNK;`,
+      "if(!window.THNK)window.THNK={};let THNK=window.THNK;"
+    );
+
+  fs.writeFileSync(extensionFile, JSON.stringify(localExt, null, 2));
 }
