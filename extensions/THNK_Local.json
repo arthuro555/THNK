@@ -1,0 +1,154 @@
+{
+  "author": "",
+  "category": "Network",
+  "extensionNamespace": "",
+  "fullName": "THNK - Local adapter",
+  "helpPath": "https://thnk.cloud/",
+  "iconUrl": "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAyMy4wLjMsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0iSWNvbnMiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4Ig0KCSB2aWV3Qm94PSIwIDAgMzIgMzIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDMyIDMyOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+DQo8c3R5bGUgdHlwZT0idGV4dC9jc3MiPg0KCS5zdDB7ZmlsbDpub25lO3N0cm9rZTojMDAwMDAwO3N0cm9rZS13aWR0aDoyO3N0cm9rZS1saW5lY2FwOnJvdW5kO3N0cm9rZS1saW5lam9pbjpyb3VuZDtzdHJva2UtbWl0ZXJsaW1pdDoxMDt9DQo8L3N0eWxlPg0KPGc+DQoJPHBhdGggZD0iTTIzLDI4TDIzLDI4Yy0xLjEsMC0yLjEtMC43LTIuNS0xLjhjMC0wLjEsMC0wLjItMC4xLTAuMmgtOC45YzAsMC4xLDAsMC4yLTAuMSwwLjJDMTEuMSwyNy4zLDEwLjEsMjgsOSwyOGgwDQoJCWMtMC42LDAtMSwwLjQtMSwxczAuNCwxLDEsMWgxNGMwLjYsMCwxLTAuNCwxLTFTMjMuNiwyOCwyMywyOHoiLz4NCjwvZz4NCjxwYXRoIGQ9Ik0yNywzSDVDMy4zLDMsMiw0LjMsMiw2djE1YzAsMS43LDEuMywzLDMsM2g2LjloOC4xSDI3YzEuNywwLDMtMS4zLDMtM1Y2QzMwLDQuMywyOC43LDMsMjcsM3ogTTE0LjcsMTUuNg0KCWMwLjQsMC40LDAuNCwwLjksMC4xLDEuM2MtMSwxLjMtMi42LDIuMS00LjMsMi4xYy0zLDAtNS41LTIuNS01LjUtNS41UzcuNSw4LDEwLjUsOGMxLjcsMCwzLjIsMC44LDQuMywyLjFjMC4zLDAuNCwwLjMsMS0wLjEsMS4zDQoJbC0yLjEsMi4xTDE0LjcsMTUuNnogTTE3LjUsMTVjLTAuOCwwLTEuNS0wLjctMS41LTEuNXMwLjctMS41LDEuNS0xLjVzMS41LDAuNywxLjUsMS41UzE4LjMsMTUsMTcuNSwxNXogTTIxLjUsMTUNCgljLTAuOCwwLTEuNS0wLjctMS41LTEuNXMwLjctMS41LDEuNS0xLjVzMS41LDAuNywxLjUsMS41UzIyLjMsMTUsMjEuNSwxNXogTTI1LjUsMTVjLTAuOCwwLTEuNS0wLjctMS41LTEuNXMwLjctMS41LDEuNS0xLjUNCglzMS41LDAuNywxLjUsMS41UzI2LjMsMTUsMjUuNSwxNXoiLz4NCjwvc3ZnPg0K",
+  "name": "THNK_Local",
+  "previewIconUrl": "https://asset-resources.gdevelop.io/public-resources/Icons/Glyphster Pack/Master/SVG/Videogames/f58016010d3500aaa033703da2f40cb1cc279d2ffee6c04c230b949f9337b93b_Videogames_online_arcade_pc_game_pacman.svg",
+  "shortDescription": "An inter-tab local machine only adapter for easy testing in previews.",
+  "version": "1.0.0",
+  "description": "This THNK adapter uses the `BroadcastChannel` feature of browsers that allows multiple tabs of a browser to communicate. This allows for locally connecting multiple open game instances, and is very handy for testing with previews. Comes with an option to start multiple preview windows at once automatically!",
+  "tags": [
+    "THNK",
+    "adapter",
+    "local",
+    "test",
+    "preview"
+  ],
+  "authorIds": [
+    "ZgrsWuRTAkXgeuPV9bo0zuEcA2w1"
+  ],
+  "dependencies": [],
+  "eventsFunctions": [
+    {
+      "fullName": "",
+      "functionType": "Action",
+      "name": "onFirstSceneLoaded",
+      "sentence": "",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::JsCode",
+          "inlineCode": "// Load THNK Local Adapter (https://github.com/arthuro555/THNK)\n\"use strict\";\n(() => {\n  // code/adapters/local.ts\n  if(!window.THNK)window.THNK={};let THNK=window.THNK;\n  ((THNK2) => {\n    const logger = new gdjs.Logger(\"THNK - Local Testing Adapter\");\n    if (!globalThis.BroadcastChannel)\n      logger.error(\n        \"This browser does not support the local adapter - please try using another adapter! (Prepare for an error)\"\n      );\n    const bc = new BroadcastChannel(\"thnk-local-server\");\n    bc.addEventListener(\n      \"messageerror\",\n      (e) => logger.error(\"An error occured while sending a message!\", e)\n    );\n    const ownID = \"\" + Date.now() + Math.random() * 1e3;\n    class LocalClientAdapter extends THNK2.ClientAdapter {\n      constructor() {\n        super(...arguments);\n        this.boundOnBCMessage = this.onBCMessage.bind(this);\n      }\n      onBCMessage({ data }) {\n        if (data.message === \"msg-for-client\" && data.for === ownID)\n          this.onMessage(data.data);\n      }\n      async prepare(runtimeScene) {\n        bc.addEventListener(\"message\", this.boundOnBCMessage);\n        bc.postMessage({ message: \"connect\", from: ownID });\n        window.addEventListener(\"beforeunload\", () => this.close());\n      }\n      close() {\n        bc.postMessage({ message: \"disconnect\", from: ownID });\n        bc.removeEventListener(\"message\", this.boundOnBCMessage);\n      }\n      doSendMessage(message) {\n        bc.postMessage({\n          message: \"msg-for-server\",\n          data: message,\n          from: ownID\n        });\n      }\n    }\n    THNK2.LocalClientAdapter = LocalClientAdapter;\n    class LocalServerAdapter extends THNK2.ServerAdapter {\n      constructor() {\n        super(...arguments);\n        this.boundOnBCMessage = this.onBCMessage.bind(this);\n      }\n      onBCMessage({ data }) {\n        if (data.message === \"msg-for-server\")\n          this.onMessage(data.from, data.data);\n        else if (data.message === \"connect\")\n          this.onConnection(data.from);\n        else if (data.message === \"disconnect\")\n          this.onDisconnection(data.from);\n      }\n      async prepare() {\n        bc.addEventListener(\"message\", this.boundOnBCMessage);\n        window.addEventListener(\"beforeunload\", () => this.close());\n      }\n      close() {\n        bc.removeEventListener(\"message\", this.boundOnBCMessage);\n      }\n      doSendMessageTo(userID, message) {\n        bc.postMessage({\n          message: \"msg-for-client\",\n          data: message.buffer.slice(\n            message.buffer.byteLength - message.byteLength\n          ),\n          for: userID\n        });\n      }\n      getServerID() {\n        return ownID;\n      }\n    }\n    THNK2.LocalServerAdapter = LocalServerAdapter;\n  })(THNK || (THNK = {}));\n})();\nif (new URL(location).searchParams.get(\"client\")) THNK.client.startClient(runtimeScene, new THNK.LocalClientAdapter());",
+          "parameterObjects": "",
+          "useStrict": true,
+          "eventsSheetExpanded": true
+        }
+      ],
+      "parameters": [],
+      "objectGroups": []
+    },
+    {
+      "description": "Starts a local testing server.",
+      "fullName": "Start a local server",
+      "functionType": "Action",
+      "name": "StartServer",
+      "sentence": "Start scene _PARAM1_ as a local server (Start and connect _PARAM2_ clients)",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::JsCode",
+          "inlineCode": [
+            "if (new URL(location).searchParams.get(\"client\"))\r",
+            "    return console.error(\"Cannot start server - preview set as client!\");\r",
+            "\r",
+            "THNK.server.startServer(\r",
+            "    new THNK.LocalServerAdapter(),\r",
+            "    runtimeScene,\r",
+            "    eventsFunctionContext.getArgument(\"Scene\")\r",
+            ");\r",
+            "\r",
+            "let { windowWidth, windowHeight } = runtimeScene.getGame().getGameData().properties;\r",
+            "windowWidth /= 2; windowHeight /= 2;\r",
+            "let x = 0, y = 0, windowID = 0;\r",
+            "for (\r",
+            "    let clients = eventsFunctionContext.getArgument(\"Clients\");\r",
+            "    clients > 0;\r",
+            "    clients--\r",
+            ") {\r",
+            "    const remote = runtimeScene.getGame().getRenderer().getElectronRemote()\r",
+            "    if (remote) {\r",
+            "        // Create a new window\r",
+            "        const { BrowserWindow } = remote.require(\"electron\");\r",
+            "        const win = new BrowserWindow({\r",
+            "            x, y,\r",
+            "            width: windowWidth,\r",
+            "            height: windowHeight,\r",
+            "            useContentSize: true,\r",
+            "            backgroundColor: '#000000',\r",
+            "            parent: remote.getCurrentWindow(),\r",
+            "            webPreferences: {\r",
+            "                nodeIntegration: true,\r",
+            "                contextIsolation: false,\r",
+            "            }\r",
+            "        });\r",
+            "\r",
+            "        // Load the current \r",
+            "        remote.require(\"@electron/remote/main\").enable(win.webContents);\r",
+            "        win.loadFile(\r",
+            "            require(\"os\").platform() === \"win32\" ? location.pathname.slice(1) : location.pathname,\r",
+            "            { query: { \"client\": 1 } }\r",
+            "        );\r",
+            "    } else {\r",
+            "        // As a fallback, open with the natove window.open\r",
+            "        window.open(location + \"?client=1\", \"THNK Client n°\" + windowID++, `width=${windowWidth},height=${windowHeight},screenY=${y},screenX=${x},popup=1;`);\r",
+            "    }\r",
+            "\r",
+            "    // Shift the window positions for the next client\r",
+            "    x += windowWidth;\r",
+            "    if (x + windowWidth > screen.width) {\r",
+            "        x = 0;\r",
+            "        y += windowHeight\r",
+            "        if (y + windowHeight > screen.height) {\r",
+            "            x = windowWidth / 2;\r",
+            "            y = 0;\r",
+            "        }\r",
+            "    }\r",
+            "}\r",
+            ""
+          ],
+          "parameterObjects": "",
+          "useStrict": true,
+          "eventsSheetExpanded": false
+        }
+      ],
+      "parameters": [
+        {
+          "description": "The scene to start as a local server",
+          "name": "Scene",
+          "type": "sceneName"
+        },
+        {
+          "description": "Clients amount",
+          "longDescription": "This will automatically start clients in new windows that will connect to the local server.",
+          "name": "Clients",
+          "type": "expression"
+        }
+      ],
+      "objectGroups": []
+    },
+    {
+      "description": "Connect to the locally running server",
+      "fullName": "Connect to the local server",
+      "functionType": "Action",
+      "name": "ConnectToServer",
+      "sentence": "Connect to local server",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::JsCode",
+          "inlineCode": [
+            "THNK.client.startClient(runtimeScene, new THNK.LocalClientAdapter());\r",
+            ""
+          ],
+          "parameterObjects": "",
+          "useStrict": true,
+          "eventsSheetExpanded": false
+        }
+      ],
+      "parameters": [],
+      "objectGroups": []
+    }
+  ],
+  "eventsBasedBehaviors": [],
+  "eventsBasedObjects": []
+}

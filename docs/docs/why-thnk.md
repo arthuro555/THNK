@@ -10,8 +10,8 @@ keywords: [getting started, intro]
     {JSON.stringify({
       "@context": "https://schema.org",
       "@type": "Organization",
-      "url": "https://thnk.arthuro555.com/docs/why-thnk/",
-      "logo": "https://thnk.arthuro555.com/img/thnk.png"
+      "url": "https://thnk.cloud/docs/why-thnk/",
+      "logo": "https://thnk.cloud/img/thnk.png"
     })}
   </script>
 </head>

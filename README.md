@@ -6,11 +6,11 @@ An authoritative multiplayer games framework for the FLOSS engine GDevelop.
 
 ## Links
 
-- [🌐 Website](https://thnk.arthuro555.com/)
+- [🌐 Website](https://thnk.cloud/)
 - [📰 Introduction blog post](https://bit.ly/thnk-introduction)
 - [📅 Roadmap](https://bit.ly/thnk-roadmap)
 - [💖 Support the project](https://ko-fi.com/arthuro555)
-- [📄 Documentation](https://thnk.arthuro555.com/docs/getting-started/)
+- [📄 Documentation](https://thnk.cloud/docs/getting-started/)
 
 ## Contributors
 
