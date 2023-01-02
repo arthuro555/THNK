@@ -7,7 +7,10 @@
   "devDependencies": {
     "tsup": "^6.5.0"
   },
+  "scripts": {
+    "build": "tsup index.ts --format esm --minify"
+  },
   "dependencies": {
-    "@geckos.io/server": "^2.2.3"
+    "@geckos.io/server": "https://gitpkg.now.sh/arthuro555/geckos.io/packages/server?multiplex-patch"
   }
 }

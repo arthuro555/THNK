@@ -330,6 +330,13 @@
   dependencies:
     "@yandeu/events" "0.0.5"
 
+"@geckos.io/common@^2.2.4":
+  version "2.2.4"
+  resolved "https://registry.yarnpkg.com/@geckos.io/common/-/common-2.2.4.tgz#2e41dc200416fb0c0ddabd45f1ab535ed3ec81ad"
+  integrity sha512-tleJrV5agYHDqcuRgw6RLPcvw+c3vJOFltHEOmyPy7lgo6xT0iZ1KNuJuepLqNfV8pZgWnSmrnLBla+HQi9K5w==
+  dependencies:
+    "@yandeu/events" "0.0.6"
+
 "@geckos.io/server@^2.2.3":
   version "2.2.3"
   resolved "https://registry.yarnpkg.com/@geckos.io/server/-/server-2.2.3.tgz#e4825f8d6d3b85c2d206eac94ab63a93bd45c15b"
@@ -338,6 +345,14 @@
     "@geckos.io/common" "^2.2.3"
     "@yandeu/events" "0.0.5"
     node-datachannel "0.3.6"
+
+"@geckos.io/server@https://gitpkg.now.sh/arthuro555/geckos.io/packages/server?multiplex-patch":
+  version "2.2.4"
+  resolved "https://gitpkg.now.sh/arthuro555/geckos.io/packages/server?multiplex-patch#92a60cabf6b404e70526ad96a465e6a2b6dab50e"
+  dependencies:
+    "@geckos.io/common" "^2.2.4"
+    "@yandeu/events" "0.0.6"
+    node-datachannel "0.4.0"
 
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.1.0"
@@ -768,6 +783,11 @@
   version "0.0.5"
   resolved "https://registry.yarnpkg.com/@yandeu/events/-/events-0.0.5.tgz#f8fb41cf4222186eca6a0a5d36f5393805484f19"
   integrity sha512-TUkghSGu0ThcEyAP50WHU/vdQkpt9EZyotjZzG8KirR+VI5o7Rp5wabcGru62JNy+awMR8Voy+kFzhNkC/1E6A==
+
+"@yandeu/events@0.0.6":
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/@yandeu/events/-/events-0.0.6.tgz#34792ce8efab2ae7854fc1fdefc92c2d55a070a9"
+  integrity sha512-TDwm4kpur8fqWduqZmrgSc3VLYIOflroVB2JhsM8XxL7KrVzviCXdiEGdUmslGi+ymMl5VsmOlw1+5vjoAsQPg==
 
 all-contributors-cli@^6.24.0:
   version "6.24.0"
@@ -2390,6 +2410,13 @@ node-datachannel@0.3.6:
   version "0.3.6"
   resolved "https://registry.yarnpkg.com/node-datachannel/-/node-datachannel-0.3.6.tgz#1ce1167ec5324d3719bd19c92570b7d5642f06f0"
   integrity sha512-weZD9Do1sFvAxznUETWDP/XOvge85NzKeEid0kzHyYF09p8IOYcnwg+rxkgymF3WviZXRYWxHCxjyPHIZnKkLw==
+  dependencies:
+    prebuild-install "^7.0.1"
+
+node-datachannel@0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/node-datachannel/-/node-datachannel-0.4.0.tgz#cd237cbc121221f5f6342cbf2226120dda6dc52f"
+  integrity sha512-4ljypzRaWfM7bLtd4fpQaE4u+bAg5d8wPADycY60RfaZLoxVjcHk+Hsg+gtyyxNIeG6Cdtp3iDN+DUGAAjeVuw==
   dependencies:
     prebuild-install "^7.0.1"
 
