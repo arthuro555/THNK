@@ -11,6 +11,7 @@
     "build": "tsup index.ts --format esm --minify"
   },
   "dependencies": {
-    "@geckos.io/server": "https://gitpkg.now.sh/arthuro555/geckos.io/packages/server?multiplex-patch"
+    "@geckos.io/server": "2.3.0",
+    "zod": "^3.20.2"
   }
 }
