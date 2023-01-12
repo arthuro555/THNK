@@ -1,5 +1,12 @@
 import { geckos, ServerChannel as _ServerChannel } from "@geckos.io/server";
 import * as z from "zod";
+import { pino } from "pino";
+
+// Create a logging instance
+const logger = pino({
+  level: "info",
+  name: "THNK Relay",
+});
 
 interface Room {
   gameID: string;
@@ -11,6 +18,8 @@ interface Room {
 type Rooms = Map<string, Room>;
 
 interface UserData {
+  roomID: string;
+  gameID: string;
   room: Room;
   server: boolean;
 }
@@ -34,12 +43,10 @@ function getRoomsForGame(gameID: string) {
   return rooms;
 }
 
-function claimRoom(gameID: string, roomID: string): UserData {
+function claimRoom(gameID: string, roomID: string): UserData | number {
   const rooms = getRoomsForGame(gameID);
 
-  if (rooms.has(roomID)) {
-    throw "The requested room ID has already been claimed!";
-  }
+  if (rooms.has(roomID)) return 410;
 
   const newRoom: Room = {
     gameID,
@@ -48,19 +55,20 @@ function claimRoom(gameID: string, roomID: string): UserData {
   };
 
   rooms.set(roomID, newRoom);
+  logger.info(`Room '${roomID}' created for game '${gameID}'`);
 
-  return { room: newRoom, server: true };
+  return { gameID, roomID, room: null!, server: true };
 }
 
-function joinRoom(gameID: string, roomID: string): UserData {
+function joinRoom(gameID: string, roomID: string): UserData | number {
   const rooms = getRoomsForGame(gameID);
   const room = rooms.get(roomID);
 
-  if (!room) {
-    throw "The requested room does not exist!";
-  }
+  if (!room) return 404;
 
-  return { room, server: false };
+  logger.info(`Client connecting to room '${roomID}' of game '${gameID}'`);
+
+  return { gameID, roomID, room: null!, server: false };
 }
 
 function setupServer(server: ServerChannel) {
@@ -71,7 +79,10 @@ function setupServer(server: ServerChannel) {
     room.clients.get(to)?.raw.emit(data);
   });
 
-  server.onDisconnect(() => closeRoom(room));
+  server.onDisconnect(() => {
+    closeRoom(room);
+    logger.info(`Server ${server.id} disconnected`);
+  });
 }
 
 function setupClient(client: ServerChannel) {
@@ -91,12 +102,16 @@ function setupClient(client: ServerChannel) {
   client.onDisconnect(() => {
     room.server?.emit("disconnect", { userID: client.id! });
     leaveRoom(room, client);
+    logger.info(`Client ${client.id} disconnected`);
   });
 }
 
 function leaveRoom(room: Room, client: ServerChannel): void {
   room.clients.delete(client.id!);
   client.close();
+  logger.info(
+    `Client '${client.id}' left room '${room.roomID}' of game '${room.gameID}'`
+  );
 }
 
 function closeRoom(room: Room): void {
@@ -108,6 +123,8 @@ function closeRoom(room: Room): void {
   // Unclaim the room.
   const gameRooms = roomsPerGame.get(room.gameID);
   if (gameRooms) gameRooms.delete(room.roomID);
+
+  logger.info(`Room '${room.roomID}' deleted for game '${room.gameID}'`);
 }
 
 const server = geckos({
@@ -117,13 +134,23 @@ const server = geckos({
   // This port range should still allow for multiple connections through node-datachannel multiplexing.
   portRange: { min: 9696, max: 9696 },
   // We obtain the game ID in advance, to know to what game rooms from that connection will belong.
-  async authorization(auth): Promise<UserData | false> {
-    const { type, gameID, roomID } = authHeaderValidator.parse(auth);
-    if (type === "server") return claimRoom(gameID, roomID);
-    if (type === "client") return joinRoom(gameID, roomID);
+  async authorization(auth): Promise<UserData | number> {
+    if (!auth) return 400;
 
-    // Should never happen thanks to zod, but
-    return false;
+    try {
+      const { type, gameID, roomID } = authHeaderValidator.parse(
+        JSON.parse(auth)
+      );
+      if (type === "server") return claimRoom(gameID, roomID);
+      if (type === "client") return joinRoom(gameID, roomID);
+      logger.error(`Type '${type} is neither server nor client!'`);
+    } catch (e) {
+      logger.warn(`An error has occured while validating a connection! ` + e);
+      return 401;
+    }
+
+    // Should never happen thanks to zod, but just in case
+    return 500;
   },
 });
 
@@ -131,9 +158,16 @@ server.onConnection((_connection) => {
   // Override type information to contain the correct userData type
   const connection = _connection as ServerChannel;
 
+  // Set it only now as otherwise geckos crashes by trying to serialize servers 🙄
+  connection.userData.room = getRoomsForGame(connection.userData.gameID).get(
+    connection.userData.roomID
+  )!;
+
   if (connection.userData.server) {
+    logger.info(`New server connected: ${connection.id}`);
     setupServer(connection);
   } else {
+    logger.info(`New client connected: ${connection.id}`);
     setupClient(connection);
   }
 });
