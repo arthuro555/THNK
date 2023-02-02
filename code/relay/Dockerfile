@@ -10,4 +10,3 @@ COPY --from=build /usr/src/app/node_modules /usr/src/app/node_modules
 WORKDIR /usr/src/app
 CMD ["index.mjs"]
 EXPOSE 6969
-EXPOSE 9696/udp

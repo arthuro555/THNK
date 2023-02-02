@@ -8,11 +8,10 @@
     "tsup": "^6.5.0"
   },
   "scripts": {
-    "build": "tsup index.ts --format esm --minify"
+    "build": "tsup ./src/index.ts --format esm --minify"
   },
   "dependencies": {
-    "@geckos.io/server": "2.3.0",
     "pino": "^8.8.0",
-    "zod": "^3.20.2"
+    "uWebSockets.js": "uNetworking/uWebSockets.js#v20.19.0"
   }
 }

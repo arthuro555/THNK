@@ -97,11 +97,12 @@ const runServerTickPostEvent = (runtimeScene: gdjs.RuntimeScene) => {
   // Send a diff of the scene to all clients now that the game logic has ran.
   if (snapshot) {
     for (const userID of runtimeScene.thnkServer.playerManager.connectedPlayers.values())
-      sendGameStateUpdateMessageTo(
-        userID,
-        runtimeScene.thnkServer.adapter,
-        snapshot
-      );
+      if (userID !== runtimeScene.thnkServer.adapter.getServerID())
+        sendGameStateUpdateMessageTo(
+          userID,
+          runtimeScene.thnkServer.adapter,
+          snapshot
+        );
   }
 };
 

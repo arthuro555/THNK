@@ -1,49 +1,27 @@
 /// <reference path="../types/global.d.ts"/>
-import { geckos, type ClientChannel } from "@geckos.io/client";
-import type { AuthHeader } from "relay";
-
-const SERVER_URL = "https://vps.arthuro555.com";
-//const SERVER_URL = "http://localhost";
+import { MessagesForServer } from "relay/src/messages";
+//const SERVER_URL = "ws://45.134.226.128"
+//const SERVER_URL = "wss://relay.thnk.cloud";
+const SERVER_URL = "ws://localhost";
 
 THNK.RelayClientAdapter = class RelayClientAdapter extends THNK.ClientAdapter {
-  connection: ClientChannel;
-
-  connected: boolean = false;
-  error?: Error;
+  connection: WebSocket;
 
   constructor(gameID: string, roomID: string) {
     super();
-    this.connection = geckos({
-      url: SERVER_URL,
-      port: 6969,
-      label: "THNK-Relay",
-      authorization: JSON.stringify({
-        type: "client",
-        gameID,
-        roomID,
-      } as AuthHeader),
-    });
-
-    this.connection.onConnect((error) => {
-      if (error) this.error = error;
-      else this.connected = true;
-    });
-    this.connection.onDisconnect(() => this.onDisconnection());
-
-    this.connection.onRaw((message) => this.onMessage(message as Uint8Array));
+    this.connection = new WebSocket(
+      `${SERVER_URL}:6969/${gameID}/${roomID}/join`
+    );
   }
 
   async prepare(): Promise<void> {
-    if (this.error) throw this.error;
-    if (this.connected) return;
+    this.connection.onclose = () => this.onDisconnection();
+
+    this.connection.onmessage = async ({ data }) =>
+      this.onMessage(await data.arrayBuffer());
 
     await new Promise<void>((resolve) => {
-      let checkIfConnected: () => void;
-      (checkIfConnected = () => {
-        if (this.error) throw this.error;
-        if (this.connected) return resolve();
-        setTimeout(checkIfConnected, 500);
-      })();
+      this.connection.onopen = () => resolve();
     });
   }
 
@@ -52,58 +30,58 @@ THNK.RelayClientAdapter = class RelayClientAdapter extends THNK.ClientAdapter {
   }
 
   protected doSendMessage(message: Uint8Array): void {
-    this.connection.raw.emit(
+    this.connection.send(
       message.buffer.slice(message.buffer.byteLength - message.byteLength)
     );
   }
 };
 
 THNK.RelayServerAdapter = class GeckosServerAdapter extends THNK.ServerAdapter {
-  connection: ClientChannel;
-
-  connected: boolean = false;
-  error?: Error;
+  connection: WebSocket;
 
   constructor(gameID: string, roomID: string) {
     super();
-    this.connection = geckos({
-      url: SERVER_URL,
-      port: 6969,
-      label: "THNK-Relay",
-      authorization: JSON.stringify({
-        type: "server",
-        gameID,
-        roomID,
-      } as AuthHeader),
-    });
+    this.connection = new WebSocket(
+      `${SERVER_URL}:6969/${gameID}/${roomID}/claim`
+    );
 
-    this.connection.onConnect((error) => {
-      if (error) this.error = error;
-      else this.connected = true;
-    });
+    this.connection.onmessage = async ({ data }) => {
+      console.log(data);
+      if (!(data instanceof Blob))
+        return console.error(data, " is not a Blob!");
 
-    this.connection.on("msg", ({ from, data }: any) =>
-      this.onMessage(from, data)
-    );
-    this.connection.on("connect", ({ userID }: any) =>
-      this.onConnection(userID)
-    );
-    this.connection.on("disconnect", ({ userID }: any) =>
-      this.onDisconnection(userID)
-    );
+      const message = new Uint8Array(await data.arrayBuffer());
+      if (message.length < 2)
+        return console.error("Message too small! ", message);
+
+      const messageType = message[message.length - 1];
+      switch (messageType) {
+        case MessagesForServer.ClientMessage:
+          if (message.length < 3)
+            return console.error("Message too small! ", message);
+          this.onMessage(
+            message[message.length - 2].toString(),
+            message.subarray(0, message.length - 2)
+          );
+          break;
+        case MessagesForServer.Connection:
+          this.onConnection(message[0].toString());
+          break;
+        case MessagesForServer.Disconnection:
+          this.onDisconnection(message[0].toString());
+          break;
+        default:
+          console.error("Unrecognized message type: ", messageType);
+      }
+    };
   }
 
   async prepare(): Promise<void> {
-    if (this.error) throw this.error;
-    if (this.connected) return;
-
     await new Promise<void>((resolve) => {
-      let checkIfConnected: () => void;
-      (checkIfConnected = () => {
-        if (this.error) throw this.error;
-        if (this.connected) return resolve();
-        setTimeout(checkIfConnected, 500);
-      })();
+      this.connection.onopen = () => {
+        this.connection.onopen = null;
+        resolve();
+      };
     });
   }
 
@@ -112,15 +90,18 @@ THNK.RelayServerAdapter = class GeckosServerAdapter extends THNK.ServerAdapter {
   }
 
   protected doSendMessageTo(userID: string, message: Uint8Array): void {
-    this.connection.emit("msg", {
-      to: userID,
-      data: message.buffer.slice(
-        message.buffer.byteLength - message.byteLength
-      ),
-    });
+    const extendedMessage = new Uint8Array(message.byteLength + 1);
+
+    extendedMessage.set(
+      message,
+      message.buffer.byteLength - message.byteLength
+    );
+    extendedMessage[message.byteLength] = parseInt(userID, 10);
+
+    this.connection.send(extendedMessage);
   }
 
   getServerID(): string {
-    return this.connection.id!;
+    return "-1";
   }
 };

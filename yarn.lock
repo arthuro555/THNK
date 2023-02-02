@@ -329,7 +329,7 @@
   dependencies:
     "@yandeu/events" "0.0.6"
 
-"@geckos.io/server@2.3.0", "@geckos.io/server@^2.2.3":
+"@geckos.io/server@^2.2.3":
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/@geckos.io/server/-/server-2.3.0.tgz#f687d9bf641d234f07fad84b69fb94c68bb13516"
   integrity sha512-0ezdx9Cclg9xWo70cuE0n/mmpTVwKxH0suaJmAlaUHDxxqZlvEb+hl/tvt02QRSZPoIeCDyE+nAkg1F1p91J4w==
@@ -3195,6 +3195,10 @@ typescript@^4.9.4:
   version "4.9.4"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.9.4.tgz#a2a3d2756c079abda241d75f149df9d561091e78"
   integrity sha512-Uz+dTXYzxXXbsFpM86Wh3dKCxrQqUcVMxwU54orwlJjOpO3ao8L7j5lH+dWfTwgCwIuM9GQ2kvVotzYJMXTBZg==
+
+uWebSockets.js@uNetworking/uWebSockets.js#v20.19.0:
+  version "20.19.0"
+  resolved "https://codeload.github.com/uNetworking/uWebSockets.js/tar.gz/42c9c0d5d31f46ca4115dc75672b0037ec970f28"
 
 update-browserslist-db@^1.0.9:
   version "1.0.10"
