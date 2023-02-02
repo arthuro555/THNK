@@ -16,7 +16,8 @@
     "",
     "Additionally, those rooms can have tags, and you can query rooms by tags to discover rooms to connect to.",
     "",
-    "You can host a relay server yourself too, if you so wish. Simply run the docker image `arthuro5555/thnk-relay:latest` on your server. You will need to open tcp port 6969 and udp port 9696. Example command: `docker run -p 6969:6969 -p 9696:9696/udp -d --restart always arthuro5555/thnk-relay:latest`."
+    "You can host a relay server yourself too, if you so wish. Simply run the docker image `arthuro5555/thnk-relay:latest` on your server. The server runs on TCP port 6969 by default. Example command: `docker run -p 6969:6969 -d --restart always arthuro5555/thnk-relay:latest`.",
+    "Once your server is running, connect to it by overriding the server URL to `ws://<Your IP address>:6969`."
   ],
   "tags": [
     "THNK",
@@ -49,7 +50,7 @@
       "events": [
         {
           "type": "BuiltinCommonInstructions::JsCode",
-          "inlineCode": "// Load THNK Cloud Relay Adapter (https://github.com/arthuro555/THNK)\n\"use strict\";\n(() => {\n  // code/relay/src/messages.ts\n  var staticBinarySlotsMessage = new Uint8Array(2);\n  var staticArbitrarySizeMessage = new Uint8Array(1024 ** 2);\n\n  // code/adapters/relay.ts\n  var SERVER_URL = \"ws://localhost\";\n  THNK.RelayClientAdapter = class RelayClientAdapter extends THNK.ClientAdapter {\n    connection;\n    constructor(gameID, roomID) {\n      super();\n      this.connection = new WebSocket(\n        `${SERVER_URL}:6969/${gameID}/${roomID}/join`\n      );\n    }\n    async prepare() {\n      this.connection.onclose = () => this.onDisconnection();\n      this.connection.onmessage = async ({ data }) => this.onMessage(await data.arrayBuffer());\n      await new Promise((resolve) => {\n        this.connection.onopen = () => resolve();\n      });\n    }\n    close() {\n      this.connection.close();\n    }\n    doSendMessage(message) {\n      this.connection.send(\n        message.buffer.slice(message.buffer.byteLength - message.byteLength)\n      );\n    }\n  };\n  THNK.RelayServerAdapter = class GeckosServerAdapter extends THNK.ServerAdapter {\n    connection;\n    constructor(gameID, roomID) {\n      super();\n      this.connection = new WebSocket(\n        `${SERVER_URL}:6969/${gameID}/${roomID}/claim`\n      );\n      this.connection.onmessage = async ({ data }) => {\n        console.log(data);\n        if (!(data instanceof Blob))\n          return console.error(data, \" is not a Blob!\");\n        const message = new Uint8Array(await data.arrayBuffer());\n        if (message.length < 2)\n          return console.error(\"Message too small! \", message);\n        const messageType = message[message.length - 1];\n        switch (messageType) {\n          case 0 /* ClientMessage */:\n            if (message.length < 3)\n              return console.error(\"Message too small! \", message);\n            this.onMessage(\n              message[message.length - 2].toString(),\n              message.subarray(0, message.length - 2)\n            );\n            break;\n          case 1 /* Connection */:\n            this.onConnection(message[0].toString());\n            break;\n          case 2 /* Disconnection */:\n            this.onDisconnection(message[0].toString());\n            break;\n          default:\n            console.error(\"Unrecognized message type: \", messageType);\n        }\n      };\n    }\n    async prepare() {\n      await new Promise((resolve) => {\n        this.connection.onopen = () => {\n          this.connection.onopen = null;\n          resolve();\n        };\n      });\n    }\n    close() {\n      this.connection.close();\n    }\n    doSendMessageTo(userID, message) {\n      const extendedMessage = new Uint8Array(message.byteLength + 1);\n      extendedMessage.set(\n        message,\n        message.buffer.byteLength - message.byteLength\n      );\n      extendedMessage[message.byteLength] = parseInt(userID, 10);\n      this.connection.send(extendedMessage);\n    }\n    getServerID() {\n      return \"-1\";\n    }\n  };\n})();\n",
+          "inlineCode": "// Load THNK Cloud Relay Adapter (https://github.com/arthuro555/THNK)\n\"use strict\";\n(() => {\n  // code/relay/src/messages.ts\n  var staticBinarySlotsMessage = new Uint8Array(2);\n  var staticArbitrarySizeMessage = new Uint8Array(1024 ** 2);\n\n  // code/adapters/relay.ts\n  THNK.RELAY_SERVER_URL = \"ws://relay.thnk.cloud:6969\";\n  THNK.RelayClientAdapter = class RelayClientAdapter extends THNK.ClientAdapter {\n    connection;\n    constructor(gameID, roomID) {\n      super();\n      this.connection = new WebSocket(\n        `${THNK.RELAY_SERVER_URL}/${gameID}/${roomID}/join`\n      );\n    }\n    async prepare() {\n      this.connection.onclose = () => this.onDisconnection();\n      this.connection.onmessage = async ({ data }) => this.onMessage(await data.arrayBuffer());\n      await new Promise((resolve) => {\n        this.connection.onopen = () => resolve();\n      });\n    }\n    close() {\n      this.connection.close();\n    }\n    doSendMessage(message) {\n      this.connection.send(\n        message.buffer.slice(message.buffer.byteLength - message.byteLength)\n      );\n    }\n  };\n  THNK.RelayServerAdapter = class GeckosServerAdapter extends THNK.ServerAdapter {\n    connection;\n    constructor(gameID, roomID) {\n      super();\n      this.connection = new WebSocket(\n        `${THNK.RELAY_SERVER_URL}/${gameID}/${roomID}/claim`\n      );\n      this.connection.onmessage = async ({ data }) => {\n        console.log(data);\n        if (!(data instanceof Blob))\n          return console.error(data, \" is not a Blob!\");\n        const message = new Uint8Array(await data.arrayBuffer());\n        if (message.length < 2)\n          return console.error(\"Message too small! \", message);\n        const messageType = message[message.length - 1];\n        switch (messageType) {\n          case 0 /* ClientMessage */:\n            if (message.length < 3)\n              return console.error(\"Message too small! \", message);\n            this.onMessage(\n              message[message.length - 2].toString(),\n              message.subarray(0, message.length - 2)\n            );\n            break;\n          case 1 /* Connection */:\n            this.onConnection(message[0].toString());\n            break;\n          case 2 /* Disconnection */:\n            this.onDisconnection(message[0].toString());\n            break;\n          default:\n            console.error(\"Unrecognized message type: \", messageType);\n        }\n      };\n    }\n    async prepare() {\n      await new Promise((resolve) => {\n        this.connection.onopen = () => {\n          this.connection.onopen = null;\n          resolve();\n        };\n      });\n    }\n    close() {\n      this.connection.close();\n    }\n    doSendMessageTo(userID, message) {\n      const extendedMessage = new Uint8Array(message.byteLength + 1);\n      extendedMessage.set(\n        message,\n        message.buffer.byteLength - message.byteLength\n      );\n      extendedMessage[message.byteLength] = parseInt(userID, 10);\n      this.connection.send(extendedMessage);\n    }\n    getServerID() {\n      return \"-1\";\n    }\n  };\n})();\n",
           "parameterObjects": "",
           "useStrict": true,
           "eventsSheetExpanded": false
@@ -126,6 +127,34 @@
           "description": "The ID of the room to join",
           "name": "RoomID",
           "type": "string"
+        }
+      ],
+      "objectGroups": []
+    },
+    {
+      "description": "Changes the relay server URL. This will not change the server for current connections, only for new ones.",
+      "fullName": "Override Relay URL",
+      "functionType": "Action",
+      "name": "OverrideRelayURL",
+      "sentence": "Override Relay URL to _PARAM1_",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::JsCode",
+          "inlineCode": [
+            "THNK.RELAY_SERVER_URL = eventsFunctionContext.getArgument(\"URL\");",
+            ""
+          ],
+          "parameterObjects": "",
+          "useStrict": true,
+          "eventsSheetExpanded": false
+        }
+      ],
+      "parameters": [
+        {
+          "description": "New Relay URL",
+          "name": "URL",
+          "supplementaryInformation": "[\"ws://relay.thnk.cloud:6969\"]",
+          "type": "stringWithSelector"
         }
       ],
       "objectGroups": []

@@ -1,8 +1,8 @@
 /// <reference path="../types/global.d.ts"/>
+/// <reference path="./relay.d.ts"/>
 import { MessagesForServer } from "relay/src/messages";
-//const SERVER_URL = "ws://45.134.226.128"
-//const SERVER_URL = "wss://relay.thnk.cloud";
-const SERVER_URL = "ws://localhost";
+
+THNK.RELAY_SERVER_URL = "ws://relay.thnk.cloud:6969";
 
 THNK.RelayClientAdapter = class RelayClientAdapter extends THNK.ClientAdapter {
   connection: WebSocket;
@@ -10,7 +10,7 @@ THNK.RelayClientAdapter = class RelayClientAdapter extends THNK.ClientAdapter {
   constructor(gameID: string, roomID: string) {
     super();
     this.connection = new WebSocket(
-      `${SERVER_URL}:6969/${gameID}/${roomID}/join`
+      `${THNK.RELAY_SERVER_URL}/${gameID}/${roomID}/join`
     );
   }
 
@@ -42,7 +42,7 @@ THNK.RelayServerAdapter = class GeckosServerAdapter extends THNK.ServerAdapter {
   constructor(gameID: string, roomID: string) {
     super();
     this.connection = new WebSocket(
-      `${SERVER_URL}:6969/${gameID}/${roomID}/claim`
+      `${THNK.RELAY_SERVER_URL}/${gameID}/${roomID}/claim`
     );
 
     this.connection.onmessage = async ({ data }) => {
