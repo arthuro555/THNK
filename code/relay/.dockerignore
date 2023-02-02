@@ -1,0 +1,3 @@
+# Those need to be regenerated before building an image. The dockerfile has a build container taking care of regenerating those.
+dist
+node_modules

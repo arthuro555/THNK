@@ -93,3 +93,22 @@ window.${thnkCode.slice(`"use strict";var `.length)}{`;
 
   fs.writeFileSync(extensionFile, JSON.stringify(localExt, null, 2));
 }
+
+{
+  const relayCode = fs
+    .readFileSync(distPath + "relay.global.js")
+    .toString();
+  /** @type {{eventsFunctions: { name: string, events: { type: string, inlineCode: string }[] }[]}} */
+  const relayExt = JSON.parse(
+    fs.readFileSync(extensionsPath + "THNK_Relay.json").toString()
+  );
+
+  relayExt.eventsFunctions[0].events[0].inlineCode =
+    `// Load THNK Cloud Relay Adapter (https://github.com/arthuro555/THNK)\n` +
+    relayCode;
+
+  fs.writeFileSync(
+    extensionsPath + "THNK_Relay.json",
+    JSON.stringify(relayExt, null, 2)
+  );
+}

@@ -1,0 +1,165 @@
+{
+  "author": "",
+  "category": "Network",
+  "extensionNamespace": "",
+  "fullName": "THNK Framework - Rooms adapter",
+  "helpPath": "https://thnk.cloud/",
+  "iconUrl": "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4iICJodHRwOi8vd3d3LnczLm9yZy9HcmFwaGljcy9TVkcvMS4xL0RURC9zdmcxMS5kdGQiPjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0ibWRpLWxhbi1jb25uZWN0IiB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTQsMUMyLjg5LDEgMiwxLjg5IDIsM1Y3QzIsOC4xMSAyLjg5LDkgNCw5SDFWMTFIMTNWOUgxMEMxMS4xMSw5IDEyLDguMTEgMTIsN1YzQzEyLDEuODkgMTEuMTEsMSAxMCwxSDRNNCwzSDEwVjdINFYzTTMsMTNWMThMMywyMEgxMFYxOEg1VjEzSDNNMTQsMTNDMTIuODksMTMgMTIsMTMuODkgMTIsMTVWMTlDMTIsMjAuMTEgMTIuODksMjEgMTQsMjFIMTFWMjNIMjNWMjFIMjBDMjEuMTEsMjEgMjIsMjAuMTEgMjIsMTlWMTVDMjIsMTMuODkgMjEuMTEsMTMgMjAsMTNIMTRNMTQsMTVIMjBWMTlIMTRWMTVaIiAvPjwvc3ZnPg==",
+  "name": "THNK_Relay",
+  "previewIconUrl": "https://resources.gdevelop-app.com/assets/Icons/lan-connect.svg",
+  "shortDescription": "A THNK client adapter for connecting with a rooms system.",
+  "version": "1.0.0",
+  "description": [
+    "> Note: This THNK adapter uses a relay server that is hosted for free. To help with the hosting costs and keeping this service up, consider [donating to the project](https://ko-fi.com/arthuro555)!",
+    "",
+    "This adapter allows to connect players together through a relay server. Players can create rooms with custom names or a randomly generated one, and other players can join those rooms.",
+    "",
+    "Additionally, those rooms can have tags, and you can query rooms by tags to discover rooms to connect to.",
+    "",
+    "You can host a relay server yourself too, if you so wish. Simply run the docker image `arthuro5555/thnk-relay:latest` on your server. The server runs on TCP port 6969 by default. Example command: `docker run -p 6969:6969 -d --restart always arthuro5555/thnk-relay:latest`.",
+    "Once your server is running, connect to it by overriding the server URL to `ws://<Your IP address>:6969`."
+  ],
+  "tags": [
+    "THNK",
+    "adapter",
+    "client",
+    "server",
+    "room",
+    "code",
+    "among us",
+    "amogus",
+    "multiplayer"
+  ],
+  "authorIds": [
+    "ZgrsWuRTAkXgeuPV9bo0zuEcA2w1"
+  ],
+  "dependencies": [
+    {
+      "exportName": "@geckos.io/server",
+      "name": "Geckos server",
+      "type": "npm",
+      "version": "^2.2.3"
+    }
+  ],
+  "eventsFunctions": [
+    {
+      "fullName": "",
+      "functionType": "Action",
+      "name": "onFirstSceneLoaded",
+      "sentence": "",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::JsCode",
+          "inlineCode": "// Load THNK Cloud Relay Adapter (https://github.com/arthuro555/THNK)\n\"use strict\";\n(() => {\n  // code/relay/src/messages.ts\n  var staticBinarySlotsMessage = new Uint8Array(2);\n  var staticArbitrarySizeMessage = new Uint8Array(1024 ** 2);\n\n  // code/adapters/relay.ts\n  THNK.RELAY_SERVER_URL = \"ws://relay.thnk.cloud:6969\";\n  THNK.RelayClientAdapter = class RelayClientAdapter extends THNK.ClientAdapter {\n    connection;\n    constructor(gameID, roomID) {\n      super();\n      this.connection = new WebSocket(\n        `${THNK.RELAY_SERVER_URL}/${gameID}/${roomID}/join`\n      );\n    }\n    async prepare() {\n      this.connection.onclose = () => this.onDisconnection();\n      this.connection.onmessage = async ({ data }) => this.onMessage(await data.arrayBuffer());\n      await new Promise((resolve) => {\n        this.connection.onopen = () => resolve();\n      });\n    }\n    close() {\n      this.connection.close();\n    }\n    doSendMessage(message) {\n      this.connection.send(\n        message.buffer.slice(message.buffer.byteLength - message.byteLength)\n      );\n    }\n  };\n  THNK.RelayServerAdapter = class GeckosServerAdapter extends THNK.ServerAdapter {\n    connection;\n    constructor(gameID, roomID) {\n      super();\n      this.connection = new WebSocket(\n        `${THNK.RELAY_SERVER_URL}/${gameID}/${roomID}/claim`\n      );\n      this.connection.onmessage = async ({ data }) => {\n        console.log(data);\n        if (!(data instanceof Blob))\n          return console.error(data, \" is not a Blob!\");\n        const message = new Uint8Array(await data.arrayBuffer());\n        if (message.length < 2)\n          return console.error(\"Message too small! \", message);\n        const messageType = message[message.length - 1];\n        switch (messageType) {\n          case 0 /* ClientMessage */:\n            if (message.length < 3)\n              return console.error(\"Message too small! \", message);\n            this.onMessage(\n              message[message.length - 2].toString(),\n              message.subarray(0, message.length - 2)\n            );\n            break;\n          case 1 /* Connection */:\n            this.onConnection(message[0].toString());\n            break;\n          case 2 /* Disconnection */:\n            this.onDisconnection(message[0].toString());\n            break;\n          default:\n            console.error(\"Unrecognized message type: \", messageType);\n        }\n      };\n    }\n    async prepare() {\n      await new Promise((resolve) => {\n        this.connection.onopen = () => {\n          this.connection.onopen = null;\n          resolve();\n        };\n      });\n    }\n    close() {\n      this.connection.close();\n    }\n    doSendMessageTo(userID, message) {\n      const extendedMessage = new Uint8Array(message.byteLength + 1);\n      extendedMessage.set(\n        message,\n        message.buffer.byteLength - message.byteLength\n      );\n      extendedMessage[message.byteLength] = parseInt(userID, 10);\n      this.connection.send(extendedMessage);\n    }\n    getServerID() {\n      return \"-1\";\n    }\n  };\n})();\n",
+          "parameterObjects": "",
+          "useStrict": true,
+          "eventsSheetExpanded": false
+        }
+      ],
+      "parameters": [],
+      "objectGroups": []
+    },
+    {
+      "description": "Claim a room on the relay and start a server on it.",
+      "fullName": "Create a room",
+      "functionType": "Action",
+      "name": "StartServer",
+      "sentence": "Start scene _PARAM2_ as a server on relay room _PARAM1_",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::JsCode",
+          "inlineCode": [
+            "THNK.server.startServer(",
+            "    new THNK.RelayServerAdapter(",
+            "        runtimeScene.getGame().getGameData().properties.projectUuid + runtimeScene.getGame().getGameData().properties.packageName,",
+            "        eventsFunctionContext.getArgument(\"RoomID\")",
+            "    ),",
+            "    runtimeScene,",
+            "    eventsFunctionContext.getArgument(\"Scene\")",
+            ");",
+            ""
+          ],
+          "parameterObjects": "",
+          "useStrict": true,
+          "eventsSheetExpanded": false
+        }
+      ],
+      "parameters": [
+        {
+          "description": "The ID of the room to create",
+          "name": "RoomID",
+          "type": "string"
+        },
+        {
+          "description": "The scene to start the server with",
+          "name": "Scene",
+          "type": "sceneName"
+        }
+      ],
+      "objectGroups": []
+    },
+    {
+      "description": "Join a room on the relay and connect to the server on it.",
+      "fullName": "Join a room",
+      "functionType": "Action",
+      "name": "ConnectToServer",
+      "sentence": "Connect to the server on relay room _PARAM1_",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::JsCode",
+          "inlineCode": [
+            "THNK.client.startClient(",
+            "    runtimeScene,",
+            "    new THNK.RelayClientAdapter(",
+            "        runtimeScene.getGame().getGameData().properties.projectUuid + runtimeScene.getGame().getGameData().properties.packageName,",
+            "        eventsFunctionContext.getArgument(\"RoomID\")",
+            "    )",
+            ");",
+            ""
+          ],
+          "parameterObjects": "",
+          "useStrict": true,
+          "eventsSheetExpanded": false
+        }
+      ],
+      "parameters": [
+        {
+          "description": "The ID of the room to join",
+          "name": "RoomID",
+          "type": "string"
+        }
+      ],
+      "objectGroups": []
+    },
+    {
+      "description": "Changes the relay server URL. This will not change the server for current connections, only for new ones.",
+      "fullName": "Override Relay URL",
+      "functionType": "Action",
+      "name": "OverrideRelayURL",
+      "sentence": "Override Relay URL to _PARAM1_",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::JsCode",
+          "inlineCode": [
+            "THNK.RELAY_SERVER_URL = eventsFunctionContext.getArgument(\"URL\");",
+            ""
+          ],
+          "parameterObjects": "",
+          "useStrict": true,
+          "eventsSheetExpanded": false
+        }
+      ],
+      "parameters": [
+        {
+          "description": "New Relay URL",
+          "name": "URL",
+          "supplementaryInformation": "[\"ws://relay.thnk.cloud:6969\"]",
+          "type": "stringWithSelector"
+        }
+      ],
+      "objectGroups": []
+    }
+  ],
+  "eventsBasedBehaviors": [],
+  "eventsBasedObjects": []
+}

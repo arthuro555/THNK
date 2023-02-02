@@ -1,0 +1,17 @@
+{
+  "name": "relay",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "license": "MIT",
+  "type": "module",
+  "devDependencies": {
+    "tsup": "^6.5.0"
+  },
+  "scripts": {
+    "build": "tsup ./src/index.ts --format esm --minify"
+  },
+  "dependencies": {
+    "pino": "^8.8.0",
+    "uWebSockets.js": "uNetworking/uWebSockets.js#v20.19.0"
+  }
+}
