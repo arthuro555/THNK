@@ -6,6 +6,8 @@ keywords:
     get started,
     platformer,
     learn,
+    connect,
+    network,
     animation,
     messages,
     events,

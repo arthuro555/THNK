@@ -25,7 +25,19 @@ keywords:
 
 Let's make a platformer! First, we'll add a platformer character (with the default controls on) and a few platforms using GDevelop's default behaviors.
 
-![A GDevelop scene with objects that have the platformer character and platform behaviors attached](./platformer-gifs/behaviors.gif "well you probably already know how that works lol")
+<video
+  title="well you probably already know how that works lol"
+  width="100%"
+  muted
+  loop
+  controls
+>
+  <source src="/webm/platformer/behaviors.webm" type="video/webm" />
+  <p>
+    A video of a GDevelop scene with objects that have the platformer character
+    and platform behaviors attached
+  </p>
+</video>
 
 If you start a preview, you should be able to jump around on your platforms. Nothing too exciting yet, but now let's get right into what changes with THNK...
 
@@ -46,13 +58,18 @@ Here, player animations:
 Therefore, it should be in the client section!
 
 <video
-  src="/webm/platformer-animations.webm"
-  type="video/webm"
+  title="IS THIS A MFing HARRY POTTER REFFERENCE?!?"
   width="100%"
-  autoPlay
   muted
   loop
-></video>
+  controls
+>
+  <source src="/webm/platformer/animations.webm" type="video/webm" />
+  <p>
+    A video of a Harry Potter's sorting hat declaring those events should be put
+    in client events.
+  </p>
+</video>
 
 :::note Why can't I just put it in server events?
 
@@ -78,11 +95,17 @@ If you have an initial instance of the player on the scene, you should remove it
 
 Since this is creating objects everyone should be able to see, it should be on the server - it affects other players and affects the game state, not just the visual representation of the game.
 
-![Adding the events described above to the events sheet](./platformer-gifs/connections.gif "ooo that's pretty easy")
+<video title="ooo that's pretty easy" width="100%" muted loop controls>
+  <source src="/webm/platformer/connections.webm" type="video/webm" />
+  <p>A video of adding the events described above to the events sheet.</p>
+</video>
 
 Since we want the clients to be able to see the player objects, we need that object to be synchronized across the server and clients. To do so, it's very simple - simply add the synchronize behavior (from THNK) to your player object!
 
-![Adding the synchronize behavior](./platformer-gifs/add-sync-behavior.gif "well that was surprisingly fast")
+<video title="well that was surprisingly fast" width="100%" muted loop controls>
+  <source src="/webm/platformer/add-sync-behavior.webm" type="video/webm" />
+  <p>A video of adding the synchronize behavior to an object.</p>
+</video>
 
 ### Adding player controls for the clients
 
@@ -94,7 +117,18 @@ Therefore, in THNK, all interactions with the game, from player movement to usin
 
 Sending a command from the client and receiving it on the server can be done with the corresponding action and conditions:
 
-![Adding a message sending and receiving event to the events sheet](./platformer-gifs/messages.gif "Remember to add messages both server- and client-side 😉")
+<video
+  title="Remember to add messages both server- and client-side 😉"
+  width="100%"
+  muted
+  loop
+  controls
+>
+  <source src="/webm/platformer/messages.webm" type="video/webm" />
+  <p>
+    A video of adding a message sending and receiving event to the events sheet.
+  </p>
+</video>
 
 :::note
 
@@ -108,13 +142,19 @@ If you wish to target a player manually, you can get the currently picked player
 
 We have those events so far:
 
-![The events we have so far](./platformer-gifs/messages.png "Our events so far 😎")
+![The events we have so far](./img/platformer/messages.png "Our events so far 😎")
 
 They may technically work, but... they have a few issues.
 
 Receiving events in a normal event is more readable, but it only allows to process one message per server tick, which can cause issues when more player join. To handle all messages received in a single server tick, use a while event instead:
 
-![Transferring the conditions and action from a standard event into a while event](./platformer-gifs/while.gif "While event underrated smh")
+<video title="While event underrated smh" width="100%" muted loop controls>
+  <source src="/webm/platformer/while.webm" type="video/webm" />
+  <p>
+    A video of transferring the conditions and action from a standard event into
+    a while event.
+  </p>
+</video>
 
 The second issue is that we shouldn't be using messages like this. When sending messages, you should always keep a few things in mind:
 
@@ -125,10 +165,10 @@ Those events are sending every frame where a key is pressed a ton of inputs to t
 
 To fix that, let's take another approach: We'll only send one message when pressing and releasing the button. That way, we send way less messages, and if the connection is instable, the server will continue using the same inputs as the last one it received from the client.
 
-import smartInput1 from "./platformer-gifs/smart-input-1.png";
-import smartInput2 from "./platformer-gifs/smart-input-2.png";
-import smartInput3 from "./platformer-gifs/smart-input-3.png";
-import smartInput4 from "./platformer-gifs/smart-input-4.png";
+import smartInput1 from "./img/platformer/smart-input-1.png";
+import smartInput2 from "./img/platformer/smart-input-2.png";
+import smartInput3 from "./img/platformer/smart-input-3.png";
+import smartInput4 from "./img/platformer/smart-input-4.png";
 
 <div>
   {/* prettier-ignore */}

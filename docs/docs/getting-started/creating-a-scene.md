@@ -31,7 +31,7 @@ Every THNK scene must respect three rules:
 
 While it won't break your game immediately to disrespect those rules, they can lead to unexpected behavior and bugs that will be hard for you to diagnose and fix.
 
-![The genie of THNK warns you about respecting the three rules. If you don't respect them, you'll regret it, and, well, don't say he didn't warn you.](img/Genie-warning.png)
+![The genie of THNK warns you about respecting the three rules. If you don't respect them, you'll regret it, and, well, don't say he didn't warn you.](img/Genie-warning.png "DONT TRUST THE GENIE")
 
 :::
 
