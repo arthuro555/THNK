@@ -234,6 +234,11 @@ const config = {
           dark: "rgb(50, 50, 50)",
         },
       },
+      algolia: {
+        appId: "OX2RW5D4KY",
+        apiKey: "20d0ae0f40ee0230fa440bd2ea2f8fee",
+        indexName: "thnk",
+      },
     }),
 };
 
