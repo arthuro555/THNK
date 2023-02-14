@@ -22,7 +22,7 @@ keywords: [getting started, intro]
 
 :::info
 
-THNK is a framework, and not a simple extension - it's a whole way of structuring and coding your games. It is made to be very flexible despite forcing a structure onto your events, so no need to worry if you already started making your game and want to add THNK to it. Check out the [Migration Guide](/docs/migrating) for more information.
+THNK is a framework, and not a simple extension - it's a whole way of structuring and coding your games. Despite forcing a certain structure onto your events, it is made to be relatively flexible, so no need to worry if you already started making your game and want to migrate it to THNK as an afterthought.
 
 :::
 
@@ -32,15 +32,15 @@ Building your game on top of THNK provides multiple benefits. Here are the most 
 
 ### It makes your game work in both single- and multiplayer without any extra changes
 
-THNK by itself doesn't make your game multiplayer games per se, by default it still works in single-player as normal. You can switch to scenes built with THNK, and they will work just like they would if not made with it. You are not committing to multiplayer by using THNK - only, making it super easy to add a high quality multiplayer feature to the game.
+THNK by itself doesn't force your game into being a multiplayer game. By default, all THNK games work normally in single-player, as if they were not built with THNK. You are not committing to multiplayer by using THNK - only, making it super easy to add a high quality multiplayer feature to the game.
 
-### Multiplayer can be enabled in a single action
+### Different types of multiplayer can be enabled in a single action
 
 The real magic of THNK lies in its numerous adapter extensions. An adapter extension allows you to launch a server or client for a specific networking backend in 1 action. The currently available adapters include:
 
 - P2P (World-Wide LAN-like experience)
-- Geckos.io (True LAN experience)
-- Split-screen (coming soon!)
+- Geckos.io (Connect with IP/Hostanme and port)
+- THNK Rooms (Connect with room codes)
 
 This allows for a variety of types of multiplayer to be implemented without any efforts in mere minutes!
 
@@ -69,9 +69,10 @@ Synchronizing objects and variables can be a pain when doing multiplayer by your
 THNK is as optimized as it gets for making your games server and client superfast.
 
 - It uses a custom binary protocol based on [FlatBuffers](https://google.github.io/flatbuffers/) and [msgpackr](https://github.com/kriszyp/msgpackr), instead of much heavier formats like JSON, and additionally, all messages are compressed using the deflate algorithm, the same as the one used in zip files, to use the most minimal bandwidth and provide faster packing and unpacking of messages.
-- It synchronizes in a smart way: it only synchronizes the parts you care about, and only if they changed since the last server tick.
-- It allows having a server update rate slower than the client, and interpolate results on the client, to use up less server resources and bandwidth. (WIP)
-- It never runs server code on the client or client code on server builds (Note that THNK servers in non-server builds of the game also act as a client to itself)
+- It only synchronizes exactly what you tell it to
+- It only synchronises things that have changed since the last synchronisation
+- It allows having a server update rate slower than the client, and interpolate results on the client, to use up less server resources and bandwidth. (Coming soon!)
+- It is written in TypeScript using internal GDevelop APIs to be as fast as a built-in feature
 
 :::note
 
@@ -88,4 +89,4 @@ It is planned to add the possibility to leverage the optimized binary snapshotti
 
 ## How do I get started?
 
-Are you convinced yet? If so, [continue to the next page to learn how to get started using THNK.](/docs/getting-started/)
+Are you convinced yet? If so, [continue to the next page to learn how to get started using THNK](/docs/getting-started/)!
