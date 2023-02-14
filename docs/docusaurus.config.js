@@ -7,6 +7,10 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
 /** @type {import("@docusaurus/theme-common").FooterLinkItem[]} */
 const moreLinks = [
   {
+    label: "💬 Discord (Chat and support)",
+    href: "https://discord.gg/KbkArAMfE7",
+  },
+  {
     label: "👨‍💻 GitHub",
     href: "https://github.com/arthuro555/THNK",
   },
@@ -206,10 +210,9 @@ const config = {
                 label: "Getting started",
                 to: "/docs/getting-started/",
               },
-
               {
-                label: "Migrating to THNK",
-                to: "/docs/migrating",
+                label: "Compare and pick adapters",
+                to: "/docs/misc/picking-an-adapter",
               },
             ],
           },

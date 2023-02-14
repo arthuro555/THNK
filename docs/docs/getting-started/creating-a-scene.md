@@ -35,4 +35,4 @@ While it won't break your game immediately to disrespect those rules, they can l
 
 :::
 
-Enough lecturing, [let's get started creating](/docs/getting-started/simple-platformer)!
+Enough lecturing, let's get started creating!
