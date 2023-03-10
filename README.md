@@ -17,7 +17,7 @@ An authoritative multiplayer games framework for the FLOSS engine GDevelop.
 Thanks to all the contributors to THNK! Here is the full list of all contributors of all kinds to the project:
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-5-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-6-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
@@ -31,6 +31,7 @@ Thanks to all the contributors to THNK! Here is the full list of all contributor
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/MyNameIsRinax"><img src="https://avatars.githubusercontent.com/u/40387061?v=4?s=100" width="100px;" alt="Rinax"/><br /><sub><b>Rinax</b></sub></a><br /><a href="https://github.com/arthuro555/THNK/issues?q=author%3AMyNameIsRinax" title="Bug reports">🐛</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/Midhil457"><img src="https://avatars.githubusercontent.com/u/73597906?v=4?s=100" width="100px;" alt="Leo_Red"/><br /><sub><b>Leo_Red</b></sub></a><br /><a href="#design-Midhil457" title="Design">🎨</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/Entr0py404"><img src="https://avatars.githubusercontent.com/u/75917656?v=4?s=100" width="100px;" alt="Tim"/><br /><sub><b>Tim</b></sub></a><br /><a href="https://github.com/arthuro555/THNK/commits?author=Entr0py404" title="Documentation">📖</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/triloute"><img src="https://avatars.githubusercontent.com/u/45915223?v=4?s=100" width="100px;" alt="triloute"/><br /><sub><b>triloute</b></sub></a><br /><a href="https://github.com/arthuro555/THNK/commits?author=triloute" title="Documentation">📖</a></td>
     </tr>
   </tbody>
 </table>
