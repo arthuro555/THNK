@@ -31,6 +31,6 @@ This is subject to breaking changes, `PlayerState` might become simply the curre
 
 ## Usage of state variables
 
-Using a state variable is simple: a state variable is simply a special type of **structure variable**. You can simply use any child variable of it as a normal GDevelop variable, and it'll be automatically syncrhonized on the client's side.
+Using a state variable is simple: a state variable is simply a special type of **structure variable**. You can simply use any child variable of it as a normal GDevelop variable, and it'll be automatically synchronized on the client's side.
 
 For example, one could make a chat system by appending strings to the array variable `State.Messages`, then on the client side, reading this variable and displaying all messages in this array.
