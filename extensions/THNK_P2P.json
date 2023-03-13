@@ -100,6 +100,76 @@
         }
       ],
       "objectGroups": []
+    },
+    {
+      "description": "Check if the current scene is running with the P2P client adapter.",
+      "fullName": "P2P client adapter in use",
+      "functionType": "Condition",
+      "name": "IsP2PClientInUse",
+      "sentence": "P2P client is running",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::JsCode",
+          "inlineCode": [
+            "eventsFunctionContext.returnValue = runtimeScene.thnkClient && runtimeScene.thnkClient.adapter instanceof THNK.P2PClientAdapter;\r",
+            ""
+          ],
+          "parameterObjects": "",
+          "useStrict": true,
+          "eventsSheetExpanded": false
+        }
+      ],
+      "parameters": [],
+      "objectGroups": []
+    },
+    {
+      "description": "Check if the current scene is running with the P2P server adapter.",
+      "fullName": "P2P server adapter in use",
+      "functionType": "Condition",
+      "name": "IsP2PServerInUse",
+      "sentence": "P2P server is running",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::JsCode",
+          "inlineCode": [
+            "eventsFunctionContext.returnValue = runtimeScene.thnkServer && runtimeScene.thnkServer.adapter instanceof THNK.P2PServerAdapter;\r",
+            ""
+          ],
+          "parameterObjects": "",
+          "useStrict": true,
+          "eventsSheetExpanded": false
+        }
+      ],
+      "parameters": [],
+      "objectGroups": []
+    },
+    {
+      "description": "the P2P ID of the server",
+      "fullName": "Server P2P ID",
+      "functionType": "ExpressionAndCondition",
+      "name": "ServerID",
+      "sentence": "The P2P ID of the server",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::JsCode",
+          "inlineCode": [
+            "eventsFunctionContext.returnValue =",
+            "    (runtimeScene.thnkServer && runtimeScene.thnkServer.adapter instanceof THNK.P2PServerAdapter)",
+            "        ? gdjs.evtTools.p2p.getCurrentId()",
+            "        : runtimeScene.thnkClient",
+            "            ? runtimeScene.thnkClient.adapter.peerID || \"\"",
+            "            : \"\""
+          ],
+          "parameterObjects": "",
+          "useStrict": true,
+          "eventsSheetExpanded": false
+        }
+      ],
+      "expressionType": {
+        "type": "string"
+      },
+      "parameters": [],
+      "objectGroups": []
     }
   ],
   "eventsBasedBehaviors": [],

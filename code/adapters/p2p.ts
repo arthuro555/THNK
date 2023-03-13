@@ -13,8 +13,8 @@ namespace THNK {
   }
 
   export class P2PClientAdapter extends THNK.ClientAdapter {
-    peerID: string;
-    connection: Peer.DataConnection<ArrayBuffer> | null = null;
+    public readonly peerID: string;
+    private connection: Peer.DataConnection<ArrayBuffer> | null = null;
     constructor(peerID: string) {
       super();
       this.peerID = peerID;

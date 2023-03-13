@@ -5,10 +5,12 @@ import { MessagesForServer } from "relay/src/messages";
 THNK.RELAY_SERVER_URL = "ws://relay.thnk.cloud:6969";
 
 THNK.RelayClientAdapter = class RelayClientAdapter extends THNK.ClientAdapter {
-  connection: WebSocket;
+  private connection: WebSocket;
+  public readonly roomID: string;
 
   constructor(gameID: string, roomID: string) {
     super();
+    this.roomID = roomID;
     this.connection = new WebSocket(
       `${THNK.RELAY_SERVER_URL}/${gameID}/${roomID}/join`
     );
@@ -37,10 +39,12 @@ THNK.RelayClientAdapter = class RelayClientAdapter extends THNK.ClientAdapter {
 };
 
 THNK.RelayServerAdapter = class GeckosServerAdapter extends THNK.ServerAdapter {
-  connection: WebSocket;
+  private connection: WebSocket;
+  public readonly roomID: string;
 
   constructor(gameID: string, roomID: string) {
     super();
+    this.roomID = roomID;
     this.connection = new WebSocket(
       `${THNK.RELAY_SERVER_URL}/${gameID}/${roomID}/claim`
     );

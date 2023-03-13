@@ -11,6 +11,8 @@ const getSomeNums = () =>
     .toFixed(Math.ceil(Math.random() * 6) + 2)
     .slice(2);
 
+const logger = new gdjs.Logger("THNK - Geckos adapter");
+
 THNK.GeckosServerAdapter = class GeckosServerAdapter extends (
   THNK.ServerAdapter
 ) {
@@ -114,6 +116,13 @@ THNK.GeckosServerAdapter = class GeckosServerAdapter extends (
       this.onConnection(id);
       this.channels.set(id, channel);
 
+      channel.on("error", (err) => logger.error("Channel error! ", err));
+      channel.webrtcConnection.on("error", (err) =>
+        logger.error("WebRTC error! ", err)
+      );
+      channel.dataChannel.onError((err) =>
+        logger.error("Datachannel error! ", err)
+      );
       channel.onRaw((message) => this.onMessage(id, message as Uint8Array));
       channel.onDisconnect(() => {
         this.onDisconnection(id);
@@ -124,6 +133,12 @@ THNK.GeckosServerAdapter = class GeckosServerAdapter extends (
     this.httpServer = (
       electronRequire("http") as typeof import("http")
     ).createServer();
+    this.httpServer.on("error", (err) =>
+      logger.error("HTTP server error! ", err)
+    );
+    this.httpServer.on("clientError", (err) =>
+      logger.error("HTTP server client-error! ", err)
+    );
     this.server.addServer(this.httpServer);
     this.httpServer.listen(this.port);
 
@@ -163,5 +178,18 @@ THNK.GeckosServerAdapter = class GeckosServerAdapter extends (
 
   getServerID(): string {
     return this.serverID;
+  }
+
+  getServerIP() {
+    const address = this.httpServer?.address();
+    return typeof address === "string"
+      ? address
+      : address?.address ?? "unknown ip";
+  }
+
+  getServerPort() {
+    const address = this.httpServer?.address();
+
+    return (typeof address !== "string" && address?.port) || this.port;
   }
 };

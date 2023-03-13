@@ -42,4 +42,12 @@ THNK.GeckosClientAdapter = class GeckosClientAdapter extends (
       message.buffer.slice(message.buffer.byteLength - message.byteLength)
     );
   }
+
+  getServerIP() {
+    return this.ip;
+  }
+
+  getServerPort() {
+    return this.port;
+  }
 };
