@@ -30,7 +30,7 @@ Screenshots and videos are still missing, come back later if you need them!
 
 :::
 
-To connect players together, an adapter is required. Each have different tradeoffs, and you can [more about each of them here](../misc/picking-an-adapter.md). We'll use P2P as you might already be somewhat familliar with it, as it is integrated in GDevelop.
+To connect players together, an adapter is required. Each have different tradeoffs, and you can learn [more about each of them here](../misc/picking-an-adapter.md). We'll use P2P as you might already be somewhat familliar with it, as it is integrated in GDevelop.
 
 ## Setting up P2P
 
