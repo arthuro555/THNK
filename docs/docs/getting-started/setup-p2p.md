@@ -91,7 +91,7 @@ When the button is pressed, simply use the P2P adapter's "Connect to server at <
 
 In order for clients to connect, a THNK server needs to be started first. The server needs [a THNK scene](./creating-a-scene.md) to run.
 
-In this game, it makes sense to allow players to join and leave whenever they want athe already running game, akin to minecraft. Therefore, we'll just start the game scene directly as a THNK P2P server, using the corresponding action from the .
+In this game, it makes sense to allow players to join and leave whenever they want at the already running game, akin to minecraft. Therefore, we'll just start the game scene directly as a THNK P2P server, using the corresponding action from the P2P adapter.
 
 To allow clients to connect, we'll add a _read-only and disabled text input object_ containing the P2P ID in the platformer scene.
 This is the best way to make selectable text, allowing to easily copy-paste it in an intuitive manner, while allowoing to also simply read it out to a friend.
