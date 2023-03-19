@@ -2,7 +2,7 @@
 /// <reference path="./relay.d.ts"/>
 import { MessagesForServer } from "relay/src/messages";
 
-THNK.RELAY_SERVER_URL = "ws://relay.thnk.cloud:6969";
+THNK.RELAY_SERVER_URL = "wss://relay.thnk.cloud";
 
 THNK.RelayClientAdapter = class RelayClientAdapter extends THNK.ClientAdapter {
   private connection: WebSocket;
@@ -50,7 +50,6 @@ THNK.RelayServerAdapter = class GeckosServerAdapter extends THNK.ServerAdapter {
     );
 
     this.connection.onmessage = async ({ data }) => {
-      console.log(data);
       if (!(data instanceof Blob))
         return console.error(data, " is not a Blob!");
 
