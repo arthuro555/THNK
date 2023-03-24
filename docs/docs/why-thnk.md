@@ -39,14 +39,14 @@ THNK by itself doesn't force your game into being a multiplayer game. By default
 The real magic of THNK lies in its numerous adapter extensions. An adapter extension allows you to launch a server or client for a specific networking backend in 1 action. The currently available adapters include:
 
 - P2P (World-Wide LAN-like experience)
-- Geckos.io (Connect with IP/Hostanme and port)
+- Geckos.io (Connect with IP/Host name and port)
 - THNK Rooms (Connect with room codes)
 
 This allows for a variety of types of multiplayer to be implemented without any efforts in mere minutes!
 
 ### THNK multiplayer is always authoritative
 
-Multiplayer games can be done in a lot of ways. All there is to it in the end is to synchronize objects across instances of a game. But certain ways of doing it can be bad: if we let everyone synchronize any object of the game, a hacker could easily send malicious updates to other clients in order to cheat or crash their games.
+Multiplayer games can be done in a lot of ways. All there is to do in the end is to synchronize objects across instances of a game. But certain ways of doing it can be bad: if we let everyone synchronize any object of the game, a hacker could easily send malicious updates to other clients in order to cheat or crash their games.
 
 Authoritative multiplayer is an architecture that aims to protect against this. In an authoritative architecture, there is a single designated server that runs all the game code. This is the so-called _source of truth_: all instances of the game will trust it and only that servers. That way, for a hacker to manipulate the game, they would have to control the server.
 
