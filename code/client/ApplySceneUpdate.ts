@@ -2,6 +2,10 @@ import { ByteBuffer, Variable } from "t-h-n-k";
 import type { Scene } from "t-h-n-k";
 import { deserializeObject } from "client/ObjectDeserializer";
 import { deserializeVariable } from "client/VariableDeserializer";
+import {
+  _addNewPBLinks as addNewPBLinks,
+  _removeOldPBLinks as removeOldPBLinks,
+} from "client/PlayerBehavior";
 
 export const applySceneUpdateToScene = (
   sceneUpdate: Scene,
@@ -26,13 +30,17 @@ export const applySceneUpdateToScene = (
     );
   }
 
+  const oldPBObjects = sceneUpdate.oldOwnedObjectsArray();
+  if (oldPBObjects) removeOldPBLinks(runtimeScene, oldPBObjects);
+
   const deletedObjects = sceneUpdate.deletedObjectsArray();
-  if (deletedObjects)
+  if (deletedObjects) {
     for (const id of deletedObjects) {
       objectsRegistery.deleteObject(id);
     }
+  }
 
-  if (sceneUpdate.createdObjectsLength() !== 0)
+  if (sceneUpdate.createdObjectsLength() !== 0) {
     for (
       let len = sceneUpdate.createdObjectsLength(),
         i = 0,
@@ -45,8 +53,9 @@ export const applySceneUpdateToScene = (
       const obj = runtimeScene.createObject(name)!;
       objectsRegistery.registerObject(createdObject.id(), obj);
     }
+  }
 
-  if (sceneUpdate.objectsLength() !== 0)
+  if (sceneUpdate.objectsLength() !== 0) {
     for (
       let len = sceneUpdate.objectsLength(),
         i = 0,
@@ -66,4 +75,8 @@ export const applySceneUpdateToScene = (
 
       if (obj) deserializeObject(gameObject, obj);
     }
+  }
+
+  const newPBObjects = sceneUpdate.newOwnedObjectsArray();
+  if (newPBObjects) addNewPBLinks(runtimeScene, newPBObjects);
 };

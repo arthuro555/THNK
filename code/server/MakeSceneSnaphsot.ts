@@ -1,5 +1,6 @@
 import { Builder, GameStateSnapshot } from "t-h-n-k";
 import { packVariable } from "utils/VariablePacker";
+import { _getAllIDsOfObjectsOfPlayer as getAllIDsOfObjectsOfPlayer } from "server/PlayerBehavior";
 
 export const makeSceneSnapshot = (
   builder: Builder,
@@ -36,6 +37,11 @@ export const makeSceneSnapshot = (
     ? GameStateSnapshot.createObjectsVector(builder, objectsSnapshots)
     : null;
 
+  const playerIDs = getAllIDsOfObjectsOfPlayer(forPlayer);
+  const playerIDsOffset = playerIDs
+    ? GameStateSnapshot.createOwnedObjectsVector(builder, playerIDs)
+    : null;
+
   GameStateSnapshot.startGameStateSnapshot(builder);
   if (publicStateVariableOffset)
     GameStateSnapshot.addPublicStatePacked(builder, publicStateVariableOffset);
@@ -47,5 +53,7 @@ export const makeSceneSnapshot = (
   }
   if (objectsSnapshotsOffset)
     GameStateSnapshot.addObjects(builder, objectsSnapshotsOffset);
+  if (playerIDsOffset)
+    GameStateSnapshot.addOwnedObjects(builder, playerIDsOffset);
   return GameStateSnapshot.endGameStateSnapshot(builder);
 };

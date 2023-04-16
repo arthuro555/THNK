@@ -6,7 +6,11 @@ import {
   CreatedObject,
 } from "t-h-n-k";
 import { getTickRate } from "utils/Settings";
-import { serializeRGB } from "./SerializeRGB";
+import { serializeRGB } from "server/SerializeRGB";
+import {
+  _getNewPlayerObjects as getNewPlayerObjects,
+  _getOldPlayerObjects as getOldPlayerObjects,
+} from "server/PlayerBehavior";
 
 export class SnapshotsManager {
   /** The number of diffs to keep */
@@ -62,6 +66,8 @@ export class SceneDiff {
   private readonly objectsDiff: Map<number, ObjectSnapshot> = new Map();
   private readonly deletedObjects = new Set<number>();
   private readonly createdObjects = new Map<number, string>();
+  private readonly newPlayersObjects = getNewPlayerObjects();
+  private readonly oldPlayersObjects = getOldPlayerObjects();
 
   private constructor() {}
   static createDiff(runtimeScene: gdjs.RuntimeScene): SceneDiff {
@@ -164,6 +170,26 @@ export class SceneDiff {
       ? Scene.createDeletedObjectsVector(builder, [...this.deletedObjects])
       : null;
 
+    const newlyOwnedObjectsOrUndefined = this.newPlayersObjects.get(forPlayer);
+    const newlyOwnedObjects =
+      newlyOwnedObjectsOrUndefined && newlyOwnedObjectsOrUndefined.size
+        ? Scene.createNewOwnedObjectsVector(
+            builder,
+            Array.from(newlyOwnedObjectsOrUndefined.values())
+          )
+        : null;
+
+    const previouslyOwnedObjectsOrUndefined =
+      this.oldPlayersObjects.get(forPlayer);
+    const previouslyOwnedObjects =
+      previouslyOwnedObjectsOrUndefined &&
+      previouslyOwnedObjectsOrUndefined.size
+        ? Scene.createOldOwnedObjectsVector(
+            builder,
+            Array.from(previouslyOwnedObjectsOrUndefined.values())
+          )
+        : null;
+
     Scene.startScene(builder);
     if (publicSceneVariable)
       Scene.addPublicStateDiff(builder, publicSceneVariable);
@@ -174,6 +200,9 @@ export class SceneDiff {
       Scene.addCreatedObjects(builder, serializedObjectsToCreateOffset);
     if (serializedObjectsToDeleteOffset)
       Scene.addDeletedObjects(builder, serializedObjectsToDeleteOffset);
+    if (newlyOwnedObjects) Scene.addNewOwnedObjects(builder, newlyOwnedObjects);
+    if (previouslyOwnedObjects)
+      Scene.addOldOwnedObjects(builder, previouslyOwnedObjects);
     return Scene.endScene(builder);
   }
 }

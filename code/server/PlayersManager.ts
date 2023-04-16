@@ -1,4 +1,4 @@
-import { switchPlayerContext } from "server/PlayerContext";
+import { setPickedPlayer } from "server/PickedPlayer";
 export class PlayerManager {
   readonly connectedPlayers = new Set<string>();
   private readonly connectionsQueue: string[] = [];
@@ -19,7 +19,7 @@ export class PlayerManager {
 
   popConnection() {
     if (this.connectionsQueue.length) {
-      switchPlayerContext(this.connectionsQueue.shift()!);
+      setPickedPlayer(this.connectionsQueue.shift()!);
       return true;
     }
 
@@ -28,7 +28,7 @@ export class PlayerManager {
 
   popDisconnection() {
     if (this.disconnectionsQueue.length) {
-      switchPlayerContext(this.disconnectionsQueue.shift()!);
+      setPickedPlayer(this.disconnectionsQueue.shift()!);
       return true;
     }
 

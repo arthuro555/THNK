@@ -14,4 +14,6 @@ table Scene {
   objects: [GameObject];
   created_objects: [CreatedObject];
   deleted_objects: [ushort];
+  new_owned_objects: [ushort];
+  old_owned_objects: [ushort];
 }

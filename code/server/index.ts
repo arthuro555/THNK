@@ -15,4 +15,6 @@ const events = {
 };
 export { events };
 
+export * as PlayerBehavior from "server/PlayerBehavior";
+
 export { startServer } from "server/StartServer";

@@ -6,4 +6,5 @@ table GameStateSnapshot {
   objects: [GameObject];
   public_state_packed: [ubyte];
   private_state_packed: [ubyte];
+  owned_objects: [ushort];
 }

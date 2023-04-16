@@ -1,4 +1,4 @@
-import { switchPlayerContext } from "server/PlayerContext";
+import { setPickedPlayer } from "server/PickedPlayer";
 import { unpackVariable } from "utils/VariablePacker";
 
 interface Message {
@@ -36,7 +36,7 @@ export const popMessage = (name: string, extraData: gdjs.Variable) => {
   if (queue.length) {
     const currentMessage = queue.shift()!;
 
-    switchPlayerContext(currentMessage.initiatorUserID);
+    setPickedPlayer(currentMessage.initiatorUserID);
 
     if (currentMessage.serializedExtraData)
       unpackVariable(extraData, currentMessage.serializedExtraData);

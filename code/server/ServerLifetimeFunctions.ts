@@ -9,6 +9,7 @@ import { addSerializedMessageToTheQueue } from "server/ClientMessagesQueue";
 import { getTickRate } from "utils/Settings";
 import { setupSceneAsServer } from "server/SetupServerScene";
 import { ServerAdapter } from "adapters/Adapter";
+import * as playerBehavior from "server/PlayerBehavior";
 
 const logger = new gdjs.Logger("THNK - Server");
 let timer = 0;
@@ -26,6 +27,7 @@ const runServerTickPreEvent = (runtimeScene: gdjs.RuntimeScene) => {
             continue;
           sendConnectionStartMessageTo(userID, adapter, runtimeScene);
           runtimeScene.thnkServer.playerManager._onConnect(userID);
+          playerBehavior.onPlayerConnection(runtimeScene);
           continue;
         case ClientMessageContent.ClientInputMessage:
           const clientMessage = message.content(
@@ -47,8 +49,10 @@ const runServerTickPreEvent = (runtimeScene: gdjs.RuntimeScene) => {
     messages.length = 0;
   }
 
-  for (const disconnectedUser of adapter.getDisconnectedUsers())
+  for (const disconnectedUser of adapter.getDisconnectedUsers()) {
     runtimeScene.thnkServer.playerManager._onDisconnect(disconnectedUser);
+    playerBehavior.onPlayerDisconnection(runtimeScene, disconnectedUser);
+  }
   adapter.getDisconnectedUsers().length = 0;
 
   const timeManager = runtimeScene.getTimeManager();

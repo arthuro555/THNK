@@ -1,6 +1,7 @@
 import { GameStateSnapshot } from "t-h-n-k";
 import { deserializeObject } from "client/ObjectDeserializer";
 import { unpackVariable } from "utils/VariablePacker";
+import { _reinitializePBLinks } from "./PlayerBehavior";
 
 export const applyGameStateSnapshotToScene = (
   gameState: GameStateSnapshot,
@@ -25,7 +26,7 @@ export const applyGameStateSnapshotToScene = (
   // Delete previous objects, as the snapshot expects to be applied to a blank state.
   objectsRegistery.clear();
 
-  if (gameState.objectsLength() !== 0) {
+  if (gameState.objectsLength() > 0) {
     for (
       let len = gameState.objectsLength(),
         i = 0,
@@ -40,4 +41,6 @@ export const applyGameStateSnapshotToScene = (
       objectsRegistery.registerObject(gameObject.id(), obj);
     }
   }
+
+  _reinitializePBLinks(runtimeScene, gameState.ownedObjectsArray());
 };

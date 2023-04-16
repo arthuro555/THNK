@@ -21,14 +21,7 @@
   "authorIds": [
     "ZgrsWuRTAkXgeuPV9bo0zuEcA2w1"
   ],
-  "dependencies": [
-    {
-      "exportName": "@geckos.io/server",
-      "name": "Geckos server",
-      "type": "npm",
-      "version": "^2.2.3"
-    }
-  ],
+  "dependencies": [],
   "eventsFunctions": [
     {
       "fullName": "",

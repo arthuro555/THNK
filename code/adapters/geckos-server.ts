@@ -74,7 +74,7 @@ THNK.GeckosServerAdapter = class GeckosServerAdapter extends (
           "stream/promises"
         ) as typeof import("stream/promises");
 
-        console.info(`Geckos server not found, downloading it now!`);
+        logger.info(`Geckos server not found, downloading it now!`);
 
         const geckosDownloadPath = path.join(
           app.getPath("temp"),
