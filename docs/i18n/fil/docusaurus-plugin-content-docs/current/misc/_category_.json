@@ -1,0 +1,9 @@
+{
+  "label": "Misc. ",
+  "position": 4,
+  "link": {
+    "type": "generated-index",
+    "slug": "misc",
+    "description": "Miscellaneous pages of documentation."
+  }
+}

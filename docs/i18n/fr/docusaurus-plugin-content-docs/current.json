@@ -1,14 +1,30 @@
 {
-  "sidebar.tutorialSidebar.category.Basics concepts": {
-    "message": "Concepts de base",
-    "description": "The label for category Basics concepts in sidebar tutorialSidebar"
-  },
-  "sidebar.tutorialSidebar.category.Basics concepts.link.generated-index.description": {
-    "message": "5 minutes pour apprendre les concepts de base de THNK.",
-    "description": "The generated-index page description for category Basics concepts in sidebar tutorialSidebar"
-  },
   "version.label": {
-    "message": "Version actuelle",
+    "message": "Prochain",
     "description": "The label for version current"
+  },
+  "sidebar.tutorialSidebar.category.Getting started - Platformer tutorial": {
+    "message": "Comment Démarrer - Jeu de Plateformes",
+    "description": "The label for category Getting started - Platformer tutorial in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Getting started - Platformer tutorial.link.generated-index.description": {
+    "message": "Une introduction approfondie à THNK, où nous construisons un jeu de plateforme avec THNK. C'est la façon recommandée de commencer à apprendre comment utiliser THNK.",
+    "description": "The generated-index page description for category Getting started - Platformer tutorial in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.THNK concepts in-depth": {
+    "message": "Concepts de THNK en profondeur",
+    "description": "The label for category THNK concepts in-depth in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.THNK concepts in-depth.link.generated-index.description": {
+    "message": "Découvrez ici en détail les concepts de THNK les plus importants!",
+    "description": "The generated-index page description for category THNK concepts in-depth in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Misc. ": {
+    "message": "Divers",
+    "description": "The label for category Misc.  in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Misc. .link.generated-index.description": {
+    "message": "Diverses pages de documentation additionnelles.",
+    "description": "The generated-index page description for category Misc.  in sidebar tutorialSidebar"
   }
 }

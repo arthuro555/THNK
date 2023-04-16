@@ -1,0 +1,9 @@
+{
+  "label": "Comment Démarrer - Jeu de Plateformes",
+  "position": 2,
+  "link": {
+    "type": "generated-index",
+    "slug": "getting-started",
+    "description": "Une introduction approfondie à THNK, où nous construisons un jeu de plateforme avec THNK. C'est la façon recommandée de commencer à apprendre comment utiliser THNK."
+  }
+}

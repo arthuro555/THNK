@@ -1,0 +1,30 @@
+{
+  "version.label": {
+    "message": "Next",
+    "description": "The label for version current"
+  },
+  "sidebar.tutorialSidebar.category.Getting started - Platformer tutorial": {
+    "message": "Getting started - Platformer tutorial",
+    "description": "The label for category Getting started - Platformer tutorial in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Getting started - Platformer tutorial.link.generated-index.description": {
+    "message": "A thorough introduction to THNK, where we build a platformer game with THNK. This is the recommended way to learn THNK.",
+    "description": "The generated-index page description for category Getting started - Platformer tutorial in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.THNK concepts in-depth": {
+    "message": "THNK concepts in-depth",
+    "description": "The label for category THNK concepts in-depth in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.THNK concepts in-depth.link.generated-index.description": {
+    "message": "Learn the most important THNK concepts in-depth here!",
+    "description": "The generated-index page description for category THNK concepts in-depth in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Misc. ": {
+    "message": "Misc. ",
+    "description": "The label for category Misc.  in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Misc. .link.generated-index.description": {
+    "message": "Miscellaneous pages of documentation.",
+    "description": "The generated-index page description for category Misc.  in sidebar tutorialSidebar"
+  }
+}

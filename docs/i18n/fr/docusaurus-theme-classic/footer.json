@@ -7,28 +7,40 @@
     "message": "Plus",
     "description": "The title of the footer links column with title=More in the footer"
   },
-  "link.item.label.Tutorial": {
-    "message": "Tutoriel",
-    "description": "The label of footer link with label=Tutorial linking to /docs/intro"
+  "link.item.label.Why THNK?": {
+    "message": "Pourquoi THNK?",
+    "description": "The label of footer link with label=Why THNK? linking to /docs/why-thnk"
+  },
+  "link.item.label.Getting started": {
+    "message": "Comment démarrer",
+    "description": "The label of footer link with label=Getting started linking to /docs/getting-started/"
+  },
+  "link.item.label.Compare and pick adapters": {
+    "message": "Comparer et choisir un adaptateur",
+    "description": "The label of footer link with label=Compare and pick adapters linking to /docs/misc/picking-an-adapter"
+  },
+  "link.item.label.💬 Discord (Chat and support)": {
+    "message": "💬 Discord (Chat and support)",
+    "description": "The label of footer link with label=💬 Discord (Chat and support) linking to https://discord.gg/KbkArAMfE7"
   },
   "link.item.label.👨‍💻 GitHub": {
     "message": "👨‍💻 GitHub",
     "description": "The label of footer link with label=👨‍💻 GitHub linking to https://github.com/arthuro555/THNK"
   },
   "link.item.label.📅 Roadmap": {
-    "message": "📅 Plan de dévelopment",
+    "message": "📅 Planification du projet",
     "description": "The label of footer link with label=📅 Roadmap linking to https://github.com/users/arthuro555/projects/2/views/1"
   },
   "link.item.label.☕ Gift a coffee": {
     "message": "☕ Offrir un café",
-    "description": "The label of footer link with label=☕ Gift a coffee linking to https://discordapp.com/invite/docusaurus"
+    "description": "The label of footer link with label=☕ Gift a coffee linking to https://ko-fi.com/arthuro555"
   },
   "link.item.label.🐦 Twitter": {
     "message": "🐦 Twitter",
     "description": "The label of footer link with label=🐦 Twitter linking to https://twitter.com/arthuro555"
   },
   "copyright": {
-    "message": "THNK. Copyright © 2022 Arthur \"arthuro555\" Pacaud.",
+    "message": "THNK. Copyright © 2023 Arthur \"arthuro555\" Pacaud.",
     "description": "The footer copyright"
   }
 }

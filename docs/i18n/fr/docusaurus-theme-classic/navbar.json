@@ -15,12 +15,16 @@
     "message": "Plus",
     "description": "Navbar item with label More"
   },
+  "item.label.💬 Discord (Chat and support)": {
+    "message": "💬 Discord (Chat et support)",
+    "description": "Navbar item with label 💬 Discord (Chat and support)"
+  },
   "item.label.👨‍💻 GitHub": {
     "message": "👨‍💻 GitHub",
     "description": "Navbar item with label 👨‍💻 GitHub"
   },
   "item.label.📅 Roadmap": {
-    "message": "📅 Plan de dévelopment",
+    "message": "📅 Planification du projet",
     "description": "Navbar item with label 📅 Roadmap"
   },
   "item.label.☕ Gift a coffee": {

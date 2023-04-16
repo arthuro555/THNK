@@ -1,0 +1,30 @@
+{
+  "version.label": {
+    "message": "Siguiente",
+    "description": "The label for version current"
+  },
+  "sidebar.tutorialSidebar.category.Getting started - Platformer tutorial": {
+    "message": "Empezando - Tutorial de plataforma",
+    "description": "The label for category Getting started - Platformer tutorial in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Getting started - Platformer tutorial.link.generated-index.description": {
+    "message": "Una introducción completa a THNK, donde creamos un juego de plataformas con THNK. Esta es la forma recomendada de aprender THNK.",
+    "description": "The generated-index page description for category Getting started - Platformer tutorial in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.THNK concepts in-depth": {
+    "message": "Conceptos de THNK en profundidad",
+    "description": "The label for category THNK concepts in-depth in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.THNK concepts in-depth.link.generated-index.description": {
+    "message": "¡Aprende los conceptos más importantes de THNK en profundidad!",
+    "description": "The generated-index page description for category THNK concepts in-depth in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Misc. ": {
+    "message": "Misc. ",
+    "description": "The label for category Misc.  in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Misc. .link.generated-index.description": {
+    "message": "Páginas de documentación misceláneas.",
+    "description": "The generated-index page description for category Misc.  in sidebar tutorialSidebar"
+  }
+}

@@ -1,68 +1,65 @@
 {
+  "THNK": {
+    "message": "THNK"
+  },
+  "The GDevelop Multiplayer Framework for everyone!": {
+    "message": "Le Kit de Jeux Multijoueur GDevelop fait pour tous!"
+  },
+  "Why THNK?": {
+    "message": "Pourquoi THNK?"
+  },
   "Get started": {
     "message": "Comment démarrer"
   },
   "THNK is an authoritative multiplayer games frameworks for the GDevelop game engine. It is made for everyone - all use cases are supported! From local multiplayer, to LAN, MMOs, and even singleplayer, all are available with the press of a button!": {
-    "message": "THNK est un framework pour la création de jeux vidéos en multijoueur authoritaire pour le moteur de jeux GDevelop. Il est pensé pour tous - tous les cas d'utilisations sont soutenus! Du multijoueur local, aux parites en LAN, aux MMOs, et meme les parties à 1 joueur, tout est disponible et ce avec un seul clic!"
-  },
-  "Create all kinds of multiplayer experiences!": {
-    "message": "Créez touts types de jeux multijoueurs!"
+    "message": "THNK est un kit de création de jeu multijoueur autoritaire pour le moteur de jeu GDevelop. THNK, comme GDevelop, est fait pour tout le monde - utilisable par n'importe qui pour tout types d'utilisations! Du multijoueur local, au LAN, aux MMOs, et même un mode solo, toutes les options sont à votre disposition en un seul clic!"
   },
   "Local": {
     "message": "Local"
   },
   "THNK games work in singleplayer by default!": {
-    "message": "Les jeux THNK marchent en solo par défaut!"
+    "message": "Les jeux créés avec THNK fonctionnent en solo par défaut!"
   },
   "Multiplayer on the local machine is possible as well with the split-screen adapter (coming soon!)": {
-    "message": "Le multijoueur local est possible aussi grace a l'adaptateur écran séparé (à venir!)"
+    "message": "Le multijoueur local est rendu possible via l'adaptateur écran-partagé (à venir!)"
   },
   "LAN": {
     "message": "LAN"
   },
-  "You can easily make LAN games! With the WebSocket adapter (comming soon!), start a server on your machine and let other connect to it via your local IP": {
-    "message": "Il est facile de créer des jeux multijoueur en LAN! Avec l'adaptateur WebSocket (à venir!), on peut démarrer un serveur sur son ordinateur et laisser les autres s'y connecter par son IP"
+  "You can easily make LAN games! With the Geckos.io adapter, start a server on your machine and let other connect to it via your local IP": {
+    "message": "Il est facile de créer des jeux sur le LAN avec l'adaptateur geckos! Les clients peuvent se connecter à un serveur geckos via l'IP et le port de l'autre joueur"
   },
   "World-wide": {
-    "message": "Dans le monde entier!"
+    "message": "Et dans le monde entier!"
   },
   "Players across the world can connect and play your game together with the THNK Cloud (coming soon!) and the P2P adapter": {
-    "message": "Des joueurs du monde entier peuvent jouer a votre jeu ensemble grace au Cloud THNK (à venir!) et à l'adaptateur P2P"
+    "message": "Des joueurs de tous les pays peuvent se rassembler et jouer à vos jeux ensemble, grâce au Cloud THNK (en cours de construction!) et à l'adaptateur P2P"
+  },
+  "Create all kinds of multiplayer experiences!": {
+    "message": "Créez tous types d'expériences multijoueurs!"
   },
   "theme.ErrorPageContent.title": {
-    "message": "Cette page a planté :/",
+    "message": "Cette page a planté.",
     "description": "The title of the fallback page when the page crashed"
   },
   "theme.ErrorPageContent.tryAgain": {
-    "message": "Réessayer?",
+    "message": "Veuillez réessayer",
     "description": "The label of the button to try again when the page crashed"
   },
   "theme.NotFound.title": {
-    "message": "Page non-trouvée :p",
+    "message": "Page introuvable",
     "description": "The title of the 404 page"
   },
   "theme.NotFound.p1": {
-    "message": "On a pas pu trouver la page que vous cherchez :(",
+    "message": "Nous n'avons pas trouvé ce que vous recherchiez.",
     "description": "The first paragraph of the 404 page"
   },
   "theme.NotFound.p2": {
-    "message": "Veuillez contacter arthur.pacaud@hotmail.fr à propos de ceci si vous êtes tombé sur cette page depuis un lien sur ce site.",
+    "message": "Veuillez contacter le propriétaire du site qui vous a lié à l'URL d'origine et leur faire savoir que leur lien est cassé.",
     "description": "The 2nd paragraph of the 404 page"
   },
-  "theme.AnnouncementBar.closeButtonAriaLabel": {
-    "message": "Fermer",
-    "description": "The ARIA label for close button of announcement bar"
-  },
-  "theme.blog.archive.title": {
-    "message": "Archive",
-    "description": "The page & hero title of the blog archive page"
-  },
-  "theme.blog.archive.description": {
-    "message": "Archive",
-    "description": "The page & hero description of the blog archive page"
-  },
   "theme.admonition.note": {
-    "message": "remarque",
+    "message": "note",
     "description": "The default label used for the Note admonition (:::note)"
   },
   "theme.admonition.tip": {
@@ -74,19 +71,27 @@
     "description": "The default label used for the Danger admonition (:::danger)"
   },
   "theme.admonition.info": {
-    "message": "info",
+    "message": "information",
     "description": "The default label used for the Info admonition (:::info)"
   },
   "theme.admonition.caution": {
-    "message": "attention",
+    "message": "prudence",
     "description": "The default label used for the Caution admonition (:::caution)"
   },
   "theme.BackToTopButton.buttonAriaLabel": {
-    "message": "Retour au début de la page",
+    "message": "Retourner en haut",
     "description": "The ARIA label for the back to top button"
   },
+  "theme.blog.archive.title": {
+    "message": "Archive",
+    "description": "The page & hero title of the blog archive page"
+  },
+  "theme.blog.archive.description": {
+    "message": "Archive",
+    "description": "The page & hero description of the blog archive page"
+  },
   "theme.blog.paginator.navAriaLabel": {
-    "message": "Pagination de la liste des articles du blog",
+    "message": "Liste de navigation vers les pages de blog",
     "description": "The ARIA label for the blog pagination"
   },
   "theme.blog.paginator.newerEntries": {
@@ -94,35 +99,23 @@
     "description": "The label used to navigate to the newer blog posts page (previous page)"
   },
   "theme.blog.paginator.olderEntries": {
-    "message": "Anciennes entrées",
+    "message": "Vielles entrées",
     "description": "The label used to navigate to the older blog posts page (next page)"
   },
   "theme.blog.post.paginator.navAriaLabel": {
-    "message": "Pagination des articles du blog",
+    "message": "Navigation vers un autre article de blog",
     "description": "The ARIA label for the blog posts pagination"
   },
   "theme.blog.post.paginator.newerPost": {
-    "message": "Article plus récent",
+    "message": "Prochain poste",
     "description": "The blog post button label to navigate to the newer/previous post"
   },
   "theme.blog.post.paginator.olderPost": {
-    "message": "Article plus ancien",
+    "message": "Post précédent",
     "description": "The blog post button label to navigate to the older/next post"
   },
-  "theme.blog.post.plurals": {
-    "message": "Un article|{count} articles",
-    "description": "Pluralized label for \"{count} posts\". Use as much plural forms (separated by \"|\") as your language support (see https://www.unicode.org/cldr/cldr-aux/charts/34/supplemental/language_plural_rules.html)"
-  },
-  "theme.blog.tagTitle": {
-    "message": "{nPosts} tagués avec « {tagName} »",
-    "description": "The title of the page for a blog tag"
-  },
-  "theme.tags.tagsPageLink": {
-    "message": "Voir tous les tags",
-    "description": "The label of the link targeting the tag list page"
-  },
   "theme.colorToggle.ariaLabel": {
-    "message": "Basculer entre le mode sombre et clair (actuellement {mode})",
+    "message": "Basculer entre le mode sombre et le mode clair (actuellement {mode})",
     "description": "The ARIA label for the navbar color mode toggle"
   },
   "theme.colorToggle.ariaLabel.mode.dark": {
@@ -133,8 +126,20 @@
     "message": "mode clair",
     "description": "The name for the light color mode"
   },
+  "theme.blog.post.plurals": {
+    "message": "Un post|{count} posts",
+    "description": "Pluralized label for \"{count} posts\". Use as much plural forms (separated by \"|\") as your language support (see https://www.unicode.org/cldr/cldr-aux/charts/34/supplemental/language_plural_rules.html)"
+  },
+  "theme.blog.tagTitle": {
+    "message": "{nPosts} étiquetés \"{tagName}\"",
+    "description": "The title of the page for a blog tag"
+  },
+  "theme.tags.tagsPageLink": {
+    "message": "Voir toutes les étiquettes",
+    "description": "The label of the link targeting the tag list page"
+  },
   "theme.docs.DocCard.categoryDescription": {
-    "message": "{count} éléments",
+    "message": "{count} pages de documentation",
     "description": "The default description for a category card in the generated index about how many items this category includes"
   },
   "theme.docs.breadcrumbs.home": {
@@ -154,26 +159,26 @@
     "description": "The label used to navigate to the previous doc"
   },
   "theme.docs.paginator.next": {
-    "message": "Suivant",
+    "message": "Prochain",
     "description": "The label used to navigate to the next doc"
   },
   "theme.docs.tagDocListPageTitle.nDocsTagged": {
-    "message": "Un document tagué|{count} documents tagués",
+    "message": "Un document étiqueté|{count} documents étiquetés",
     "description": "Pluralized label for \"{count} docs tagged\". Use as much plural forms (separated by \"|\") as your language support (see https://www.unicode.org/cldr/cldr-aux/charts/34/supplemental/language_plural_rules.html)"
   },
   "theme.docs.tagDocListPageTitle": {
-    "message": "{nDocsTagged} avec \"{tagName}\"",
+    "message": "{nDocsTagged} en tant que \"{tagName}\"",
     "description": "The title of the page for a docs tag"
   },
   "theme.docs.versionBadge.label": {
     "message": "Version: {versionLabel}"
   },
   "theme.docs.versions.unreleasedVersionLabel": {
-    "message": "Ceci est la documentation de la prochaine version {versionLabel} de {siteTitle}.",
+    "message": "Ceci est la documentation non publiée pour la version {versionLabel} de {siteTitle}.",
     "description": "The label used to tell the user that he's browsing an unreleased doc version"
   },
   "theme.docs.versions.unmaintainedVersionLabel": {
-    "message": "Ceci est la documentation de {siteTitle} {versionLabel}, qui n'est plus activement maintenue.",
+    "message": "Ceci est la documentation de {siteTitle} pour la version {versionLabel}, qui n'est plus activement maintenue.",
     "description": "The label used to tell the user that he's browsing an unmaintained doc version"
   },
   "theme.docs.versions.latestVersionSuggestionLabel": {
@@ -208,16 +213,16 @@
     "message": "Versions",
     "description": "The label for the navbar versions dropdown on mobile view"
   },
-  "theme.common.skipToMainContent": {
-    "message": "Aller au contenu principal",
-    "description": "The skip to content label used for accessibility, allowing to rapidly navigate to main content with keyboard tab/enter navigation"
-  },
   "theme.tags.tagsListLabel": {
-    "message": "Tags :",
+    "message": "Étiquettes:",
     "description": "The label alongside a tag list"
   },
+  "theme.AnnouncementBar.closeButtonAriaLabel": {
+    "message": "Fermer",
+    "description": "The ARIA label for close button of announcement bar"
+  },
   "theme.blog.sidebar.navAriaLabel": {
-    "message": "Navigation article de blog récent",
+    "message": "Navigation des articles récents du blog",
     "description": "The ARIA label for recent posts in the blog sidebar"
   },
   "theme.CodeBlock.copied": {
@@ -225,7 +230,7 @@
     "description": "The copied button label on code blocks"
   },
   "theme.CodeBlock.copyButtonAriaLabel": {
-    "message": "Copier le code",
+    "message": "Copier le code dans le presse-papiers",
     "description": "The ARIA label for copy code blocks button"
   },
   "theme.CodeBlock.copy": {
@@ -237,53 +242,194 @@
     "description": "The title attribute for toggle word wrapping button of code block lines"
   },
   "theme.DocSidebarItem.toggleCollapsedCategoryAriaLabel": {
-    "message": "Plier/Déplier la catégorie '{label}' de la barre latérale",
+    "message": "Afficher/Masquer la catégorie '{label}' de la barre latérale",
     "description": "The ARIA label to toggle the collapsible sidebar category"
+  },
+  "theme.TOCCollapsible.toggleButtonLabel": {
+    "message": "Sur cette page",
+    "description": "The label used by the button on the collapsible TOC component"
   },
   "theme.navbar.mobileLanguageDropdown.label": {
     "message": "Langues",
     "description": "The label for the mobile language switcher dropdown"
   },
   "theme.blog.post.readMore": {
-    "message": "Lire plus",
+    "message": "Lire la suite",
     "description": "The label used in blog post item excerpts to link to full blog posts"
   },
   "theme.blog.post.readMoreLabel": {
-    "message": "En savoir plus sur {title}",
+    "message": "Lire la suite de {title}",
     "description": "The ARIA label for the link to full blog posts from excerpts"
-  },
-  "theme.TOCCollapsible.toggleButtonLabel": {
-    "message": "Sur cette page",
-    "description": "The label used by the button on the collapsible TOC component"
   },
   "theme.blog.post.readingTime.plurals": {
     "message": "Une minute de lecture|{readingTime} minutes de lecture",
     "description": "Pluralized label for \"{readingTime} min read\". Use as much plural forms (separated by \"|\") as your language support (see https://www.unicode.org/cldr/cldr-aux/charts/34/supplemental/language_plural_rules.html)"
   },
   "theme.docs.sidebar.collapseButtonTitle": {
-    "message": "Réduire le menu latéral",
+    "message": "Masquer la barre latérale",
     "description": "The title attribute for collapse button of doc sidebar"
   },
   "theme.docs.sidebar.collapseButtonAriaLabel": {
-    "message": "Réduire le menu latéral",
+    "message": "Masquer la barre latérale",
     "description": "The title attribute for collapse button of doc sidebar"
+  },
+  "theme.docs.sidebar.closeSidebarButtonAriaLabel": {
+    "message": "Fermer la barre de navigation",
+    "description": "The ARIA label for close button of mobile sidebar"
   },
   "theme.navbar.mobileSidebarSecondaryMenu.backButtonLabel": {
     "message": "← Retour au menu principal",
     "description": "The label of the back button to return to main menu, inside the mobile navbar sidebar secondary menu (notably used to display the docs sidebar)"
   },
+  "theme.docs.sidebar.toggleSidebarButtonAriaLabel": {
+    "message": "Afficher/Masquer la barre de navigation",
+    "description": "The ARIA label for hamburger menu button of mobile navigation"
+  },
   "theme.docs.sidebar.expandButtonTitle": {
-    "message": "Déplier le menu latéral",
+    "message": "Afficher la barre latérale",
     "description": "The ARIA label and title attribute for expand button of doc sidebar"
   },
   "theme.docs.sidebar.expandButtonAriaLabel": {
-    "message": "Déplier le menu latéral",
+    "message": "Afficher la barre latérale",
     "description": "The ARIA label and title attribute for expand button of doc sidebar"
   },
-  "THNK": {
-    "message": "THNK"
+  "theme.SearchBar.label": {
+    "message": "Rechercher",
+    "description": "The ARIA label and placeholder for search button"
   },
-  "The GDevelop Multiplayer Framework for everyone!": {
-    "message": "Le framework de jeux multijoueur pour tous!"
+  "theme.SearchModal.searchBox.resetButtonTitle": {
+    "message": "Effacer la recherche",
+    "description": "The label and ARIA label for search box reset button"
+  },
+  "theme.SearchModal.searchBox.cancelButtonText": {
+    "message": "Annuler",
+    "description": "The label and ARIA label for search box cancel button"
+  },
+  "theme.SearchModal.startScreen.recentSearchesTitle": {
+    "message": "Récent",
+    "description": "The title for recent searches"
+  },
+  "theme.SearchModal.startScreen.noRecentSearchesText": {
+    "message": "Aucune recherche récente",
+    "description": "The text when no recent searches"
+  },
+  "theme.SearchModal.startScreen.saveRecentSearchButtonTitle": {
+    "message": "Enregistrer cette recherche",
+    "description": "The label for save recent search button"
+  },
+  "theme.SearchModal.startScreen.removeRecentSearchButtonTitle": {
+    "message": "Supprimer cette recherche de l'historique",
+    "description": "The label for remove recent search button"
+  },
+  "theme.SearchModal.startScreen.favoriteSearchesTitle": {
+    "message": "Favoris",
+    "description": "The title for favorite searches"
+  },
+  "theme.SearchModal.startScreen.removeFavoriteSearchButtonTitle": {
+    "message": "Supprimer cette recherche des favoris",
+    "description": "The label for remove favorite search button"
+  },
+  "theme.SearchModal.errorScreen.titleText": {
+    "message": "Impossible de récupérer les résultats",
+    "description": "The title for error screen of search modal"
+  },
+  "theme.SearchModal.errorScreen.helpText": {
+    "message": "Essayez de vérifier votre connexion réseau.",
+    "description": "The help text for error screen of search modal"
+  },
+  "theme.SearchModal.footer.selectText": {
+    "message": "pour sélectionner",
+    "description": "The explanatory text of the action for the enter key"
+  },
+  "theme.SearchModal.footer.selectKeyAriaLabel": {
+    "message": "Touche Entrée",
+    "description": "The ARIA label for the Enter key button that makes the selection"
+  },
+  "theme.SearchModal.footer.navigateText": {
+    "message": "pour naviguer",
+    "description": "The explanatory text of the action for the Arrow up and Arrow down key"
+  },
+  "theme.SearchModal.footer.navigateUpKeyAriaLabel": {
+    "message": "Flèche du haut",
+    "description": "The ARIA label for the Arrow up key button that makes the navigation"
+  },
+  "theme.SearchModal.footer.navigateDownKeyAriaLabel": {
+    "message": "Flèche du bas",
+    "description": "The ARIA label for the Arrow down key button that makes the navigation"
+  },
+  "theme.SearchModal.footer.closeText": {
+    "message": "pour fermer",
+    "description": "The explanatory text of the action for Escape key"
+  },
+  "theme.SearchModal.footer.closeKeyAriaLabel": {
+    "message": "Touche échap.",
+    "description": "The ARIA label for the Escape key button that close the modal"
+  },
+  "theme.SearchModal.footer.searchByText": {
+    "message": "Système de recherche offert par",
+    "description": "The text explain that the search is making by Algolia"
+  },
+  "theme.SearchModal.noResultsScreen.noResultsText": {
+    "message": "Aucun résultat pour",
+    "description": "The text explains that there are no results for the following search"
+  },
+  "theme.SearchModal.noResultsScreen.suggestedQueryText": {
+    "message": "Essayez de chercher",
+    "description": "The text for the suggested query when no results are found for the following search"
+  },
+  "theme.SearchModal.noResultsScreen.reportMissingResultsText": {
+    "message": "Pensez-vous que cette requête aurait dû retourner des résultats ?",
+    "description": "The text for the question where the user thinks there are missing results"
+  },
+  "theme.SearchModal.noResultsScreen.reportMissingResultsLinkText": {
+    "message": "Signalez-le nous.",
+    "description": "The text for the link to report missing results"
+  },
+  "theme.SearchModal.placeholder": {
+    "message": "Rechercher dans la documentation",
+    "description": "The placeholder of the input of the DocSearch pop-up modal"
+  },
+  "theme.SearchBar.seeAll": {
+    "message": "Voir tous les {count} résultats"
+  },
+  "theme.SearchPage.documentsFound.plurals": {
+    "message": "Un document trouvé|{count} documents trouvés",
+    "description": "Pluralized label for \"{count} documents found\". Use as much plural forms (separated by \"|\") as your language support (see https://www.unicode.org/cldr/cldr-aux/charts/34/supplemental/language_plural_rules.html)"
+  },
+  "theme.SearchPage.existingResultsTitle": {
+    "message": "Résultats de recherche pour « {query} »",
+    "description": "The search page title for non-empty query"
+  },
+  "theme.SearchPage.emptyResultsTitle": {
+    "message": "Rechercher dans la documentation",
+    "description": "The search page title for empty query"
+  },
+  "theme.SearchPage.inputPlaceholder": {
+    "message": "Saisissez votre recherche ici",
+    "description": "The placeholder for search page input"
+  },
+  "theme.SearchPage.inputLabel": {
+    "message": "Rechercher",
+    "description": "The ARIA label for search page input"
+  },
+  "theme.SearchPage.algoliaLabel": {
+    "message": "Service de recherche par Algolia",
+    "description": "The ARIA label for Algolia mention"
+  },
+  "theme.SearchPage.noResultsText": {
+    "message": "Aucun résultat trouvé",
+    "description": "The paragraph for empty search result"
+  },
+  "theme.SearchPage.fetchingNewResults": {
+    "message": "Chargement de nouveaux résultats...",
+    "description": "The paragraph for fetching new search results"
+  },
+  "theme.common.skipToMainContent": {
+    "message": "Aller au contenu principal",
+    "description": "The skip to content label used for accessibility, allowing to rapidly navigate to main content with keyboard tab/enter navigation"
+  },
+  "theme.tags.tagsPageTitle": {
+    "message": "Étiquettes",
+    "description": "The title of the tag list page"
   }
 }

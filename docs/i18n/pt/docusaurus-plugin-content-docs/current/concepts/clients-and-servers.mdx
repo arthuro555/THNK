@@ -1,0 +1,44 @@
+---
+description: Aprenda tudo sobre servidores e clientes THNK e como eles funcionam juntos!
+sidebar_position: 1
+---
+
+import Diagram from "./THNK-Server-Client-Diagram.svg";
+
+# Clientes e Servidors
+
+Um jogo THNK é sempre dividido em duas partes: o servidor e o cliente. São modos diferentes THNK pode executar o seu jogo em:
+
+## Servidores
+
+THNK tem autoridade, que significa que apenas uma instância do jogo executa a lógica do jogo. Esta instância é o servidor. O servidor então enviará para cada cliente as novas posições dos objetos, as variáveis, etc. Todos esses dados são chamados estado do jogo.
+
+O servidor pode ser fornecido como diferentes entidades: ele pode ser o PC local num único jogador, uma instância de jogo de um jogador, um servidor de jogo dedicado, servidores de jogos que fornece para os seus jogadores...
+
+A menos que o servidor também seja um cliente (por exemplo, se você iniciar um cenário como um servidor THNK numa compilação normal do jogo), o servidor não executará o código do cliente. O código do servidor sempre é executado no servidor.
+
+## Clientes
+
+Um cliente é uma instância de jogo conectada a um servidor. Ele nunca executa o código do servidor, mas sempre executa o código do cliente. As responsabilidades do cliente incluem:
+
+1.  Eventos relacionados à aparência (animações, câmera, juice, HUD, menus...)
+2.  Input do jogador (pressionar tecla para mover o personagem, ações nos menus, enviar uma mensagem no chat...)
+
+Um cliente não pode falsificar o estado do jogo com o qual os outros jogadores interagem dado que todas as ações e estados de jogo são realmente executados pelo servidor. Isso torna hacking difícil e improvável para o seu jogo. Claro, se o servidor dá muito controle sobre a input do jogador, a proteção se desvanece! Mantenha os comandos do cliente simples e o mais controlado possível pelo servidor.
+
+## Interação entre servidor e cliente
+
+O cliente e o servidor se comunicam de forma diferente. O cliente comunica com o servidor enviando _comandos_, e o servidor responde com _estado do jogo_.
+
+O fluxo típico se parece com isto:
+
+<Diagram />
+
+O jogador, interagindo com o jogo, produz comandos. O servidor regularmente
+executa os eventos do servidor, uma notificação do servidor. Dentro dele, quaisquer comandos dos clientes podem ser processados.
+No final do tick, o servidor THNK cria um patch descrevendo as diferenças
+no estado do jogo, entre antes e depois do tick do servidor, e envia-o para todos os clientes.
+O cliente aplica a atualização para a sua cópia local do estado do jogo, alterando assim
+as posições e valores de variáveis como o código do servidor encomendado.
+
+O servidor não tem comandos ele pode enviar o jogador de volta, somente estado. Portanto, se você quiser disponibilizar alguns dados somente mediante solicitação, porque eles são bastante grandes, você pode fazer um sistema de requisição-resposta enviando um comando para o servidor, e, em seguida, esperando que ele responda com as informações solicitadas com a próxima atualização da situação do jogo, como uma variável somente de estado do jogador.

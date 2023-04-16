@@ -1,10 +1,10 @@
 {
   "title": {
-    "message": "Blog | THNK",
+    "message": "Blog THNK",
     "description": "The title for the blog used in SEO"
   },
   "description": {
-    "message": "Le blog du dévelopment de THNK - Le framework de création de jeux multijoueur pour tous.",
+    "message": "Le blog du projet THNK.",
     "description": "The description for the blog used in SEO"
   },
   "sidebar.title": {

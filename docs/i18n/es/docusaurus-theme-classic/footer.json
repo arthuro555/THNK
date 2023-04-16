@@ -1,0 +1,46 @@
+{
+  "link.title.Docs": {
+    "message": "Documentación",
+    "description": "The title of the footer links column with title=Docs in the footer"
+  },
+  "link.title.More": {
+    "message": "Más",
+    "description": "The title of the footer links column with title=More in the footer"
+  },
+  "link.item.label.Why THNK?": {
+    "message": "¿Por qué THNK?",
+    "description": "The label of footer link with label=Why THNK? linking to /docs/why-thnk"
+  },
+  "link.item.label.Getting started": {
+    "message": "Primeros pasos",
+    "description": "The label of footer link with label=Getting started linking to /docs/getting-started/"
+  },
+  "link.item.label.Compare and pick adapters": {
+    "message": "Compare y elija adaptadores",
+    "description": "The label of footer link with label=Compare and pick adapters linking to /docs/misc/picking-an-adapter"
+  },
+  "link.item.label.💬 Discord (Chat and support)": {
+    "message": ":speech_balloon: Discord (Chat y soporte)",
+    "description": "The label of footer link with label=💬 Discord (Chat and support) linking to https://discord.gg/KbkArAMfE7"
+  },
+  "link.item.label.👨‍💻 GitHub": {
+    "message": "👨‍💻 GitHub",
+    "description": "The label of footer link with label=👨‍💻 GitHub linking to https://github.com/arthuro555/THNK"
+  },
+  "link.item.label.📅 Roadmap": {
+    "message": "📅 Hoja de ruta",
+    "description": "The label of footer link with label=📅 Roadmap linking to https://github.com/users/arthuro555/projects/2/views/1"
+  },
+  "link.item.label.☕ Gift a coffee": {
+    "message": "☕ Regale un café",
+    "description": "The label of footer link with label=☕ Gift a coffee linking to https://ko-fi.com/arthuro555"
+  },
+  "link.item.label.🐦 Twitter": {
+    "message": "🐦 Twitter",
+    "description": "The label of footer link with label=🐦 Twitter linking to https://twitter.com/arthuro555"
+  },
+  "copyright": {
+    "message": "THNK. Copyright © 2023 Arthur \"arthuro555\" Pacaud.",
+    "description": "The footer copyright"
+  }
+}

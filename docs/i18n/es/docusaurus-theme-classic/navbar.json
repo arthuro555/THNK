@@ -1,0 +1,38 @@
+{
+  "title": {
+    "message": "THNK",
+    "description": "The title in the navbar"
+  },
+  "item.label.Docs": {
+    "message": "Documentación",
+    "description": "Navbar item with label Docs"
+  },
+  "item.label.Blog": {
+    "message": "Blog",
+    "description": "Navbar item with label Blog"
+  },
+  "item.label.More": {
+    "message": "Más",
+    "description": "Navbar item with label More"
+  },
+  "item.label.💬 Discord (Chat and support)": {
+    "message": ":speech_balloon: Discord (Chat y soporte)",
+    "description": "Navbar item with label 💬 Discord (Chat and support)"
+  },
+  "item.label.👨‍💻 GitHub": {
+    "message": "👨‍💻 GitHub",
+    "description": "Navbar item with label 👨‍💻 GitHub"
+  },
+  "item.label.📅 Roadmap": {
+    "message": "📅 Hoja de ruta",
+    "description": "Navbar item with label 📅 Roadmap"
+  },
+  "item.label.☕ Gift a coffee": {
+    "message": "☕ Regale un café",
+    "description": "Navbar item with label ☕ Gift a coffee"
+  },
+  "item.label.🐦 Twitter": {
+    "message": "🐦 Twitter",
+    "description": "Navbar item with label 🐦 Twitter"
+  }
+}

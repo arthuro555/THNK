@@ -1,0 +1,201 @@
+---
+sidebar_position: 3
+description: Dans cette troisième partie du tutoriel débutant, découvrons comment adapter votre jeu à THNK.
+keywords:
+  - comment démarrer
+  - jeu de plateforme
+  - apprendre
+  - animation
+  - messages
+  - événements
+  - client
+  - joueur
+  - contrôles
+  - THNK
+  - p2p
+  - multijoueur
+  - GDevelop
+---
+
+# Utiliser THNK pour un jeu de plateforme
+
+## THNK n'est pas un framework de jeux multijoueur.
+
+THNK est avant tout un kit de création de jeux en architecture autoritaire. C'est une façon de construire des jeux qui suivent l'architecture client-serveur qui fait autorité. Un jeu construit avec THNK est prêt à être transformé en multijoueur par une extension d'adaptateur, mais n'est pas un jeu intrinsèquement multijoueur.
+
+Par conséquent, un aperçu du jeu sans adaptateur fonctionnera en mode solo. Lorsque vous construisez avec THNK, vous commencez par construire le jeu en mode solo. Ensuite vous ajouterez le multijoueur avec les extensions d'adaptateur.
+
+Commençons à construire en mode solo!
+
+## Créons un jeu de plateforme !
+
+Tout d'abord, nous allons ajouter un personnage de jeu de plateforme (avec les contrôles par défaut) et quelques plateformes utilisant les comportements par défaut de GDevelop. Cela ressemble à la façon dont vous le feriez dans GDevelop - rien de nouveau jusqu'à présent !
+
+<video
+  title="well you probably already know how that works lol"
+  width="100%"
+  muted
+  loop
+  controls
+>
+  <source src="/webm/platformer/behaviors.webm" type="video/webm" />
+  <p>
+    Une vidéo d'une scène GDevelop avec des objets contenant les comportements de personnage de jeu de plateforme et de plateforme
+    
+  </p>
+</video>
+
+Si vous lancez un aperçu, vous devriez être en mesure de sauter sur vos plateformes.
+
+## Ajouter des animations au joueur
+
+Ajoutons des animations au joueur ! C'est une tâche assez basique dans GDevelop. Mais souvenez-vous, dans THNK, les événements doivent être dans une des deux catégories : Serveur ou Client. Avant d'ajouter des animations, nous devons décider à quelle section elles appartiennent.
+
+Lorsque vous ajoutez des événements à votre jeu, vous devez toujours vous poser quelques questions :
+
+-   Exigent-t-ils des informations que le client ne devrait pas connaître ?
+-   Est-ce quelque chose qui affecte d'autres joueurs ?
+
+Dans notre cas, les animations du joueur :
+
+-   Utilise la position des joueurs visibles à l'écran (pour déterminer s'ils se déplacent ou pas), informations que le client a dans tous les cas
+-   N'affecte que l'aspect du jeu local et non celui des autres joueurs
+
+Cela devrait donc être dans la section client !
+
+<video
+  title="C'EST UNE PrStain de REFFERENCE A HARRY POTTER?!?"
+  width="100%"
+  muted
+  loop
+  controls
+>
+  <source src="/webm/platformer/animations.webm" type="video/webm" />
+  <p>
+    Une vidéo du "Choixpeau" de Harry Potter déclarant que ces événements doivent être mis sous les événements clients.
+  </p>
+</video>
+
+:::note Pourquoi ne puis-je pas le mettre dans les événements du serveur ?
+
+Techniquement, il n'est pas obligatoire d'inclure les animations dans les événements client, mais, en pratique, c'est souvent une meilleure idée. Si elles étaient sur le serveur, elles devraient être synchronisées avec les clients. Cela pose problème pour deux raisons :
+
+1.  C'est mauvais pour la bande passante - chaque fois qu'une animation change, le changement devrait être envoyé aux clients. Avec beaucoup d'objets et de clients, cela peut surcharger rapidement le réseau en transmettant quelque chose que le client connaît déjà, car il peut déjà le déduire du mouvement d'autres objets. Vous devriez toujours essayer de réduire au minimum la communication entre le client et le serveur pour éviter des problèmes sur des connexions à faible vitesse.
+
+2.  Il pourrait en résulter que les animations ne correspondent pas à ce qui est affiché à l'écran. Étant donné que le serveur gérerait les animations, les animations ne seraient mises à jour que sur les ticks du serveur, qui peuvent être réglées à un taux inférieur à celui de la fréquence de rendu des images. Pendant quelques images, l'animation pourrait ne pas correspondre à ce à quoi vous vous attendiez, jusqu'à ce que le serveur envoie une mise à jour.
+
+:::
+
+## Adaptation du jeu de plate-forme pour le multijoueur
+
+### Donner à chaque client un objet joueur
+
+Nous avons maintenant un simple jeu de plateforme solo avec des animations. Ajoutons un peu de multijoueur !
+D'abord, nous devons dire à THNK ce qu'il faut faire quand un autre joueur se connecte. Nous voulons que chaque joueur ait son propre personnage. Par conséquent, à chaque connexion de joueur, nous devons lui créer un objet de personnage, et le supprimer lorsque le joueur se déconnecte. Nous allons lier l'objet au joueur : cela nous permettra de savoir quelle instance appartient à quel joueur. De cette façon, nous saurons quelle instance du personnage de plateforme supprimer quand un joueur quitte la partie.
+
+:::tip Sélection du joueur
+
+Vous avez peut-être remarqué que vous ne spécifiez pas à quel joueur vous liez l'objet. Cela est dû au fait que THNK l'a déjà fait : l'événement "connexion" choisit le joueur qui se connecte pour être utilisé par les actions suivantes.
+
+Si vous souhaitez lier un objet (ou généralement utiliser une action THNK qui utilise le joueur choisi) sur un autre joueur spécifique ou en dehors d'une condition de sélection du joueur, vous pouvez utiliser l'action "Choisir un joueur" pour spécifier le joueur à choisir.
+
+:::
+
+:::info
+
+Si vous aviez une instance initiale du joueur sur la scène, vous devriez la supprimer ! Cette instance serait juste un "zombie" - puisqu'elle n'est liée à aucun joueur, aucun ne sera capable de le contrôler...
+
+:::
+
+Évidemment, les connexions et les déconnexions doivent être gérés par le serveur, c'est pourquoi nous devons les inclure dans les événements du serveur.
+
+<video title="ooo that's pretty easy" width="100%" muted loop controls>
+  <source src="/webm/platformer/connections.webm" type="video/webm" />
+  <p>Une vidéo montrant l'ajout des événements mentionnés.</p>
+</video>
+
+Puisque nous voulons que les clients puissent voir les objets de joueur, nous avons besoin qu'ils soient synchronisés du serveur à tous les clients. Pour ce faire, c'est très simple - il suffit d'ajouter le comportement de synchronisation (de THNK) à l'objet de votre joueur !
+
+<video title="woa c si rapid" width="100%" muted loop controls>
+  <source src="/webm/platformer/add-sync-behavior.webm" type="video/webm" />
+  <p>Une vidéo montrant l'ajout du comportement "Synchronisation".</p>
+</video>
+
+### Ajout de contrôles de joueur pour les clients
+
+Alors que le joueur peut être correctement contrôlé en mode solo tel quel, les mouvements ne se synchroniseraient pas avec les autres clients en mode multijoueur, malgré le comportement de synchronisation. _Pourquoi ?_
+
+La raison en est que les comportements fonctionnent à la fois sur le client et sur le serveur. Puisque le serveur ne peut pas lire une commande d'un joueur, c'est une tâche du client. Le comportement de plateforme ne recevra aucune commande en ce qui concerne le serveur, et donc les autres clients ne verront aucun mouvement.
+
+Les clients peuvent toujours déplacer leur propre personnage car le client a accès aux commandes du joueur et exécute également le comportement de plateforme. Seul le serveur peut déplacer des objets pour tous les joueurs, donc ce mouvement ne sera pas synchronisé.
+
+Dans THNK, toute interaction avec l'état du jeu, du mouvement du joueur à l'utilisation d'un objet dans l'inventaire, doit être envoyée en tant que commande du client vers le serveur. C'est alors au serveur de valider/traiter la commande et de mettre à jour l'état du jeu en conséquence, pour que tout le monde puisse le voir.
+
+Dans ce cas, tout ce que nous avons à faire est d'envoyer les commandes des clients et de les transmettre au comportement de plateforme. Le comportement de plateforme traitera la façon dont l'objet doit se déplacer et mettra à jour sa position automatiquement, en s'occupant de la partie "validation et mise à jour de l'état du jeu" de la gestion des messages.
+
+#### La manière naïve
+
+Envoyer une commande depuis le client et la recevoir sur le serveur peut être fait avec l'action et les conditions correspondantes :
+
+<video
+  title="C'est la manière naïve, ne faites pas ça chez vous, les enfants!"
+  width="100%"
+  muted
+  loop
+  controls
+>
+  <source src="/webm/platformer/messages.webm" type="video/webm" />
+  <p>
+    Une vidéo de l'ajout des événements pour envoyer et recevoir des messages.
+  </p>
+</video>
+
+#### La méthode intelligente
+
+Nous avons ces événements jusqu'à présent:
+
+![Nos événements écrits jusqu'ici](./img/platformer/messages.png "Oooh voila nos événements jusqu'ici 😎")
+
+Ils peuvent techniquement fonctionner, mais... ils sont imparfaits.
+
+La réception d'événements dans un événement normal est plus lisible, mais cela ne permet de traiter qu'un message par tick du serveur, étant donné que la condition n'est vérifiée qu'une seule fois. Laisser des messages non gérés et être traités lors du prochain tick risque de causer des problèmes si de nombreux joueurs envoient beaucoup de messages. Pour traiter tous les messages reçus en un seul tick du serveur, utilisez un événement "tant que" pour gérer les événements alors que certains sont disponibles pour être traités:
+
+<video title="While event underrated smh" width="100%" muted loop controls>
+  <source src="/webm/platformer/while.webm" type="video/webm" />
+  <p>
+    Une vidéo montrant le transfert des conditions et actions d'un événement standard à un évènement "tant que".
+  </p>
+</video>
+
+Le deuxième problème est le type de message que nous envoyons. Lors de l'envoi de messages, vous devriez toujours garder quelques éléments à l'esprit.
+
+1.  La connexion peut être instable, ce qui peut occasionner des retards dans les messages
+2.  Le trafic entre le serveur et le client devrait être aussi minimal que possible, afin de ne pas utiliser plus de bande passante que disponible
+
+Ces événements sont envoyés à chaque image durant laquelle une touche est pressée. C'est beaucoup de messages, et cela prend beaucoup de bande passante!
+Si pour une raison quelconque, un message n'est pas reçu par le serveur avant chaque tick, p. ex. en raison de déconnexions courtes en raison de l'instabilité de la connexion, alors, en ce qui concerne le serveur, c'est comme si le joueur pressait et relachait le bouton alors qu'en fait, ils le maintiennent appuyé.
+
+Pour corriger cela, prenons une autre approche: Nous enverrons un unique message lorsque nous appuierons sur le bouton et un autre, lorsque nous le relâcherons. De cette façon, nous pouvons envoyer moins de messages, et si la connexion est instable, le serveur supposera que le client continue à faire ce qu'il faisait au lieu de supposer qu'il a arrêté de faire quoi que ce soit.
+
+import smartInput1 from "./img/platformer/smart-input-1.png";
+import smartInput2 from "./img/platformer/smart-input-2.png";
+import smartInput3 from "./img/platformer/smart-input-3.png";
+import smartInput4 from "./img/platformer/smart-input-4.png";
+
+<div>
+  {/* prettier-ignore */}
+  <div style={{ display: "flex", flexWrap: "wrap", gap: "1vh", justifyContent: "center" }}>
+    <img src={smartInput1} width="50%" style={{ alignSelf: "center", minWidth: "300px" }} />
+    <img src={smartInput2} width="50%" style={{ alignSelf: "center", minWidth: "300px" }} />
+    <img src={smartInput3} width="50%" style={{ alignSelf: "center", minWidth: "300px" }} />
+    <img src={smartInput4} width="50%" style={{ alignSelf: "center", minWidth: "300px" }} />
+  </div>
+</div>
+
+Cette solution est plus complexe, mais offrira une bien meilleure expérience aux joueurs.
+
+:::caution
+
+Bien sûr, nous le faisons ici que parce que cela a du sens pour une commande de mouvement continue. Par exemple, l'utilisation d'une potion dans un RPG ne devrait être traitée qu'une seule fois lorsque cela est demandé. Consommer continuellement des potions à chaque tick du serveur tant que le client ne demande pas d'arrêter n'est pas une bonne mécanique de jeu :p
+
+:::
