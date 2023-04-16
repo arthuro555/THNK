@@ -2,7 +2,14 @@
 sidebar_position: 1
 description: To start off the getting started tutorial, we take a look at how to install THNK here.
 keywords:
-  [get started, install, download, adapter, THNK, p2p, multiplayer, GDevelop]
+  - get started
+  - install
+  - download
+  - adapter
+  - THNK
+  - p2p
+  - multiplayer
+  - GDevelop
 ---
 
 # Installing THNK

@@ -2,18 +2,16 @@
 sidebar_position: 0
 description: THNK is an authoritative multiplayer framework for GDevelop. You can find extensive documentation, tutorials and guides about THNK on this site.
 keywords:
-  [
-    get started,
-    quick,
-    start,
-    adapter,
-    THNK,
-    p2p,
-    multiplayer,
-    GDevelop,
-    game,
-    framework,
-  ]
+  - get started
+  - quick
+  - start
+  - adapter
+  - THNK
+  - p2p
+  - multiplayer
+  - GDevelop
+  - game
+  - framework
 ---
 
 # Welcome to the THNK Documentation!

@@ -2,7 +2,9 @@
 sidebar_position: 1
 title: What is THNK?
 description: A brief introduction to THNK - What is it? Why would I want to use it? How do I get started? All of those questions will be answered here. It is the recommended starting point to get started with the THNK framework.
-keywords: [getting started, intro]
+keywords:
+  - getting started
+  - intro
 ---
 
 <head>

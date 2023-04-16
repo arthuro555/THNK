@@ -3,21 +3,23 @@ slug: website-released
 title: The THNK website has been released!
 description: I am happy to announce the opening of the THNK website!
 image: /img/THNK-thumbnail.png
-authors: [arthuro555]
-tags: [website, docs, announcement]
+authors:
+  - arthuro555
+tags:
+  - website
+  - docs
+  - announcement
 keywords:
-  [
-    thnk,
-    release,
-    docs,
-    website,
-    gdevelop,
-    p2p,
-    multiplayer,
-    network,
-    beta,
-    preview,
-  ]
+  - thnk
+  - release
+  - docs
+  - website
+  - gdevelop
+  - p2p
+  - multiplayer
+  - network
+  - beta
+  - preview
 ---
 
 THNK now has a website!

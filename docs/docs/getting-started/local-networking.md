@@ -2,24 +2,22 @@
 sidebar_position: 4
 description: A game is never totally the same in multiplayer than it is in single player. Learn how to preview and test out your game's multiplayer locally in this fouth part of the getting started tutorial!
 keywords:
-  [
-    get started,
-    platformer,
-    learn,
-    connect,
-    network,
-    animation,
-    messages,
-    events,
-    client,
-    player,
-    control,
-    THNK,
-    local,
-    adapter,
-    multiplayer,
-    GDevelop,
-  ]
+  - get started
+  - platformer
+  - learn
+  - connect
+  - network
+  - animation
+  - messages
+  - events
+  - client
+  - player
+  - control
+  - THNK
+  - local
+  - adapter
+  - multiplayer
+  - GDevelop
 ---
 
 # Try out the multiplayer using the local adapter
