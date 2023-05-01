@@ -40,6 +40,7 @@
 
 .heroHeaderText {
   font-family: "Nunito";
+  color: rgb(33, 37, 41);
   font-size: 18vh;
   margin-bottom: 0;
 }
@@ -59,4 +60,15 @@
   padding-right: 12%;
   flex-wrap: wrap;
   gap: 5px;
+}
+
+.buttons > * {
+  /* Colors from the logo */
+  background-color: rgb(33, 37, 41);
+  color: rgb(248, 249, 250);
+}
+
+.buttons > *:hover {
+  /* Color from the banner */
+  color: #ffe066;
 }

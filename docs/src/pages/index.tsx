@@ -25,13 +25,13 @@ function HomepageHeader() {
         </p>
         <div className={styles.buttons}>
           <Link
-            className="button button--secondary button--lg"
+            className="button button--lg"
             to="/docs/why-thnk"
           >
             <Translate>Why THNK?</Translate>
           </Link>
           <Link
-            className="button button--secondary button--lg"
+            className="button button--lg"
             to="/docs/getting-started/"
           >
             <Translate>Get started</Translate>
