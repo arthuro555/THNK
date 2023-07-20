@@ -64,8 +64,18 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "EmilyLemonly",
+      "name": "Emily Lemonly",
+      "avatar_url": "https://avatars.githubusercontent.com/u/67420178?v=4",
+      "profile": "https://discord.io/wemg",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
-  "linkToUsage": false
+  "linkToUsage": false,
+  "commitType": "docs"
 }
