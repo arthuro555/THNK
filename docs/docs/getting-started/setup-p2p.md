@@ -28,7 +28,7 @@ Screenshots and videos are still missing, come back later if you need them!
 
 :::
 
-To connect players together, an adapter is required. Each have different tradeoffs, and you can learn [more about each of them here](../misc/picking-an-adapter.md). We'll use P2P as you might already be somewhat familliar with it, as it is integrated in GDevelop.
+To connect players together, an adapter is required. Each have different tradeoffs, and you can learn [more about each of them here](../misc/picking-an-adapter.md). We'll use P2P as you might already be somewhat familiar with it, as it is integrated in GDevelop.
 
 ## Setting up P2P
 
@@ -48,13 +48,13 @@ Then, to connect,
 
 ---
 
-First, let's create a menu scene that contains a "Connceting to server" text in the middle. While we are not connected to the broker, it is useless to propose any other option as starting a server or connecting to one is impossible without a P2P ID provided by the broker.
+First, let's create a menu scene that contains a "Connecting to server" text in the middle. While we are not connected to the broker, it is useless to propose any other option as starting a server or connecting to one is impossible without a P2P ID provided by the broker.
 
 We can, at the beginning of the scene, simply call the "Connect to the default broker server" action.
 
 :::info TURN/STUN servers
 
-If you are going to add TURN/STUN servers as ICE candidates (recomended as a fallback if the player's firewall block P2P connections), they must be called just before connecting to the broker, not after!
+If you are going to add TURN/STUN servers as ICE candidates (recommended as a fallback if the player's firewall block P2P connections), they must be called just before connecting to the broker, not after!
 
 :::
 
@@ -81,7 +81,7 @@ That next step is to display two buttons: one for client, one for server.
 
 The client connection should allow typing in an ID. A text input object is the best: it allows to manually write the ID if needed, but also allows pasting in the ID.
 
-Once the player finishes entering the ID, they need to be able to innitiate the connection. You can use a button from the GDevelop asset store for this.
+Once the player finishes entering the ID, they need to be able to initiate the connection. You can use a button from the GDevelop asset store for this.
 
 When the button is pressed, simply use the P2P adapter's "Connect to server at < P2P ID >". Use the text input's expressions to get the entered ID.
 
@@ -92,7 +92,7 @@ In order for clients to connect, a THNK server needs to be started first. The se
 In this game, it makes sense to allow players to join and leave the game anytime after it started, akin to minecraft. Therefore, we'll just start the game scene directly as a THNK P2P server, using the corresponding action from the P2P adapter.
 
 To allow clients to connect, we'll add a _read-only and disabled text input object_ containing the P2P ID in the platformer scene.
-This is the best way to make selectable text, allowing to easily copy-paste it in an intuitive manner, while allowoing to also simply read it out to a friend.
+This is the best way to make selectable text, allowing to easily copy-paste it in an intuitive manner, while allowing to also simply read it out to a friend.
 
 :::tip Lobby
 

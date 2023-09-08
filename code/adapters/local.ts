@@ -7,7 +7,7 @@ namespace THNK {
     );
   const bc = new BroadcastChannel("thnk-local-server");
   bc.addEventListener("messageerror", (e) =>
-    logger.error("An error occured while sending a message!", e)
+    logger.error("An error occurred while sending a message!", e)
   );
   const ownID = "" + Date.now() + Math.random() * 1000;
 

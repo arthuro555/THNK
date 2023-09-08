@@ -2,7 +2,7 @@
 
 Thanks for your interest in contributing to THNK! We value them a lot, and hope to see you stick around :)
 
-Although THNK is a program, non-code contributions are very welcome too! If you do not feel confortable writing code, you can also contribute to the project by:
+Although THNK is a program, non-code contributions are very welcome too! If you do not feel comfortable writing code, you can also contribute to the project by:
 
 - Creating and sharing an example
 - Publishing video tutorials
@@ -15,7 +15,7 @@ Although THNK is a program, non-code contributions are very welcome too! If you 
 - Hunting for bugs
 - Code-reviewing PRs
 - Sending supportive messages to all contributors :)
-- Staring the repository
+- Starring the repository
 
 With that said, let's look at how to contribute to THNK!
 
@@ -57,11 +57,12 @@ The GDevelop extensions are contained in `extensions`. You can install the lates
 ## Building - Test your changes
 
 You will need the following tools to build THNK:
+
 - NodeJS (Preferably v16 LTS)
 - Yarn
 - A system that can run FlatBuffer's `flatc`
 
-When you first download the repository, you will need to install dependencies by running `yarn`. Remember to run it again regularely to ensure you are using the same version and dependencies as everyone else!
+When you first download the repository, you will need to install dependencies by running `yarn`. Remember to run it again regularly to ensure you are using the same version and dependencies as everyone else!
 
 To launch a full build of THNK, run `yarn build`. You can also run the build step-by-step:
 

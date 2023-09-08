@@ -40,7 +40,7 @@ The best advantage is that it can find the networking method that's the fastest 
 
 THNK Rooms allow any player to start a server with any given code, and clients will be able to connect to it over the THNK Relay.
 
-The relay uses µWebSockets, which is a fast networking method, albeit uses TCP and therefore gets more laggy on an reliable network than other adapters. That is its biggest flaw.
+The relay uses µWebSockets, which is a fast networking method, albeit uses TCP and therefore gets more laggy on a reliable network than other adapters. That is its biggest flaw.
 
 The biggest advantage is that it uses standard TCP connections, which are never ever blocked by any network.
 
@@ -66,6 +66,6 @@ You likely would want to use THNK Rooms (Relay) instead: It allows you to create
 
 ### Jackbox games
 
-Jackbox uses a room code system. Since Jackbox is more of a party game, it is something most people will play with their friends and familly, so there is little risk in players knowing each other's IP address. Since multiple games are likely to be played in a row, it's also handy if the code does not change between each game. If the Jackbox game in question needs good reflexes or is otherwise time-based, it's especially important to have a quick connection too. Therefore, it'd be a good fit for P2P. Since players are likely on the local network as well, LAN connections are rarely blocked by the router/firewall as well.
+Jackbox uses a room code system. Since Jackbox is more of a party game, it is something most people will play with their friends and family, so there is little risk in players knowing each other's IP address. Since multiple games are likely to be played in a row, it's also handy if the code does not change between each game. If the Jackbox game in question needs good reflexes or is otherwise time-based, it's especially important to have a quick connection too. Therefore, it'd be a good fit for P2P. Since players are likely on the local network as well, LAN connections are rarely blocked by the router/firewall as well.
 
 Note that you might want to add a "Streamer mode" that uses the THNK Rooms adapter instead, though, as a streamer will not want members of their audience to know their IP address, and they'll likely want to get a new room for new audience members to join after each game. This would also help avoid having to install a TURN server.

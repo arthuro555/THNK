@@ -12,7 +12,7 @@ Each room can optionally have a variable with data set by the owner of a room. T
 
 ## Room tags (TODO)
 
-A room's owne can add and remove tags from their room. Any player can query rooms by one or multiple tags. The amount of rooms returned by a query can be limited.
+A room's owner can add and remove tags from their room. Any player can query rooms by one or multiple tags. The amount of rooms returned by a query can be limited.
 
 This can be used for discovering rooms, matchmaking, and cumulating filters on the former two.
 
