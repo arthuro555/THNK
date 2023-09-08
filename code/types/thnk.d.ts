@@ -18,7 +18,7 @@ declare global {
       /** A reference to the `State` variable of the object, if it is replicated and on the server. */
       stateVariables: StateVariables;
 
-      // Previous values are stored to not send unecessary data
+      // Previous values are stored to not send unnecessary data
       prevX: number;
       prevY: number;
       prevAngle: number;

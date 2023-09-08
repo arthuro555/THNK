@@ -143,7 +143,7 @@ export class Variable {
   }
 
   /**
-   * Unserialize a JSON string into this variable.
+   * Deserialize a JSON string into this variable.
    *
    * This just logs an error if the JSON is invalid.
    *

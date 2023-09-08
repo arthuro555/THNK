@@ -64,7 +64,7 @@ Here, player animations:
 Therefore, it should be in the client section!
 
 <video
-  title="IS THIS A MFing HARRY POTTER REFFERENCE?!?"
+  title="IS THIS A MFing HARRY POTTER REFERENCE?!?"
   width="100%"
   muted
   loop
@@ -128,7 +128,7 @@ While the player might be controlling fine in single-player, as it stands, the m
 
 The reason is that the behaviors run on both the client, and on the server. Since the server cannot read a player's input though, as that is a client task. The platformer behavior will not receive any inputs as far as the server is concerned, and therefore other clients will not see any movement.
 
-Clients still can move their own character as the client code, which does have access to player inputs, also runs the platformer behavior. Only the server can move objects for all players, hence this movement will not be synchornized.
+Clients still can move their own character as the client code, which does have access to player inputs, also runs the platformer behavior. Only the server can move objects for all players, hence this movement will not be synchronized.
 
 In THNK, all player interactions with the game state, from player movement to using an item in the inventory, needs to be sent as a command from the client to the server. It is then the server's job to validate and process the command, updating the game state accordingly for everyone to see.
 
@@ -177,7 +177,7 @@ The second issue is the kind of message we are sending. When sending messages, y
 Those events are being sent every frame where a key is pressed. That is a lot of messages, and this takes a lot of bandwidth!
 If for some reason a message is not received by the server before each tick, e.g. because of short disconnects due to connection instability, then as far as the server is concerned, it is as if the player keeps on pressing and unpressing the button, where, in fact, they are still holding it.
 
-To fix that, let's take another approach: We'll only send 1 message when pressing and 1 when releasing the button. That way, we can send way less messages, and if the connection is or becomes unstable, the server will assume the client is continueing to do what they were doing instead of assuming they stopped doing anything.
+To fix that, let's take another approach: We'll only send 1 message when pressing and 1 when releasing the button. That way, we can send way less messages, and if the connection is or becomes unstable, the server will assume the client is continuing to do what they were doing instead of assuming they stopped doing anything.
 
 import smartInput1 from "./img/platformer/smart-input-1.png";
 import smartInput2 from "./img/platformer/smart-input-2.png";

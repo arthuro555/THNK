@@ -8,14 +8,14 @@ Contributing is simple and welcome! Just submit a PR with your changes.
 
 ### Installation
 
-```
-$ yarn
+```bash
+yarn
 ```
 
 ### Display the website with local changes
 
-```
-$ yarn start
+```bash
+yarn start
 ```
 
 This command starts a local development server and opens it up in a browser window. Most changes are reflected live without having to restart the server.

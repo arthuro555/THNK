@@ -15,7 +15,7 @@ THNK takes care of synchronizing the game state from the server to the client. F
 
 ### Objects
 
-Objects can be marked as game state in THNK by adding the "Synchronize" behvaior on them. This behavior will watch for changes on the object and automatically sync those on clients.
+Objects can be marked as game state in THNK by adding the "Synchronize" behavior on them. This behavior will watch for changes on the object and automatically sync those on clients.
 
 :::note
 

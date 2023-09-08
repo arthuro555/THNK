@@ -41,7 +41,7 @@ THNK by itself doesn't force your game into being a multiplayer game. By default
 The real magic of THNK lies in its numerous adapter extensions. An adapter extension allows you to launch a server or client for a specific networking backend in 1 action. The currently available adapters include:
 
 - P2P (World-Wide LAN-like experience)
-- Geckos.io (Connect with IP/Hostanme and port)
+- Geckos.io (Connect with IP/Hostname and port)
 - THNK Rooms (Connect with room codes)
 
 This allows for a variety of types of multiplayer to be implemented without any efforts in mere minutes!
@@ -72,7 +72,7 @@ THNK is as optimized as it gets for making your games server and client superfas
 
 - It uses a custom binary protocol based on [FlatBuffers](https://google.github.io/flatbuffers/) and [msgpackr](https://github.com/kriszyp/msgpackr), instead of much heavier formats like JSON, and additionally, all messages are compressed using the deflate algorithm, the same as the one used in zip files, to use the most minimal bandwidth and provide faster packing and unpacking of messages.
 - It only synchronizes exactly what you tell it to
-- It only synchronises things that have changed since the last synchronisation
+- It only synchronizes things that have changed since the last synchronization
 - It allows having a server update rate slower than the client, and interpolate results on the client, to use up less server resources and bandwidth. (Coming soon!)
 - It is written in TypeScript using internal GDevelop APIs to be as fast as a built-in feature
 

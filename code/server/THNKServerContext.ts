@@ -23,7 +23,7 @@ export class THNKServerContext {
   runServerCode: boolean = true;
   /** List of users that already know this scene, used when unpausing a scene to only send a snapshot to those who do not have it in memory already. */
   previouslyConnectedUsers?: Set<string>;
-  /** Stores snapshots of the diffs of a hanful of previous frames. */
+  /** Stores snapshots of the diffs of a handful of previous frames. */
   snapshotsManager = new SnapshotsManager();
 
   constructor(adapter: ServerAdapter, stateVariables: StateVariables) {
