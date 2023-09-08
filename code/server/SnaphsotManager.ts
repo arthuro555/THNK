@@ -11,7 +11,7 @@ import { serializeRGB } from "./SerializeRGB";
 export class SnapshotsManager {
   /** The number of diffs to keep */
   diffsCount: number;
-  /** The list of previous difs in case one gets missed by the client. */
+  /** The list of previous diffs in case one gets missed by the client. */
   diffs: Array<Snapshot>;
   /** The index of the current diff. */
   currentDiff = 0;
