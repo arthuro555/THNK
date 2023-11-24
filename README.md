@@ -17,7 +17,7 @@ An authoritative multiplayer games framework for the FLOSS engine GDevelop.
 Thanks to all the contributors to THNK! Here is the full list of all contributors of all kinds to the project:
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-7-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-8-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
@@ -33,6 +33,9 @@ Thanks to all the contributors to THNK! Here is the full list of all contributor
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/Entr0py404"><img src="https://avatars.githubusercontent.com/u/75917656?v=4?s=100" width="100px;" alt="Tim"/><br /><sub><b>Tim</b></sub></a><br /><a href="https://github.com/arthuro555/THNK/commits?author=Entr0py404" title="Documentation">📖</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/triloute"><img src="https://avatars.githubusercontent.com/u/45915223?v=4?s=100" width="100px;" alt="triloute"/><br /><sub><b>triloute</b></sub></a><br /><a href="https://github.com/arthuro555/THNK/commits?author=triloute" title="Documentation">📖</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://discord.io/wemg"><img src="https://avatars.githubusercontent.com/u/67420178?v=4?s=100" width="100px;" alt="Emily Lemonly"/><br /><sub><b>Emily Lemonly</b></sub></a><br /><a href="https://github.com/arthuro555/THNK/commits?author=EmilyLemonly" title="Documentation">📖</a></td>
+    </tr>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/dartpk"><img src="https://avatars.githubusercontent.com/u/84038852?v=4?s=100" width="100px;" alt="dartpk"/><br /><sub><b>dartpk</b></sub></a><br /><a href="https://github.com/arthuro555/THNK/issues?q=author%3Adartpk" title="Bug reports">🐛</a> <a href="https://github.com/arthuro555/THNK/commits?author=dartpk" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>

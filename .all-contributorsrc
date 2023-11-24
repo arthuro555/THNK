@@ -73,6 +73,16 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "dartpk",
+      "name": "dartpk",
+      "avatar_url": "https://avatars.githubusercontent.com/u/84038852?v=4",
+      "profile": "https://github.com/dartpk",
+      "contributions": [
+        "bug",
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
