@@ -1,6 +1,7 @@
 import { switchPlayerContext } from "server/PlayerContext";
 export class PlayerManager {
   readonly connectedPlayers = new Set<string>();
+  readonly tickConnectedPlayers: string[] = [];
   private readonly connectionsQueue: string[] = [];
   private readonly disconnectionsQueue: string[] = [];
 

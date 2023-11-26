@@ -19,6 +19,7 @@ declare global {
       stateVariables: StateVariables;
 
       // Previous values are stored to not send unecessary data
+      prevLayer?: string;
       prevX: number;
       prevY: number;
       prevAngle: number;

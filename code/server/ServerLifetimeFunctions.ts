@@ -26,6 +26,7 @@ const runServerTickPreEvent = (runtimeScene: gdjs.RuntimeScene) => {
             continue;
           sendConnectionStartMessageTo(userID, adapter, runtimeScene);
           runtimeScene.thnkServer.playerManager._onConnect(userID);
+          runtimeScene.thnkServer.playerManager.tickConnectedPlayers.push(userID);
           continue;
         case ClientMessageContent.ClientInputMessage:
           const clientMessage = message.content(
@@ -104,6 +105,8 @@ const runServerTickPostEvent = (runtimeScene: gdjs.RuntimeScene) => {
           snapshot
         );
   }
+
+  runtimeScene.thnkServer.playerManager.tickConnectedPlayers.length = 0;
 };
 
 let sceneSwitch: { adapter: ServerAdapter; isPause: boolean } | null = null;

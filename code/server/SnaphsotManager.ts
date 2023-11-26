@@ -80,15 +80,17 @@ export class SceneDiff {
     } = stateVariables;
 
     const diff = new SceneDiff();
+    //If new players connected this tick, we need to send all info, cause diff is not valid for new players
+    const forceDiff = thnkServer!.playerManager.tickConnectedPlayers.length > 0;
 
-    if (publicStateVariable.isDirty()) {
+    if (forceDiff || publicStateVariable.isDirty()) {
       diff.publicStateVariableDiff = publicStateVariable.serializeToBinary();
     }
 
     {
       const children = privateStateVariable.getAllChildren();
       for (const child in children)
-        if (children[child].isDirty())
+        if (forceDiff || children[child].isDirty())
           diff.privateStateVariablesDiffs.set(
             child,
             children[child].serializeToBinary()
@@ -98,7 +100,7 @@ export class SceneDiff {
     {
       const children = teamStateVariable.getAllChildren();
       for (const child in children)
-        if (children[child].isDirty())
+        if (forceDiff || children[child].isDirty())
           diff.teamStateVariablesDiffs.set(
             child,
             children[child].serializeToBinary()
@@ -106,7 +108,7 @@ export class SceneDiff {
     }
 
     objectsRegistery.forEach((obj) => {
-      const objDiff = ObjectSnapshot.createDiff(obj);
+      const objDiff = ObjectSnapshot.createDiff(obj, forceDiff);
       if (objDiff) diff.objectsDiff.set(obj.thnkID, objDiff);
     });
     for (const [id, objectName] of objectsRegistery.getCreatedObjects())
@@ -189,6 +191,7 @@ class ObjectSnapshot {
   teamStateVariablesDiffs = new Map<string, Uint8Array>();
 
   propertyChanged = false;
+  layer?: string;
   x?: number;
   y?: number;
   height?: number;
@@ -208,85 +211,91 @@ class ObjectSnapshot {
     this.id = id;
     this.aabb = aabb;
   }
-  static createDiff(obj: gdjs.RuntimeObject): ObjectSnapshot | null {
+  static createDiff(obj: gdjs.RuntimeObject, forceDiff = false): ObjectSnapshot | null {
     const diff = new ObjectSnapshot(
       obj.thnkID,
       obj.getVisibilityAABB() || obj.getAABB()
     );
 
-    if (obj.getX() !== obj.prevX) {
+    if (forceDiff || obj.getLayer() !== obj.prevLayer) {
+      obj.prevLayer = obj.getLayer();
+      diff.propertyChanged = true;
+      diff.layer = obj.getLayer();
+    }
+
+    if (forceDiff || obj.getX() !== obj.prevX) {
       obj.prevX = obj.getX();
       diff.propertyChanged = true;
       diff.x = obj.getX();
     }
 
-    if (obj.getY() !== obj.prevY) {
+    if (forceDiff || obj.getY() !== obj.prevY) {
       obj.prevY = obj.getY();
       diff.propertyChanged = true;
       diff.y = obj.getY();
     }
 
-    if (obj.getHeight() !== obj.prevHeight) {
+    if (forceDiff || obj.getHeight() !== obj.prevHeight) {
       obj.prevHeight = obj.getHeight();
       diff.propertyChanged = true;
       diff.height = obj.getHeight();
     }
 
-    if (obj.getWidth() !== obj.prevWidth) {
+    if (forceDiff || obj.getWidth() !== obj.prevWidth) {
       obj.prevWidth = obj.getWidth();
       diff.propertyChanged = true;
       diff.width = obj.getWidth();
     }
 
-    if (obj.getAngle() !== obj.prevAngle) {
+    if (forceDiff || obj.getAngle() !== obj.prevAngle) {
       obj.prevAngle = obj.getAngle();
       diff.propertyChanged = true;
       diff.angle = obj.getAngle();
     }
 
-    if (obj.getZOrder() !== obj.prevZOrder) {
+    if (forceDiff || obj.getZOrder() !== obj.prevZOrder) {
       obj.prevZOrder = obj.getZOrder();
       diff.propertyChanged = true;
       diff.zOrder = obj.getZOrder();
     }
 
-    if (obj.isHidden() !== obj.prevVisibility) {
+    if (forceDiff || obj.isHidden() !== obj.prevVisibility) {
       obj.prevVisibility = obj.isHidden();
       diff.propertyChanged = true;
       diff.hidden = obj.isHidden();
     }
 
-    if (obj.isFlippedX && obj.isFlippedX() !== obj.prevFlippedX) {
+    if (obj.isFlippedX && (forceDiff || obj.isFlippedX() !== obj.prevFlippedX)) {
       obj.prevFlippedX = obj.isFlippedX();
       diff.propertyChanged = true;
       diff.flippedX = obj.isFlippedX();
     }
 
-    if (obj.isFlippedY && obj.isFlippedY() !== obj.prevFlippedY) {
+    if (obj.isFlippedY && (forceDiff || obj.isFlippedY() !== obj.prevFlippedY)) {
       obj.prevFlippedY = obj.isFlippedY();
       diff.propertyChanged = true;
       diff.flippedY = obj.isFlippedY();
     }
 
-    if (obj.getOpacity && obj.getOpacity() !== obj.prevOpacity) {
+    if (obj.getOpacity && (forceDiff || obj.getOpacity() !== obj.prevOpacity)) {
       obj.prevOpacity = obj.getOpacity();
       diff.propertyChanged = true;
       diff.opacity = obj.getOpacity();
     }
 
-    if (obj.getString && obj.getString() !== obj.prevText) {
+    if (obj.getString && (forceDiff || obj.getString() !== obj.prevText)) {
       obj.prevText = obj.getString();
       diff.propertyChanged = true;
       diff.string = obj.getString();
     }
 
-    if (obj.getColor && obj.getColor() !== obj.prevColor) {
+    if (obj.getColor && (forceDiff || obj.getColor() !== obj.prevColor)) {
       obj.prevColor = obj.getColor();
       diff.propertyChanged = true;
       diff.color = obj.getColor();
     }
 
-    if (obj.getAnimation && obj.getAnimation() !== obj.prevAnimation) {
+    if (obj.getAnimation && (forceDiff || obj.getAnimation() !== obj.prevAnimation)) {
       obj.prevAnimation = obj.getAnimation();
       diff.propertyChanged = true;
       diff.animation = obj.getAnimation();
@@ -298,14 +307,14 @@ class ObjectSnapshot {
       teamStateVariable, // Not implemented yet
     } = obj.stateVariables;
 
-    if (publicStateVariable.isDirty()) {
+    if (forceDiff || publicStateVariable.isDirty()) {
       diff.publicStateVariableDiff = publicStateVariable.serializeToBinary();
     }
 
     {
       const children = privateStateVariable.getAllChildren();
       for (const child in children)
-        if (children[child].isDirty())
+        if (forceDiff || children[child].isDirty())
           diff.privateStateVariablesDiffs.set(
             child,
             children[child].serializeToBinary()
@@ -315,7 +324,7 @@ class ObjectSnapshot {
     {
       const children = teamStateVariable.getAllChildren();
       for (const child in children)
-        if (children[child].isDirty())
+        if (forceDiff || children[child].isDirty())
           diff.teamStateVariablesDiffs.set(
             child,
             children[child].serializeToBinary()
@@ -347,9 +356,15 @@ class ObjectSnapshot {
       this.string !== undefined
         ? builder.createSharedString(this.string)
         : null;
+    const layer =
+      this.layer !== undefined
+        ? builder.createSharedString(this.layer)
+        : null;    
 
     if (this.propertyChanged) {
       ObjState.startObjState(builder);
+      if (layer) ObjState.addLayer(builder, layer);
+
       if (this.x !== undefined) {
         if (this.x === 0) ObjState.addSetXTo0(builder, true);
         else ObjState.addX(builder, this.x);
