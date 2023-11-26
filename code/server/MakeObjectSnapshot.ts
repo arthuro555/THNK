@@ -10,9 +10,11 @@ export const makeObjectSnapshot = (
   const textOffset = obj.getString
     ? builder.createSharedString(obj.getString())
     : null;
+  const layer = builder.createSharedString(obj.getLayer());
 
   ObjState.startObjState(builder);
 
+  if (layer) ObjState.addLayer(builder, layer);
   ObjState.addX(builder, obj.getX());
   ObjState.addY(builder, obj.getY());
   ObjState.addHeight(builder, obj.getHeight());
