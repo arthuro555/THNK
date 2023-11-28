@@ -350,17 +350,16 @@ class ObjectSnapshot {
   }
 
   serialize(builder: Builder, forPlayer: string): number {
+    const layer =
+      this.layer !== undefined ? builder.createSharedString(this.layer) : null;
     const str =
       this.string !== undefined
         ? builder.createSharedString(this.string)
         : null;
-    const layer =
-      this.layer !== undefined
-        ? builder.createSharedString(this.layer)
-        : null;
 
     if (this.propertyChanged) {
       ObjState.startObjState(builder);
+
       if (layer) ObjState.addLayer(builder, layer);
 
       if (this.x !== undefined) {

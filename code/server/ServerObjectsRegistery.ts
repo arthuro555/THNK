@@ -52,7 +52,7 @@ export class ServerObjectsRegistery {
     (obj.prevFlippedX as any) = undefined;
     (obj.prevFlippedY as any) = undefined;
     (obj.prevVisibility as any) = undefined;
-    obj.prevAnimation = NaN;    
+    obj.prevAnimation = NaN;
     (obj.prevText as any) = undefined;
     (obj.prevColor as any) = undefined;
 
@@ -65,7 +65,7 @@ export class ServerObjectsRegistery {
     this.deletedObjects.add(obj.thnkID);
     // Delete the object from created objects in case it was created the same frame so that no ghost object is created.
     this.createdObjects.delete(obj.thnkID);
-    
+
     //Clean thnkid since some objets seems to be pooled by GDevelop
     //When creating an destroying an object quickly, sometimes,
     //unregisterObject is called but not registerObject causing to send a wrong id to clients

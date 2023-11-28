@@ -10,7 +10,7 @@ export const deserializeObject = (
 ) => {
   const objState = gameObject.objState();
   if (objState) {
-    const layer = objState.layer();    
+    const layer = objState.layer();
     if (layer !== null) obj.setLayer(layer);
 
     const x = objState.x();
