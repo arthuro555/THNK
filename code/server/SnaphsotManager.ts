@@ -189,6 +189,7 @@ class ObjectSnapshot {
   teamStateVariablesDiffs = new Map<string, Uint8Array>();
 
   propertyChanged = false;
+  layer?: string;
   x?: number;
   y?: number;
   height?: number;
@@ -213,6 +214,12 @@ class ObjectSnapshot {
       obj.thnkID,
       obj.getVisibilityAABB() || obj.getAABB()
     );
+
+    if (obj.getLayer() !== obj.prevLayer) {
+      obj.prevLayer = obj.getLayer();
+      diff.propertyChanged = true;
+      diff.layer = obj.getLayer();
+    }
 
     if (obj.getX() !== obj.prevX) {
       obj.prevX = obj.getX();
@@ -343,6 +350,8 @@ class ObjectSnapshot {
   }
 
   serialize(builder: Builder, forPlayer: string): number {
+    const layer =
+      this.layer !== undefined ? builder.createSharedString(this.layer) : null;
     const str =
       this.string !== undefined
         ? builder.createSharedString(this.string)
@@ -350,6 +359,9 @@ class ObjectSnapshot {
 
     if (this.propertyChanged) {
       ObjState.startObjState(builder);
+
+      if (layer) ObjState.addLayer(builder, layer);
+
       if (this.x !== undefined) {
         if (this.x === 0) ObjState.addSetXTo0(builder, true);
         else ObjState.addX(builder, this.x);

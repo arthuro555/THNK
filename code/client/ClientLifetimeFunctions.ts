@@ -43,7 +43,10 @@ const runClientTickPreEvent = (runtimeScene: gdjs.RuntimeScene) => {
           : runtimeScene.getGame().getSceneStack().replace(sceneName, true);
 
         //newScene.thnkClient = runtimeScene.thnkClient; //runtimeScene.thnkClient holds the old scene
-        newScene.thnkClient = new THNKClientContext(runtimeScene.thnkClient!.adapter, newScene);
+        newScene.thnkClient = new THNKClientContext(
+          runtimeScene.thnkClient!.adapter,
+          newScene
+        );
 
         // Make sure next messages are applied to the new scene.
         runtimeScene = newScene;
@@ -77,7 +80,10 @@ const runClientTickPreEvent = (runtimeScene: gdjs.RuntimeScene) => {
 
         // In the case the scene was just created it is necessary to keep it in client mode.
         //resumedScene.thnkClient = runtimeScene.thnkClient; //runtimeScene.thnkClient holds the old scene
-        resumedScene.thnkClient = new THNKClientContext(runtimeScene.thnkClient!.adapter, resumedScene);
+        resumedScene.thnkClient = new THNKClientContext(
+          runtimeScene.thnkClient!.adapter,
+          resumedScene
+        );
 
         // Make sure next messages are applied to the new scene.
         runtimeScene = resumedScene;

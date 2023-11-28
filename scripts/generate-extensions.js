@@ -95,9 +95,7 @@ window.${thnkCode.slice(`"use strict";var `.length)}{`;
 }
 
 {
-  const relayCode = fs
-    .readFileSync(distPath + "relay.global.js")
-    .toString();
+  const relayCode = fs.readFileSync(distPath + "relay.global.js").toString();
   /** @type {{eventsFunctions: { name: string, events: { type: string, inlineCode: string }[] }[]}} */
   const relayExt = JSON.parse(
     fs.readFileSync(extensionsPath + "THNK_Relay.json").toString()
