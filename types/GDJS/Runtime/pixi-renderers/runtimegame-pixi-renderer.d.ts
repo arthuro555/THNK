@@ -8,6 +8,8 @@ declare namespace gdjs {
         _isFullscreen: boolean;
         _forceFullscreen: any;
         _pixiRenderer: PIXI.Renderer | null;
+        private _threeRenderer;
+        private _gameCanvas;
         private _domElementsContainer;
         _canvasWidth: float;
         _canvasHeight: float;
@@ -78,9 +80,10 @@ declare namespace gdjs {
          * Convert a point from the canvas coordinates to the dom element container coordinates.
          *
          * @param canvasCoords The point in the canvas coordinates.
+         * @param result The point to return.
          * @returns The point in the dom element container coordinates.
          */
-        convertCanvasToDomElementContainerCoords(canvasCoords: FloatPoint): FloatPoint;
+        convertCanvasToDomElementContainerCoords(canvasCoords: FloatPoint, result: FloatPoint): FloatPoint;
         /**
          * Return the scale factor between the renderer height and the actual canvas height,
          * which is also the height of the container for DOM elements to be superimposed on top of it.
@@ -95,7 +98,15 @@ declare namespace gdjs {
         setWindowTitle(title: any): void;
         getWindowTitle(): string;
         startGameLoop(fn: any): void;
-        getPIXIRenderer(): import("@pixi/core").Renderer | null;
+        getPIXIRenderer(): import("pixi.js").Renderer | null;
+        /**
+         * Get the Three.js renderer for the game - if any.
+         */
+        getThreeRenderer(): THREE.WebGLRenderer | null;
+        /**
+         * Get the DOM element used as a container for HTML elements to display
+         * on top of the game.
+         */
         getDomElementContainer(): HTMLDivElement | null;
         /**
          * Open the given URL in the system browser (or a new tab)
@@ -108,7 +119,7 @@ declare namespace gdjs {
         /**
          * Get the canvas DOM element.
          */
-        getCanvas(): HTMLCanvasElement;
+        getCanvas(): HTMLCanvasElement | null;
         /**
          * Check if the device supports WebGL.
          * @returns true if WebGL is supported
@@ -123,6 +134,7 @@ declare namespace gdjs {
          * Note that is not guaranteed to be supported in the future - avoid if possible.
          */
         getElectronRemote: () => any;
+        getGame(): RuntimeGame;
     }
     type RuntimeGameRenderer = RuntimeGamePixiRenderer;
     const RuntimeGameRenderer: typeof RuntimeGamePixiRenderer;

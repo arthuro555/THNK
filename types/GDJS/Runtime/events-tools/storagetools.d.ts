@@ -35,8 +35,8 @@ declare namespace gdjs {
             const deleteElementFromJSONFile: (name: string, elementPath: string) => any;
             const writeNumberInJSONFile: (name: string, elementPath: string, val: any) => any;
             const writeStringInJSONFile: (name: string, elementPath: string, str: any) => any;
-            const readNumberFromJSONFile: (name: string, elementPath: string, runtimeScene: gdjs.RuntimeScene | null, variable: gdjs.Variable) => any;
-            const readStringFromJSONFile: (name: string, elementPath: string, runtimeScene: gdjs.RuntimeScene | null, variable: gdjs.Variable) => any;
+            const readNumberFromJSONFile: (name: string, elementPath: string, instanceContainer: gdjs.RuntimeInstanceContainer | null, variable: gdjs.Variable) => any;
+            const readStringFromJSONFile: (name: string, elementPath: string, instanceContainer: gdjs.RuntimeInstanceContainer | null, variable: gdjs.Variable) => any;
         }
     }
 }

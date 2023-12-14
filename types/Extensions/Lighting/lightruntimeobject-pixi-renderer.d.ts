@@ -4,7 +4,7 @@ declare namespace gdjs {
      */
     class LightRuntimeObjectPixiRenderer {
         _object: gdjs.LightRuntimeObject;
-        _runtimeScene: gdjs.RuntimeScene;
+        _instanceContainer: gdjs.RuntimeInstanceContainer;
         _manager: gdjs.LightObstaclesManager;
         _radius: number;
         _color: [number, number, number];
@@ -23,7 +23,7 @@ declare namespace gdjs {
          * to be a polygon bounding the light and its obstacles.
          */
         _lightBoundingPoly: gdjs.Polygon;
-        constructor(runtimeObject: gdjs.LightRuntimeObject, runtimeScene: gdjs.RuntimeScene);
+        constructor(runtimeObject: gdjs.LightRuntimeObject, instanceContainer: gdjs.RuntimeInstanceContainer);
         static _verticesWithAngleComparator(vertexWithAngleA: any, vertexWithAngleB: any): 1 | 0 | -1;
         static _computeClosestIntersectionPoint(lightObject: gdjs.LightRuntimeObject, angle: float, polygons: Array<gdjs.Polygon>, boundingSquareHalfDiag: float): (number | null)[] | null;
         getRendererObject(): PIXI.Mesh | null | PIXI.Container;

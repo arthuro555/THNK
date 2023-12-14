@@ -109,7 +109,7 @@ declare namespace gdjs {
         timeBetweenFrames: number;
         loop: boolean;
         frames: SpriteAnimationFrame[];
-        constructor(imageManager: any, directionData: any);
+        constructor(imageManager: gdjs.PixiImageManager, directionData: SpriteDirectionData);
         /**
          * @param imageManager The game image manager
          * @param directionData The direction data used to initialize the direction
@@ -126,7 +126,7 @@ declare namespace gdjs {
         hasMultipleDirections: boolean;
         name: string;
         directions: gdjs.SpriteAnimationDirection[];
-        constructor(imageManager: any, animData: any);
+        constructor(imageManager: gdjs.PixiImageManager, animData: SpriteAnimationData);
         /**
          * @param imageManager The game image manager
          * @param animData The animation data used to initialize the animation
@@ -135,15 +135,13 @@ declare namespace gdjs {
     }
     /**
      * The SpriteRuntimeObject represents an object that can display images.
-     *
-     * @param runtimeScene The scene the object belongs to
-     * @param spriteObjectData The object data used to initialize the object
      */
-    class SpriteRuntimeObject extends gdjs.RuntimeObject {
+    class SpriteRuntimeObject extends gdjs.RuntimeObject implements gdjs.Resizable, gdjs.Scalable, gdjs.Flippable, gdjs.Animatable, gdjs.OpacityHandler {
         _currentAnimation: number;
         _currentDirection: number;
         _currentFrame: number;
-        _frameElapsedTime: float;
+        /** In seconds */
+        _animationElapsedTime: float;
         _animationSpeedScale: number;
         _animationPaused: boolean;
         _scaleX: number;
@@ -155,17 +153,19 @@ declare namespace gdjs {
         _updateIfNotVisible: boolean;
         _animations: gdjs.SpriteAnimation[];
         /**
-         * Reference to the current SpriteAnimationFrame that is displayd.
+         * Reference to the current SpriteAnimationFrame that is displayed.
          * Verify is `this._animationFrameDirty === true` before using it, and if so
          * call `this._updateAnimationFrame()`.
          * Can be null, so ensure that this case is handled properly.
-         *
          */
         _animationFrame: gdjs.SpriteAnimationFrame | null;
         _renderer: gdjs.SpriteRuntimeObjectRenderer;
-        hitBoxesDirty: any;
-        _animationFrameDirty: any;
-        constructor(runtimeScene: any, spriteObjectData: any);
+        _animationFrameDirty: boolean;
+        /**
+         * @param instanceContainer The container the object belongs to
+         * @param spriteObjectData The object data used to initialize the object
+         */
+        constructor(instanceContainer: gdjs.RuntimeInstanceContainer, spriteObjectData: ObjectData & SpriteObjectDataType);
         reinitialize(spriteObjectData: SpriteObjectData): void;
         updateFromObjectData(oldObjectData: SpriteObjectData, newObjectData: SpriteObjectData): boolean;
         /**
@@ -176,12 +176,12 @@ declare namespace gdjs {
         /**
          * Update the current frame of the object according to the elapsed time on the scene.
          */
-        update(runtimeScene: gdjs.RuntimeScene): void;
+        update(instanceContainer: gdjs.RuntimeInstanceContainer): void;
         /**
          * Ensure the sprite is ready to be displayed: the proper animation frame
          * is set and the renderer is up to date (position, angle, alpha, flip, blend mode...).
          */
-        updatePreRender(runtimeScene: gdjs.RuntimeScene): void;
+        updatePreRender(instanceContainer: gdjs.RuntimeInstanceContainer): void;
         /**
          * Update `this._animationFrame` according to the current animation/direction/frame values
          * (`this._currentAnimation`, `this._currentDirection`, `this._currentFrame`) and set
@@ -192,7 +192,7 @@ declare namespace gdjs {
          * If invalid, `this._animationFrame` will be `null` after calling this function.
          */
         _updateAnimationFrame(): void;
-        getRendererObject(): any;
+        getRendererObject(): import("pixi.js").Sprite;
         /**
          * Update the hit boxes for the object.
          * Fallback to the default implementation (rotated bounding box) if there is no custom
@@ -202,24 +202,20 @@ declare namespace gdjs {
         /**
          * Change the animation being played.
          * @param newAnimation The index of the new animation to be played
+         * @deprecated Use `setAnimationIndex` instead
          */
         setAnimation(newAnimation: number): void;
-        /**
-         * Change the animation being played.
-         * @param newAnimationName The name of the new animation to be played
-         */
+        setAnimationIndex(newAnimation: number): void;
         setAnimationName(newAnimationName: string): void;
         /**
          * Get the index of the animation being played.
          * @return The index of the new animation being played
+         * @deprecated Use `getAnimationIndex` instead
          */
         getAnimation(): number;
-        /**
-         * Get the name of the animation being played.
-         * @return The name of the new animation being played
-         */
+        getAnimationIndex(): number;
         getAnimationName(): string;
-        isCurrentAnimationName(name: any): boolean;
+        isCurrentAnimationName(name: string): boolean;
         /**
          * Change the angle (or direction index) of the object
          * @param The new angle (or direction index) to be applied
@@ -236,15 +232,41 @@ declare namespace gdjs {
          * @return newFrame The index of the frame being displayed
          */
         getAnimationFrame(): number;
+        getAnimationElapsedTime(): float;
+        setAnimationElapsedTime(time: float): void;
+        getAnimationDuration(): number;
+        getAnimationFrameCount(): number;
+        /**
+         * @deprecated
+         * Return true if animation has ended.
+         * Prefer using `hasAnimationEnded2`. This method returns true as soon as
+         * the animation enters the last frame, not at the end of the last frame.
+         */
+        hasAnimationEndedLegacy(): boolean;
         /**
          * Return true if animation has ended.
+         * The animation had ended if:
+         * - it's not configured as a loop;
+         * - the current frame is the last frame;
+         * - the last frame has been displayed long enough.
+         *
+         * @deprecated Use `hasAnimationEnded` instead.
          */
+        hasAnimationEnded2(): boolean;
         hasAnimationEnded(): boolean;
+        /**
+         * @deprecated Use `isAnimationPaused` instead.
+         */
         animationPaused(): boolean;
+        isAnimationPaused(): boolean;
         pauseAnimation(): void;
+        /**
+         * @deprecated Use `resumeAnimation` instead.
+         */
         playAnimation(): void;
+        resumeAnimation(): void;
         getAnimationSpeedScale(): number;
-        setAnimationSpeedScale(ratio: any): void;
+        setAnimationSpeedScale(ratio: float): void;
         /**
          * Get the position on X axis on the scene of the given point.
          * @param name The point name
@@ -319,15 +341,7 @@ declare namespace gdjs {
         getAngle(): float;
         setBlendMode(newMode: any): void;
         getBlendMode(): number;
-        /**
-         * Change the transparency of the object.
-         * @param opacity The new opacity, between 0 (transparent) and 255 (opaque).
-         */
         setOpacity(opacity: float): void;
-        /**
-         * Get the transparency of the object.
-         * @return The opacity, between 0 (transparent) and 255 (opaque).
-         */
         getOpacity(): number;
         /**
          * Hide (or show) the object
@@ -346,8 +360,8 @@ declare namespace gdjs {
          * @returns The color, in RGB format ("128;200;255").
          */
         getColor(): string;
-        flipX(enable: any): void;
-        flipY(enable: any): void;
+        flipX(enable: boolean): void;
+        flipY(enable: boolean): void;
         isFlippedX(): boolean;
         isFlippedY(): boolean;
         /**
@@ -362,49 +376,40 @@ declare namespace gdjs {
          * @return The height of the object, in pixels.
          */
         getHeight(): float;
-        /**
-         * Change the width of the object. This changes the scale on X axis of the object.
-         *
-         * @param newWidth The new width of the object, in pixels.
-         */
         setWidth(newWidth: float): void;
-        /**
-         * Change the height of the object. This changes the scale on Y axis of the object.
-         *
-         * @param newHeight The new height of the object, in pixels.
-         */
         setHeight(newHeight: float): void;
-        /**
-         * Change the size of the object.
-         *
-         * @param newWidth The new width of the object, in pixels.
-         * @param newHeight The new height of the object, in pixels.
-         */
         setSize(newWidth: float, newHeight: float): void;
         /**
          * Change the scale on X and Y axis of the object.
          *
          * @param newScale The new scale (must be greater than 0).
          */
-        setScale(newScale: number): void;
+        setScale(newScale: float): void;
         /**
          * Change the scale on X axis of the object (changing its width).
          *
          * @param newScale The new scale (must be greater than 0).
          */
-        setScaleX(newScale: number): void;
+        setScaleX(newScale: float): void;
         /**
-         * Change the scale on Y axis of the object (changing its width).
+         * Change the scale on Y axis of the object (changing its height).
          *
          * @param newScale The new scale (must be greater than 0).
          */
-        setScaleY(newScale: number): void;
+        setScaleY(newScale: float): void;
         /**
-         * Get the scale of the object (or the average of the X and Y scale in case they are different).
+         * Get the scale of the object (or the arithmetic mean of the X and Y scale in case they are different).
          *
-         * @return the scale of the object (or the average of the X and Y scale in case they are different).
+         * @return the scale of the object (or the arithmetic mean of the X and Y scale in case they are different).
+         * @deprecated Use `getScale` instead.
          */
-        getScale(): number;
+        getScaleMean(): float;
+        /**
+         * Get the scale of the object (or the geometric mean of the X and Y scale in case they are different).
+         *
+         * @return the scale of the object (or the geometric mean of the X and Y scale in case they are different).
+         */
+        getScale(): float;
         /**
          * Get the scale of the object on Y axis.
          *
@@ -422,6 +427,6 @@ declare namespace gdjs {
          * @param scene The scene containing the object
          * @deprecated
          */
-        turnTowardObject(obj: any, scene: any): void;
+        turnTowardObject(obj: gdjs.RuntimeObject | null, scene: gdjs.RuntimeScene): void;
     }
 }

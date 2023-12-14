@@ -11,11 +11,11 @@ declare namespace gdjs {
         _topEdgeDistance: number;
         _bottomEdgeDistance: number;
         _useLegacyBottomAndRightAnchors: boolean;
-        constructor(runtimeScene: any, behaviorData: any, owner: any);
+        constructor(instanceContainer: gdjs.RuntimeInstanceContainer, behaviorData: any, owner: gdjs.RuntimeObject);
         updateFromBehaviorData(oldBehaviorData: any, newBehaviorData: any): boolean;
         onActivate(): void;
-        doStepPreEvents(runtimeScene: any): void;
-        doStepPostEvents(runtimeScene: any): void;
+        doStepPreEvents(instanceContainer: gdjs.RuntimeInstanceContainer): void;
+        doStepPostEvents(instanceContainer: gdjs.RuntimeInstanceContainer): void;
         static HorizontalAnchor: {
             NONE: number;
             WINDOW_LEFT: number;

@@ -1,6 +1,6 @@
 declare namespace gdjs {
     /** An axis-aligned bounding box. Used to represents a box around an object for example. */
-    export type AABB = {
+    type AABB = {
         /** The [x,y] coordinates of the top left point */
         min: FloatPoint;
         /** The [x,y] coordinates of the bottom right point */
@@ -15,7 +15,7 @@ declare namespace gdjs {
      * A `gdjs.RuntimeObject` should not be instantiated directly, always a child class
      * (because gdjs.RuntimeObject don't call onCreated at the end of its constructor).
      */
-    export class RuntimeObject implements EffectsTarget {
+    class RuntimeObject implements EffectsTarget, gdjs.EffectHandler {
         name: string;
         type: string;
         x: float;
@@ -28,7 +28,7 @@ declare namespace gdjs {
         protected _livingOnScene: boolean;
         readonly id: integer;
         private destroyCallbacks;
-        _runtimeScene: gdjs.RuntimeScene;
+        _runtimeScene: gdjs.RuntimeInstanceContainer;
         /**
          * An optional UUID associated to the object to be used
          * for hot reload. Don't modify or use otherwise.
@@ -44,21 +44,34 @@ declare namespace gdjs {
         protected hitBoxes: gdjs.Polygon[];
         protected hitBoxesDirty: boolean;
         protected aabb: AABB;
+        protected _isIncludedInParentCollisionMask: boolean;
         protected _variables: gdjs.VariablesContainer;
-        protected _rendererEffects: Record<string, PixiFiltersTools.Filter>;
-        protected _forces: gdjs.Force[];
-        _averageForce: gdjs.Force;
+        protected _rendererEffects: Record<string, gdjs.PixiFiltersTools.Filter>;
+        protected _instantForces: gdjs.Force[];
+        _permanentForceX: float;
+        _permanentForceY: float;
+        _totalForce: gdjs.Force;
         /**
-         * Contains the behaviors of the object.
+         * Contains the behaviors of the object, except those not having lifecycle functions.
+         *
+         * This means default, hidden, "capability" behaviors are not included in this array.
+         * This avoids wasting time iterating on them when we know their lifecycle functions
+         * are never used.
          */
         protected _behaviors: gdjs.RuntimeBehavior[];
+        /**
+         * Contains the behaviors of the object by name.
+         *
+         * This includes the default, hidden, "capability" behaviors (those to handle opacity,
+         * effects, scale, size...).
+         */
         protected _behaviorsTable: Hashtable<gdjs.RuntimeBehavior>;
         protected _timers: Hashtable<gdjs.Timer>;
         /**
          * @param runtimeScene The scene the object belongs to..
          * @param objectData The initial properties of the object.
          */
-        constructor(runtimeScene: gdjs.RuntimeScene, objectData: ObjectData);
+        constructor(instanceContainer: gdjs.RuntimeInstanceContainer, objectData: ObjectData & any);
         /**
          * To be called by the child classes in their constructor, at the very end.
          * Notify the behaviors that they have been constructed (this must be done when
@@ -79,7 +92,7 @@ declare namespace gdjs {
          * To implement this in your object:
          * * Set `gdjs.YourRuntimeObject.supportsReinitialization = true;` to declare support for recycling.
          * * Implement `reinitialize`. It **must** call the `reinitialize` of `gdjs.RuntimeObject`, and call `this.onCreated();`
-         * at the end of `reinitizalize`.
+         * at the end of `reinitialize`.
          * * It must reset the object as if it was newly constructed (be careful about your renderers and any global state).
          * * The `_runtimeScene`, `_nameId`, `name` and `type` are guaranteed to stay the same and do not
          * need to be set again.
@@ -93,23 +106,31 @@ declare namespace gdjs {
          *
          * Objects can have different elapsed time if they are on layers with different time scales.
          *
-         * @param runtimeScene The RuntimeScene the object belongs to (deprecated - can be omitted).
+         * @param instanceContainer The instance container the object belongs to (deprecated - can be omitted).
          */
-        getElapsedTime(runtimeScene?: gdjs.RuntimeScene): float;
+        getElapsedTime(instanceContainer?: gdjs.RuntimeInstanceContainer): float;
         /**
          * The gdjs.RuntimeScene the object belongs to.
          */
-        getRuntimeScene(): RuntimeScene;
+        getParent(): gdjs.RuntimeInstanceContainer;
+        /**
+         * The gdjs.RuntimeScene the object belongs to.
+         */
+        getRuntimeScene(): gdjs.RuntimeScene;
+        /**
+         * The container the object belongs to.
+         */
+        getInstanceContainer(): gdjs.RuntimeInstanceContainer;
         /**
          * Called once during the game loop, before events and rendering.
-         * @param runtimeScene The gdjs.RuntimeScene the object belongs to.
+         * @param instanceContainer The container the object belongs to.
          */
-        update(runtimeScene: gdjs.RuntimeScene): void;
+        update(instanceContainer: gdjs.RuntimeInstanceContainer): void;
         /**
          * Called once during the game loop, after events and before rendering.
-         * @param runtimeScene The gdjs.RuntimeScene the object belongs to.
+         * @param instanceContainer The container the object belongs to.
          */
-        updatePreRender(runtimeScene: gdjs.RuntimeScene): void;
+        updatePreRender(instanceContainer: gdjs.RuntimeInstanceContainer): void;
         /**
          * Called when the object is created from an initial instance at the startup of the scene.<br>
          * Note that common properties (position, angle, z order...) have already been setup.
@@ -130,9 +151,9 @@ declare namespace gdjs {
          * Remove an object from a scene.
          *
          * Do not change/redefine this method. Instead, redefine the onDestroyFromScene method.
-         * @param runtimeScene The RuntimeScene owning the object.
+         * @param instanceContainer The container owning the object.
          */
-        deleteFromScene(runtimeScene: gdjs.RuntimeScene): void;
+        deleteFromScene(instanceContainer: gdjs.RuntimeInstanceContainer): void;
         registerDestroyCallback(callback: () => void): void;
         unregisterDestroyCallback(callback: () => void): void;
         /**
@@ -140,9 +161,10 @@ declare namespace gdjs {
          * is being unloaded). If you redefine this function, **make sure to call the original method**
          * (`RuntimeObject.prototype.onDestroyFromScene.call(this, runtimeScene);`).
          *
-         * @param runtimeScene The scene owning the object.
+         * @param instanceContainer The container owning the object.
          */
-        onDestroyFromScene(runtimeScene: gdjs.RuntimeScene): void;
+        onDeletedFromScene(instanceContainer: gdjs.RuntimeInstanceContainer): void;
+        onDestroyed(): void;
         /**
          * Called whenever the scene owning the object is paused.
          * This should *not* impact objects, but some may need to inform their renderer.
@@ -158,12 +180,13 @@ declare namespace gdjs {
          */
         onSceneResumed(runtimeScene: gdjs.RuntimeScene): void;
         /**
-         * Called with a callback function that should be called with the internal
-         * object used for rendering by the object (PIXI.DisplayObject...)
-         *
-         * @return The internal rendered object (PIXI.DisplayObject...)
+         * @return The internal object for a 2D rendering (PIXI.DisplayObject...)
          */
         getRendererObject(): RendererObjectInterface | null | undefined;
+        /**
+         * @return The internal object for a 3D rendering (PIXI.DisplayObject...)
+         */
+        get3DRendererObject(): THREE.Object3D | null | undefined;
         /**
          * Get the name of the object.
          * @return The object's name.
@@ -196,6 +219,14 @@ declare namespace gdjs {
          * @param x The new X position
          */
         setX(x: float): void;
+        /**
+         * Send a signal that the object hitboxes are no longer up to date.
+         *
+         * The signal is propagated to parents so
+         * {@link gdjs.RuntimeObject.hitBoxesDirty} should never be modified
+         * directly.
+         */
+        invalidateHitboxes(): void;
         /**
          * Get the X position of the object.
          *
@@ -235,14 +266,19 @@ declare namespace gdjs {
          */
         getDrawableY(): float;
         rotateTowardPosition(x: float, y: float, speed: float, scene: gdjs.RuntimeScene): void;
-        rotateTowardAngle(angle: float, speed: float, runtimeScene: gdjs.RuntimeScene): void;
+        /**
+         * @param angle The targeted direction angle.
+         * @param speed The rotation speed.
+         * @param instanceContainer The container the object belongs to (deprecated - can be omitted).
+         */
+        rotateTowardAngle(angle: float, speed: float, instanceContainer?: gdjs.RuntimeInstanceContainer): void;
         /**
          * Rotate the object at the given speed
          *
          * @param speed The speed, in degrees per second.
-         * @param runtimeScene The scene where the object is displayed.
+         * @param instanceContainer The container the object belongs to (deprecated - can be omitted).
          */
-        rotate(speed: float, runtimeScene: gdjs.RuntimeScene): void;
+        rotate(speed: float, instanceContainer?: gdjs.RuntimeInstanceContainer): void;
         /**
          * Set the angle of the object.
          *
@@ -394,6 +430,22 @@ declare namespace gdjs {
          */
         static variableRemoveAt: (array: gdjs.Variable, index: number) => void;
         /**
+         * Shortcut to get the first value of an array variable as a string.
+         */
+        static getFirstVariableString: (array: gdjs.Variable) => string;
+        /**
+         * Shortcut to get the first value of an array variable as a number.
+         */
+        static getFirstVariableNumber: (array: gdjs.Variable) => number;
+        /**
+         * Shortcut to get the last value of an array variable as a string.
+         */
+        static getLastVariableString: (array: gdjs.Variable) => string;
+        /**
+         * Shortcut to get the last value of an array variable as a number.
+         */
+        static getLastVariableNumber: (array: gdjs.Variable) => number;
+        /**
          * Shortcut to test if a variable exists for the object.
          * @param name The variable to be tested
          * @return true if the variable exists.
@@ -420,23 +472,23 @@ declare namespace gdjs {
          */
         clearEffects(): boolean;
         /**
-         * Change an effect parameter value (for parameters that are numbers).
+         * Change an effect property value (for properties that are numbers).
          * @param name The name of the effect to update.
-         * @param parameterName The name of the parameter to update.
+         * @param parameterName The name of the property to update.
          * @param value The new value (number).
          */
         setEffectDoubleParameter(name: string, parameterName: string, value: float): boolean;
         /**
-         * Change an effect parameter value (for parameters that are strings).
+         * Change an effect property value (for properties that are strings).
          * @param name The name of the effect to update.
-         * @param parameterName The name of the parameter to update.
+         * @param parameterName The name of the property to update.
          * @param value The new value (string).
          */
         setEffectStringParameter(name: string, parameterName: string, value: string): boolean;
         /**
-         * Change an effect parameter value (for parameters that are booleans).
+         * Change an effect property value (for properties that are booleans).
          * @param name The name of the effect to update.
-         * @param parameterName The name of the parameter to update.
+         * @param parameterName The name of the property to update.
          * @param value The new value (boolean).
          */
         setEffectBooleanParameter(name: string, parameterName: string, value: boolean): boolean;
@@ -499,7 +551,7 @@ declare namespace gdjs {
          */
         getWidth(): float;
         /**
-         * Return the width of the object.
+         * Return the height of the object.
          * @return The height of the object
          */
         getHeight(): float;
@@ -581,7 +633,7 @@ declare namespace gdjs {
          * @param len The force length, in pixels.
          * @param multiplier Set the force multiplier
          */
-        addForceTowardObject(object: gdjs.RuntimeObject, len: float, multiplier: integer): void;
+        addForceTowardObject(object: gdjs.RuntimeObject | null, len: float, multiplier: integer): void;
         /**
          * Deletes all forces applied on the object
          */
@@ -605,6 +657,7 @@ declare namespace gdjs {
         /**
          * Return true if the average angle of the forces applied on the object
          * is in a given range.
+         * @deprecated Use isTotalForceAngleAround instead.
          *
          * @param angle The angle to be tested.
          * @param toleranceInDegrees The length of the range :
@@ -612,6 +665,16 @@ declare namespace gdjs {
          * and the angle parameter is inferior to toleranceInDegrees parameter.
          */
         averageForceAngleIs(angle: float, toleranceInDegrees: float): boolean;
+        /**
+         * Return true if the angle of the total force applied on the object
+         * is in a given range.
+         *
+         * @param angle The angle to be tested.
+         * @param toleranceInDegrees The maximum distance from the given angle.
+         * @return true if the difference between the force angle the given `angle`
+         * is less or equals the `toleranceInDegrees`.
+         */
+        isTotalForceAngleAround(angle: float, toleranceInDegrees: float): boolean;
         /**
          * Get all the hit boxes for the object.
          *
@@ -663,6 +726,8 @@ declare namespace gdjs {
          * However, you can redefine it if your object need custom hit boxes.
          */
         updateHitBoxes(): void;
+        isIncludedInParentCollisionMask(): boolean;
+        setIncludedInParentCollisionMask(isIncluded: boolean): void;
         /**
          * Get the AABB (axis aligned bounding box) for the object.
          *
@@ -730,11 +795,11 @@ declare namespace gdjs {
         /**
          * Call each behavior stepPreEvents method.
          */
-        stepBehaviorsPreEvents(runtimeScene: any): void;
+        stepBehaviorsPreEvents(instanceContainer: gdjs.RuntimeInstanceContainer): void;
         /**
          * Call each behavior stepPostEvents method.
          */
-        stepBehaviorsPostEvents(runtimeScene: any): void;
+        stepBehaviorsPostEvents(instanceContainer: gdjs.RuntimeInstanceContainer): void;
         /**
          * Called when the object was hot reloaded, to notify behaviors
          * that the object was modified. Useful for behaviors that
@@ -782,7 +847,7 @@ declare namespace gdjs {
          */
         removeBehavior(name: string): boolean;
         /**
-         * Create the behavior decribed by the given BehaviorData
+         * Create the behavior described by the given BehaviorData
          *
          * @param behaviorData The data to be used to construct the behavior.
          * @returns true if the behavior was properly created, false otherwise.
@@ -855,7 +920,7 @@ declare namespace gdjs {
          * @param ignoreTouchingEdges If true, then edges that are touching each other, without the hitbox polygons actually overlapping, won't be considered in collision.
          * @return true if the object was moved
          */
-        separateFromObjects(objects: RuntimeObject[], ignoreTouchingEdges: boolean): boolean;
+        separateFromObjects(objects: gdjs.RuntimeObject[], ignoreTouchingEdges: boolean): boolean;
         /**
          * Separate the object from others objects, using their hitboxes.
          * @param objectsLists Tables of objects
@@ -928,7 +993,7 @@ declare namespace gdjs {
          * @param distance The distance between the object and the target
          * @param angleInDegrees The angle between the object and the target, in degrees.
          */
-        putAroundObject(obj: gdjs.RuntimeObject, distance: float, angleInDegrees: float): void;
+        putAroundObject(obj: gdjs.RuntimeObject | null, distance: float, angleInDegrees: float): void;
         /**
          * @deprecated
          * @param objectsLists Tables of objects
@@ -976,7 +1041,7 @@ declare namespace gdjs {
          *
          * @return true if the cursor, or any touch, is on the object.
          */
-        cursorOnObject(runtimeScene: RuntimeScene): boolean;
+        cursorOnObject(instanceContainer: gdjs.RuntimeInstanceContainer): boolean;
         /**
          * Check if a point is inside the object collision hitboxes.
          * @param pointX The point x coordinate.
@@ -1014,6 +1079,11 @@ declare namespace gdjs {
         setVariableString: typeof RuntimeObject.setVariableString;
         getVariableBoolean: (variable: gdjs.Variable, compareWith: boolean) => boolean;
         setVariableBoolean: (variable: gdjs.Variable, newValue: boolean) => void;
+        getVariableChildCount: typeof RuntimeObject.getVariableChildCount;
+        getFirstVariableNumber: (array: gdjs.Variable) => number;
+        getFirstVariableString: (array: gdjs.Variable) => string;
+        getLastVariableNumber: (array: gdjs.Variable) => number;
+        getLastVariableString: (array: gdjs.Variable) => string;
         toggleVariableBoolean: (variable: gdjs.Variable) => void;
         variableChildExists: typeof RuntimeObject.variableChildExists;
         variableRemoveChild: typeof RuntimeObject.variableRemoveChild;
@@ -1029,5 +1099,4 @@ declare namespace gdjs {
          */
         getSqDistanceTo: (targetX: float, targetY: float) => float;
     }
-    export {};
 }

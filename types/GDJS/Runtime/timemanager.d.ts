@@ -2,6 +2,7 @@ declare namespace gdjs {
     /**
      * Manage the timers and times elapsed during last
      * frame, since the beginning of the scene and other time related values.
+     * All durations are expressed in milliseconds.
      */
     class TimeManager {
         _elapsedTime: float;
@@ -25,7 +26,7 @@ declare namespace gdjs {
          */
         getTimeScale(): float;
         /**
-         * Get the time since the instanciation of the manager (i.e: since
+         * Get the time since the instantiation of the manager (i.e: since
          * the beginning of the scene most of the time), in milliseconds.
          */
         getTimeFromStart(): float;

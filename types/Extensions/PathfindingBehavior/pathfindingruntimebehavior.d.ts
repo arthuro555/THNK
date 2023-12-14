@@ -5,6 +5,10 @@ declare namespace gdjs {
      */
     class PathfindingRuntimeBehavior extends gdjs.RuntimeBehavior {
         _path: Array<FloatPoint>;
+        /** Used by the path simplification algorithm */
+        static _smoothingResultVertices: Array<FloatPoint>;
+        /** Used by the path simplification algorithm */
+        static _smoothingWorkingVertices: Array<FloatPoint>;
         _allowDiagonals: boolean;
         _acceleration: float;
         _maxSpeed: float;
@@ -16,6 +20,7 @@ declare namespace gdjs {
         _gridOffsetX: float;
         _gridOffsetY: float;
         _extraBorder: float;
+        _smoothingMaxCellGap: float;
         _pathFound: boolean;
         _speed: float;
         _angularSpeed: float;
@@ -26,7 +31,7 @@ declare namespace gdjs {
         _manager: PathfindingObstaclesManager;
         _searchContext: PathfindingRuntimeBehavior.SearchContext;
         _movementAngle: float;
-        constructor(runtimeScene: gdjs.RuntimeScene, behaviorData: any, owner: gdjs.RuntimeObject);
+        constructor(instanceContainer: gdjs.RuntimeInstanceContainer, behaviorData: any, owner: gdjs.RuntimeObject);
         updateFromBehaviorData(oldBehaviorData: any, newBehaviorData: any): boolean;
         setCellWidth(width: float): void;
         getCellWidth(): float;
@@ -75,10 +80,10 @@ declare namespace gdjs {
         /**
          * Compute and move on the path to the specified destination.
          */
-        moveTo(runtimeScene: gdjs.RuntimeScene, x: float, y: float): void;
+        moveTo(instanceContainer: gdjs.RuntimeInstanceContainer, x: float, y: float): void;
         _enterSegment(segmentNumber: integer): void;
-        doStepPreEvents(runtimeScene: gdjs.RuntimeScene): void;
-        doStepPostEvents(runtimeScene: gdjs.RuntimeScene): void;
+        doStepPreEvents(instanceContainer: gdjs.RuntimeInstanceContainer): void;
+        doStepPostEvents(instanceContainer: gdjs.RuntimeInstanceContainer): void;
         /**
          * Compute the euclidean distance between two positions.
          * @memberof gdjs.PathfindingRuntimeBehavior

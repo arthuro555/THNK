@@ -4,8 +4,7 @@ declare namespace gdjs {
      *
      * It installs the "BitmapFont" with PixiJS to be used with PIXI.BitmapText.
      */
-    class PixiBitmapFontManager {
-        private _resources;
+    class PixiBitmapFontManager implements gdjs.ResourceManager {
         private _imageManager;
         /** Pixi.BitmapFont used, indexed by their BitmapFont name. */
         private _pixiBitmapFontsInUse;
@@ -14,20 +13,18 @@ declare namespace gdjs {
         /** Loaded fonts data, indexed by resource name. */
         private _loadedFontsData;
         private _defaultSlugFontName;
+        _resourceLoader: gdjs.ResourceLoader;
         /**
-         * @param resources The resources data of the game.
+         * @param resourceDataArray The resources data of the game.
+         * @param resourceLoader The resources loader of the game.
          * @param imageManager The image manager to be used to get textures used by fonts.
          */
-        constructor(resources: ResourceData[], imageManager: gdjs.PixiImageManager);
+        constructor(resourceLoader: gdjs.ResourceLoader, imageManager: gdjs.PixiImageManager);
+        getResourceKinds(): ResourceKind[];
         /**
          * Get the instance of the default `Pixi.BitmapFont`, always available.
          */
-        getDefaultBitmapFont(): import("@pixi/text-bitmap").BitmapFont;
-        /**
-         * Update the resources data of the game. Useful for hot-reloading, should not be used otherwise.
-         * @param resources The resources data of the game.
-         */
-        setResources(resources: ResourceData[]): void;
+        getDefaultBitmapFont(): import("pixi.js").BitmapFont;
         /**
          * Called to specify that the bitmap font with the specified key is used by an object
          * (i.e: this is reference counting).
@@ -54,11 +51,12 @@ declare namespace gdjs {
          * from memory when unused.
          */
         obtainBitmapFont(bitmapFontResourceName: string, textureAtlasResourceName: string): PIXI.BitmapFont;
+        processResource(resourceName: string): Promise<void>;
         /**
          * Load the "bitmapFont" resources of the game, so that they are ready
          * to be used when `obtainBitmapFont` is called.
          */
-        loadBitmapFontData(onProgress: (count: integer, total: integer) => void): Promise<void[]>;
+        loadResource(resourceName: string): Promise<void>;
     }
     const BitmapFontManager: typeof PixiBitmapFontManager;
     type BitmapFontManager = gdjs.PixiBitmapFontManager;

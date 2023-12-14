@@ -127,39 +127,71 @@ declare namespace gdjs {
                 Pause: number;
             };
             /**
+             * A hashmap associates each name of a mouse button with its respective code.
+             * @memberof gdjs.evtTools
+             */
+            const mouseButtonsNameToCode: {
+                Left: number;
+                Right: number;
+                Middle: number;
+                Back: number;
+                Forward: number;
+            };
+            /**
              * Return true if the specified key is pressed
              *
              */
-            const isKeyPressed: (runtimeScene: any, key: any) => any;
+            const isKeyPressed: (instanceContainer: gdjs.RuntimeInstanceContainer, key: string) => boolean;
             /**
              * Return true if the specified key was just released
              *
              */
-            const wasKeyReleased: (runtimeScene: any, key: any) => any;
+            const wasKeyReleased: (instanceContainer: gdjs.RuntimeInstanceContainer, key: string) => boolean;
             /**
              * Return the name of the last key pressed in the game
              */
-            const lastPressedKey: (runtimeScene: any) => any;
-            const anyKeyPressed: (runtimeScene: any) => any;
-            const anyKeyReleased: (runtimeScene: any) => any;
-            const isMouseButtonPressed: (runtimeScene: any, button: any) => any;
-            const isMouseButtonReleased: (runtimeScene: any, button: any) => any;
-            const hideCursor: (runtimeScene: any) => void;
-            const showCursor: (runtimeScene: any) => void;
-            const getMouseWheelDelta: (runtimeScene: any) => any;
-            const isScrollingUp: (runtimeScene: any) => any;
-            const isScrollingDown: (runtimeScene: any) => any;
-            const getMouseX: (runtimeScene: any, layer: any, camera: any) => any;
-            const getMouseY: (runtimeScene: any, layer: any, camera: any) => any;
-            const isMouseInsideCanvas: (runtimeScene: gdjs.RuntimeScene) => boolean;
-            const _cursorIsOnObject: (obj: any, runtimeScene: any) => any;
-            const cursorOnObject: (objectsLists: any, runtimeScene: any, accurate: any, inverted: any) => boolean;
-            const getTouchX: (runtimeScene: gdjs.RuntimeScene, identifier: integer, layer: string, camera: integer) => number;
-            const getTouchY: (runtimeScene: gdjs.RuntimeScene, identifier: integer, layer: string, camera: integer) => number;
-            const hasAnyTouchStarted: (runtimeScene: gdjs.RuntimeScene) => boolean;
-            const getStartedTouchCount: (runtimeScene: gdjs.RuntimeScene) => integer;
-            const getStartedTouchIdentifier: (runtimeScene: gdjs.RuntimeScene, index: integer) => integer;
-            const hasTouchEnded: (runtimeScene: gdjs.RuntimeScene, identifier: integer) => boolean;
+            const lastPressedKey: (instanceContainer: gdjs.RuntimeInstanceContainer) => any;
+            const anyKeyPressed: (instanceContainer: gdjs.RuntimeInstanceContainer) => boolean;
+            const anyKeyReleased: (instanceContainer: gdjs.RuntimeInstanceContainer) => boolean;
+            const isMouseButtonPressed: (instanceContainer: gdjs.RuntimeInstanceContainer, button: string) => boolean;
+            const isMouseButtonReleased: (instanceContainer: gdjs.RuntimeInstanceContainer, button: string) => boolean;
+            const hideCursor: (instanceContainer: gdjs.RuntimeScene) => void;
+            const showCursor: (instanceContainer: gdjs.RuntimeScene) => void;
+            const getMouseWheelDelta: (instanceContainer: gdjs.RuntimeInstanceContainer) => number;
+            const isScrollingUp: (instanceContainer: gdjs.RuntimeInstanceContainer) => boolean;
+            const isScrollingDown: (instanceContainer: gdjs.RuntimeInstanceContainer) => boolean;
+            /**
+             * @deprecated Use getCursorX instead.
+             */
+            const getMouseX: (instanceContainer: gdjs.RuntimeInstanceContainer, layer: string, camera: integer) => number;
+            /**
+             * @deprecated Use getCursorY instead.
+             */
+            const getMouseY: (instanceContainer: gdjs.RuntimeInstanceContainer, layer: string, camera: integer) => number;
+            const getCursorX: (instanceContainer: gdjs.RuntimeInstanceContainer, layer: string, camera: integer) => number;
+            const getCursorY: (instanceContainer: gdjs.RuntimeInstanceContainer, layer: string, camera: integer) => number;
+            const getMouseOnlyCursorX: (instanceContainer: gdjs.RuntimeInstanceContainer, layer: string, camera: integer) => number;
+            const getMouseOnlyCursorY: (instanceContainer: gdjs.RuntimeInstanceContainer, layer: string, camera: integer) => number;
+            const isMouseInsideCanvas: (instanceContainer: gdjs.RuntimeInstanceContainer) => boolean;
+            const cursorOnObject: (objectsLists: Hashtable<gdjs.RuntimeObject[]>, instanceContainer: gdjs.RuntimeInstanceContainer, accurate: boolean, inverted: boolean) => boolean;
+            const getTouchX: (instanceContainer: gdjs.RuntimeInstanceContainer, identifier: integer, layer: string, camera: integer) => number;
+            const getTouchY: (instanceContainer: gdjs.RuntimeInstanceContainer, identifier: integer, layer: string, camera: integer) => number;
+            /**
+             * @deprecated
+             */
+            const hasAnyTouchStarted: (instanceContainer: gdjs.RuntimeInstanceContainer) => boolean;
+            /**
+             * @deprecated
+             */
+            const getStartedTouchCount: (instanceContainer: gdjs.RuntimeInstanceContainer) => integer;
+            /**
+             * @deprecated
+             */
+            const getStartedTouchIdentifier: (instanceContainer: gdjs.RuntimeInstanceContainer, index: integer) => integer;
+            const hasAnyTouchOrMouseStarted: (instanceContainer: gdjs.RuntimeInstanceContainer) => boolean;
+            const getStartedTouchOrMouseCount: (instanceContainer: gdjs.RuntimeInstanceContainer) => integer;
+            const getStartedTouchOrMouseIdentifier: (instanceContainer: gdjs.RuntimeInstanceContainer, index: integer) => integer;
+            const hasTouchEnded: (instanceContainer: gdjs.RuntimeInstanceContainer, identifier: integer) => boolean;
             /**
              * @deprecated
              */
@@ -171,12 +203,12 @@ declare namespace gdjs {
             /**
              * @deprecated
              */
-            const popStartedTouch: (runtimeScene: gdjs.RuntimeScene) => boolean;
+            const popStartedTouch: (instanceContainer: gdjs.RuntimeInstanceContainer) => boolean;
             /**
              * @deprecated
              */
-            const popEndedTouch: (runtimeScene: gdjs.RuntimeScene) => boolean;
-            const touchSimulateMouse: (runtimeScene: any, enable: any) => void;
+            const popEndedTouch: (instanceContainer: gdjs.RuntimeInstanceContainer) => boolean;
+            const touchSimulateMouse: (instanceContainer: gdjs.RuntimeInstanceContainer, enable: boolean) => void;
         }
     }
 }

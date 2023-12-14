@@ -53,4 +53,9 @@ declare namespace gdjs {
         constructor(promise: Promise<void>);
         update(): boolean;
     }
+    class ManuallyResolvableTask extends AsyncTask {
+        private isResolved;
+        resolve(): void;
+        update(): boolean;
+    }
 }

@@ -1,12 +1,14 @@
 declare namespace gdjs {
-    type RendererEffects = Record<string, PixiFiltersTools.Filter>;
+    type RendererEffects = Record<string, gdjs.PixiFiltersTools.Filter>;
     export interface EffectsTarget {
-        getRuntimeScene: () => RuntimeScene;
-        getElapsedTime: (runtimeScene?: RuntimeScene) => number;
+        getRuntimeScene: () => gdjs.RuntimeInstanceContainer;
+        getElapsedTime: (instanceContainer?: gdjs.RuntimeInstanceContainer) => number;
         getHeight: () => number;
         getWidth: () => number;
         isLightingLayer?: () => boolean;
         getName: () => string;
+        getRendererObject: () => RendererObjectInterface | null | undefined;
+        get3DRendererObject: () => THREE.Object3D | null | undefined;
     }
     /**
      * Handle effects (aka PixiJS "filters") on PixiJS objects.
@@ -22,13 +24,6 @@ declare namespace gdjs {
          */
         initializeEffect(effectData: EffectData, rendererEffects: RendererEffects, target: EffectsTarget): boolean;
         /**
-         * Apply the effect on the PixiJS DisplayObject.
-         * Called after the effect is initialized.
-         * @param rendererObject The renderer object
-         * @param effect The effect to be applied.
-         */
-        applyEffect(rendererObject: PIXI.DisplayObject, effect: PixiFiltersTools.Filter): boolean;
-        /**
          * Update the filters applied on a PixiJS DisplayObject.
          * This must be called after the events and before the rendering.
          *
@@ -42,48 +37,47 @@ declare namespace gdjs {
          * with the same name.
          * @param effectData The effect data
          * @param rendererEffects The renderer effects
-         * @param rendererObject The renderer object
          * @param target The effects target
          */
-        addEffect(effectData: EffectData, rendererEffects: RendererEffects, rendererObject: PIXI.DisplayObject, target: EffectsTarget): boolean;
+        addEffect(effectData: EffectData, rendererEffects: RendererEffects, target: EffectsTarget): boolean;
         /**
          * Remove the effect with the specified name from a PixiJS DisplayObject.
          * @param rendererEffects The collection of PixiJS filters.
          * @param rendererObject The renderer object.
          * @param effectName The name of the effect.
          */
-        removeEffect(rendererEffects: RendererEffects, rendererObject: PIXI.DisplayObject, effectName: string): boolean;
+        removeEffect(rendererEffects: RendererEffects, target: EffectsTarget, effectName: string): boolean;
         /**
          * Remove all effects from a PixiJS DisplayObject.
          * @param rendererObject The renderer object.
          */
         clearEffects(rendererObject: PIXI.DisplayObject): boolean;
         /**
-         * Update the parameter of an effect (with a number).
+         * Update the property of an effect (with a number).
          * @param rendererEffects The collection of PixiJS filters.
          * @param name The effect name
-         * @param parameterName The parameter name
-         * @param value The new value for the parameter
+         * @param parameterName The property name
+         * @param value The new value for the property
          */
         setEffectDoubleParameter(rendererEffects: RendererEffects, name: string, parameterName: string, value: float): boolean;
         /**
-         * Update the parameter of an effect (with a string).
+         * Update the property of an effect (with a string).
          * @param rendererEffects The collection of PixiJS filters.
          * @param name The effect name
-         * @param parameterName The parameter name
-         * @param value The new value for the parameter
+         * @param parameterName The property name
+         * @param value The new value for the property
          */
         setEffectStringParameter(rendererEffects: RendererEffects, name: string, parameterName: string, value: string): boolean;
         /**
-         * Enable or disable the parameter of an effect (boolean).
+         * Enable or disable the property of an effect (boolean).
          * @param rendererEffects The collection of PixiJS filters.
          * @param name The effect name
-         * @param parameterName The parameter name
-         * @param value The new value for the parameter
+         * @param parameterName The property name
+         * @param value The new value for the property
          */
         setEffectBooleanParameter(rendererEffects: RendererEffects, name: string, parameterName: string, value: boolean): boolean;
         /**
-         * Updates all the effect parameters.
+         * Updates all the effect properties.
          * @param rendererEffects
          * @param effectData
          */
@@ -101,14 +95,14 @@ declare namespace gdjs {
          * @param name The effect name
          * @param value Set to true to enable, false to disable
          */
-        enableEffect(rendererEffects: RendererEffects, name: string, value: boolean): void;
+        enableEffect(rendererEffects: RendererEffects, target: EffectsTarget, name: string, value: boolean): void;
         /**
          * Check if an effect is enabled.
          * @param rendererEffects The collection of PixiJS filters.
          * @param name The effect name
          * @return true if the filter is enabled
          */
-        isEffectEnabled(rendererEffects: RendererEffects, name: string): boolean;
+        isEffectEnabled(rendererEffects: RendererEffects, target: EffectsTarget, name: string): boolean;
     }
     export const EffectsManager: typeof PixiEffectsManager;
     export type EffectsManager = PixiEffectsManager;

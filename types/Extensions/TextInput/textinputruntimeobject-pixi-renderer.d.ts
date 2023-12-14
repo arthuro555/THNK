@@ -2,9 +2,9 @@ declare namespace gdjs {
     class TextInputRuntimeObjectPixiRenderer {
         private _object;
         private _input;
-        private _runtimeScene;
+        private _instanceContainer;
         private _runtimeGame;
-        constructor(runtimeObject: gdjs.TextInputRuntimeObject);
+        constructor(runtimeObject: gdjs.TextInputRuntimeObject, instanceContainer: gdjs.RuntimeInstanceContainer);
         _createElement(): void;
         _destroyElement(): void;
         onScenePaused(): void;
@@ -23,6 +23,7 @@ declare namespace gdjs {
         updateDisabled(): void;
         updateReadOnly(): void;
         isFocused(): boolean;
+        focus(): void;
     }
     export const TextInputRuntimeObjectRenderer: typeof TextInputRuntimeObjectPixiRenderer;
     export type TextInputRuntimeObjectRenderer = TextInputRuntimeObjectPixiRenderer;

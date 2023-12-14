@@ -153,13 +153,27 @@ declare namespace gdjs {
              */
             const distanceBetweenPositions: (x1: number, y1: number, x2: number, y2: number) => number;
             /**
-             * Runs a linear interpolation between a and b.
+             * Return a linear interpolation between a and b.
+             *
+             * For instance, `lerp(2, 8, 0.5)` is `5`.
+             *
              * @param a Start value.
              * @param b End value.
              * @param x The interpolation value between 0 and 1.
              * @returns The interpolated value, now between a and b.
              */
             const lerp: (a: number, b: integer, x: float) => number;
+            /**
+             * Return an exponential interpolation between `start` and `end`.
+             *
+             * For instance, `exponentialInterpolation(2, 8, 0.5)` is `4`.
+             *
+             * @param start Start value.
+             * @param end End value.
+             * @param progress The interpolation value between 0 and 1.
+             * @returns The interpolated value.
+             */
+            const exponentialInterpolation: (start: float, end: float, progress: float) => number;
             /**
              * Truncate a number.
              * @param x Value.
@@ -201,6 +215,27 @@ declare namespace gdjs {
              * @returns the rounded value
              */
             const ceilTo: (value: float, decimalPlace: number) => number;
+            /**
+             * Pi 3.1415...
+             * @returns the Pi number
+             */
+            const pi: () => number;
+            /**
+             * Linearly interpolates between two angles (in degrees) by taking the shortest direction around the circle.
+             * @param angle1 Starting angle, in degrees.
+             * @param angle2 Destination angle, in degrees.
+             * @param x The interpolation value between 0 and 1.
+             * @returns Return the interpolated angle, in degrees.
+             */
+            const lerpAngle: (angle1: float, angle2: float, x: float) => float;
+            const resolveAsyncEventsFunction: (eventsFunctionContext: EventsFunctionContext) => void;
+            /**
+             * Check if the game runs on a mobile device (iPhone, iPad, Android).
+             * Note that the distinction between what is a mobile device and what is not
+             * is becoming blurry. If you use this for mobile controls,
+             * prefer to check if the device has touchscreen support.
+             */
+            const isMobile: () => boolean;
         }
     }
 }

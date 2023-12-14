@@ -9,6 +9,7 @@ declare namespace gdjs {
          * @param path - The path of the property to modify, starting from the RuntimeGame.
          */
         constructor(runtimeGame: RuntimeGame);
+        private hasLoggedError;
         protected _sendMessage(message: string): void;
     }
     const DebuggerClient: typeof WebsocketDebuggerClient;

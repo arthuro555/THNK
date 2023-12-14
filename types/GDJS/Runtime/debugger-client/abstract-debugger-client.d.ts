@@ -28,6 +28,7 @@ declare namespace gdjs {
                 (message?: any, ...optionalParams: any[]): void;
             };
         };
+        _inGameDebugger: gdjs.InGameDebugger;
         constructor(runtimeGame: RuntimeGame);
         /**
          * Should be called by derived class to handle a command
@@ -42,6 +43,7 @@ declare namespace gdjs {
          * @param message
          */
         protected abstract _sendMessage(message: string): void;
+        onUncaughtException(exception: Error): void;
         /**
          * Send a message (a log) to debugger server.
          */
@@ -77,6 +79,14 @@ declare namespace gdjs {
          * Callback called when profiling is ending.
          */
         sendProfilerStopped(): void;
+        /**
+         * Callback called when the game is paused.
+         */
+        sendGamePaused(): void;
+        /**
+         * Callback called when the game is resumed.
+         */
+        sendGameResumed(): void;
         /**
          * Send profiling results.
          * @param framesAverageMeasures The measures made for each frames.

@@ -45,9 +45,9 @@ declare namespace gdjs {
          */
         _hotReloadRuntimeBehavior(oldBehaviorData: BehaviorData, newBehaviorData: BehaviorData, runtimeBehavior: gdjs.RuntimeBehavior): boolean;
         _hotReloadRuntimeSceneLayers(oldLayers: LayerData[], newLayers: LayerData[], runtimeScene: gdjs.RuntimeScene): void;
-        _hotReloadRuntimeLayer(oldLayer: LayerData, newLayer: LayerData, runtimeLayer: gdjs.Layer): void;
-        _hotReloadRuntimeLayerEffects(oldEffectsData: EffectData[], newEffectsData: EffectData[], runtimeLayer: gdjs.Layer): void;
-        _hotReloadRuntimeLayerEffect(oldEffectData: EffectData, newEffectData: EffectData, runtimeLayer: gdjs.Layer, effectName: string): void;
+        _hotReloadRuntimeLayer(oldLayer: LayerData, newLayer: LayerData, runtimeLayer: gdjs.RuntimeLayer): void;
+        _hotReloadRuntimeLayerEffects(oldEffectsData: EffectData[], newEffectsData: EffectData[], runtimeLayer: gdjs.RuntimeLayer): void;
+        _hotReloadRuntimeLayerEffect(oldEffectData: EffectData, newEffectData: EffectData, runtimeLayer: gdjs.RuntimeLayer, effectName: string): void;
         _hotReloadRuntimeSceneInstances(oldInstances: InstanceData[], newInstances: InstanceData[], runtimeScene: gdjs.RuntimeScene): void;
         _hotReloadRuntimeInstance(oldInstance: InstanceData, newInstance: InstanceData, runtimeObject: gdjs.RuntimeObject): void;
         /**

@@ -8,9 +8,9 @@ declare namespace gdjs {
         _text: any;
         /**
          * @param runtimeObject The object to render
-         * @param runtimeScene The gdjs.RuntimeScene in which the object is
+         * @param instanceContainer The gdjs.RuntimeScene in which the object is
          */
-        constructor(runtimeObject: gdjs.DummyRuntimeObject, runtimeScene: gdjs.RuntimeScene);
+        constructor(runtimeObject: gdjs.DummyRuntimeObject, instanceContainer: gdjs.RuntimeInstanceContainer);
         getRendererObject(): any;
         ensureUpToDate(): void;
         updateText(): void;

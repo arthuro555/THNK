@@ -1,20 +1,22 @@
 declare namespace gdjs {
+    interface RuntimeInstanceContainer {
+        pathfindingObstaclesManager: gdjs.PathfindingObstaclesManager;
+    }
     /**
-     * PathfindingObstaclesManager manages the common objects shared by objects having a
-     * pathfinding behavior: In particular, the obstacles behaviors are required to declare
-     * themselves (see `PathfindingObstaclesManager.addObstacle`) to the manager of their associated scene
-     * (see `gdjs.PathfindingRuntimeBehavior.obstaclesManagers`).
+     * PathfindingObstaclesManager manages the common objects shared by objects
+     * having a pathfinding behavior: In particular, the obstacles behaviors are
+     * required to declare themselves (see
+     * `PathfindingObstaclesManager.addObstacle`) to the manager of their
+     * associated container (see
+     * `gdjs.PathfindingRuntimeBehavior.obstaclesManagers`).
      */
     class PathfindingObstaclesManager {
         _obstaclesRBush: any;
+        constructor(instanceContainer: gdjs.RuntimeInstanceContainer);
         /**
-         * @param object The object
+         * Get the obstacles manager of an instance container.
          */
-        constructor(runtimeScene: gdjs.RuntimeScene);
-        /**
-         * Get the obstacles manager of a scene.
-         */
-        static getManager(runtimeScene: any): any;
+        static getManager(instanceContainer: gdjs.RuntimeInstanceContainer): PathfindingObstaclesManager;
         /**
          * Add a obstacle to the list of existing obstacles.
          */
@@ -45,11 +47,11 @@ declare namespace gdjs {
         _manager: PathfindingObstaclesManager;
         _registeredInManager: boolean;
         currentRBushAABB: gdjs.BehaviorRBushAABB<PathfindingObstacleRuntimeBehavior> | null;
-        constructor(runtimeScene: gdjs.RuntimeScene, behaviorData: any, owner: gdjs.RuntimeObject);
+        constructor(instanceContainer: gdjs.RuntimeInstanceContainer, behaviorData: any, owner: gdjs.RuntimeObject);
         updateFromBehaviorData(oldBehaviorData: any, newBehaviorData: any): boolean;
         onDestroy(): void;
-        doStepPreEvents(runtimeScene: gdjs.RuntimeScene): void;
-        doStepPostEvents(runtimeScene: gdjs.RuntimeScene): void;
+        doStepPreEvents(instanceContainer: gdjs.RuntimeInstanceContainer): void;
+        doStepPostEvents(instanceContainer: gdjs.RuntimeInstanceContainer): void;
         getAABB(): AABB;
         onActivate(): void;
         onDeActivate(): void;

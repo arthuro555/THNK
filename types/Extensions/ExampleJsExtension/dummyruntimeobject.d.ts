@@ -7,14 +7,14 @@ declare namespace gdjs {
         _property1: string;
         _renderer: any;
         opacity: float;
-        constructor(runtimeScene: any, objectData: any);
+        constructor(instanceContainer: gdjs.RuntimeInstanceContainer, objectData: any);
         getRendererObject(): any;
         updateFromObjectData(oldObjectData: any, newObjectData: any): boolean;
         /**
          * Called once during the game loop, before events and rendering.
-         * @param runtimeScene The gdjs.RuntimeScene the object belongs to.
+         * @param instanceContainer The gdjs.RuntimeScene the object belongs to.
          */
-        update(runtimeScene: gdjs.RuntimeScene): void;
+        update(instanceContainer: gdjs.RuntimeInstanceContainer): void;
         /**
          * Initialize the extra parameters that could be set for an instance.
          */

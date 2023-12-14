@@ -5,6 +5,7 @@ declare namespace gdjs {
         clear(): void;
         has(itemName: any): boolean;
         count(itemName: any): any;
+        maximum(itemName: any): any;
         add(itemName: any): boolean;
         setCount(itemName: any, count: any): void;
         isFull(itemName: any): boolean;

@@ -22,7 +22,7 @@ declare namespace gdjs {
      * video will have the same state for this video (paused/playing, current time,
      * volume, etc...).
      */
-    class VideoRuntimeObject extends gdjs.RuntimeObject {
+    class VideoRuntimeObject extends gdjs.RuntimeObject implements gdjs.OpacityHandler {
         _opacity: float;
         _loop: boolean;
         _volume: float;
@@ -31,10 +31,10 @@ declare namespace gdjs {
         _renderer: gdjs.VideoRuntimeObjectRenderer;
         _playbackSpeed: any;
         /**
-         * @param runtimeScene The scene the object belongs to.
+         * @param instanceContainer The scene the object belongs to.
          * @param videoObjectData The data defining the object
          */
-        constructor(runtimeScene: gdjs.RuntimeScene, videoObjectData: VideoObjectData);
+        constructor(instanceContainer: gdjs.RuntimeInstanceContainer, videoObjectData: VideoObjectData);
         getRendererObject(): any;
         updateFromObjectData(oldObjectData: VideoObjectData, newObjectData: VideoObjectData): boolean;
         /**
@@ -42,8 +42,8 @@ declare namespace gdjs {
          * @param initialInstanceData The initial instance data
          */
         extraInitializationFromInitialInstance(initialInstanceData: InstanceData): void;
-        onDestroyFromScene(runtimeScene: any): void;
-        update(runtimeScene: any): void;
+        onDestroyed(): void;
+        update(instanceContainer: gdjs.RuntimeInstanceContainer): void;
         /**
          * Set object position on X axis.
          * @param x The new position X of the object.
@@ -119,7 +119,7 @@ declare namespace gdjs {
         setVolume(volume: number): void;
         /**
          * Get the volume of the video object.
-         * @returns The current video's volume, betwenn 0 and 100.
+         * @returns The current video's volume, between 0 and 100.
          */
         getVolume(): number;
         /**

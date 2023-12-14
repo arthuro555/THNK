@@ -1,13 +1,13 @@
 declare namespace gdjs {
     namespace evtTools {
         namespace runtimeScene {
-            const sceneJustBegins: (runtimeScene: any) => any;
-            const sceneJustResumed: (runtimeScene: any) => any;
-            const getSceneName: (runtimeScene: any) => any;
-            const setBackgroundColor: (runtimeScene: any, rgbColor: any) => void;
-            const getElapsedTimeInSeconds: (runtimeScene: any) => number;
-            const setTimeScale: (runtimeScene: any, timeScale: any) => any;
-            const getTimeScale: (runtimeScene: any) => any;
+            const sceneJustBegins: (runtimeScene: gdjs.RuntimeScene) => boolean;
+            const sceneJustResumed: (runtimeScene: gdjs.RuntimeScene) => boolean;
+            const getSceneName: (runtimeScene: gdjs.RuntimeScene) => string;
+            const setBackgroundColor: (runtimeScene: gdjs.RuntimeScene, rgbColor: string) => void;
+            const getElapsedTimeInSeconds: (runtimeScene: gdjs.RuntimeScene) => number;
+            const setTimeScale: (runtimeScene: gdjs.RuntimeScene, timeScale: float) => void;
+            const getTimeScale: (runtimeScene: gdjs.RuntimeScene) => number;
             /**
              * Test a timer elapsed time, if the timer doesn't exist it is created.
              *
@@ -19,11 +19,11 @@ declare namespace gdjs {
              * @return True if the timer exists and its value is greater than or equal than the given time, false otherwise
              */
             const timerElapsedTime: (runtimeScene: gdjs.RuntimeScene, timeInSeconds: float, timerName: string) => boolean;
-            const timerPaused: (runtimeScene: any, timerName: any) => any;
-            const resetTimer: (runtimeScene: any, timerName: any) => void;
-            const pauseTimer: (runtimeScene: any, timerName: any) => void;
-            const unpauseTimer: (runtimeScene: any, timerName: any) => any;
-            const removeTimer: (runtimeScene: any, timerName: any) => void;
+            const timerPaused: (runtimeScene: gdjs.RuntimeScene, timerName: string) => boolean;
+            const resetTimer: (runtimeScene: gdjs.RuntimeScene, timerName: string) => void;
+            const pauseTimer: (runtimeScene: gdjs.RuntimeScene, timerName: string) => void;
+            const unpauseTimer: (runtimeScene: gdjs.RuntimeScene, timerName: string) => void;
+            const removeTimer: (runtimeScene: gdjs.RuntimeScene, timerName: string) => void;
             class WaitTask extends gdjs.AsyncTask {
                 private duration;
                 private timeElapsedOnScene;
@@ -52,10 +52,30 @@ declare namespace gdjs {
             const getTimeFromStartInSeconds: (runtimeScene: gdjs.RuntimeScene) => number;
             const getTime: (runtimeScene: gdjs.RuntimeScene, what: string) => number;
             const replaceScene: (runtimeScene: gdjs.RuntimeScene, newSceneName: string, clearOthers: boolean) => void;
-            const pushScene: (runtimeScene: any, newSceneName: any) => void;
-            const popScene: (runtimeScene: any) => void;
-            const stopGame: (runtimeScene: any) => void;
-            const createObjectsFromExternalLayout: (scene: gdjs.RuntimeScene, externalLayout: string, xPos: float, yPos: float) => void;
+            const pushScene: (runtimeScene: gdjs.RuntimeScene, newSceneName: string) => void;
+            const popScene: (runtimeScene: gdjs.RuntimeScene) => void;
+            const stopGame: (runtimeScene: gdjs.RuntimeScene) => void;
+            const createObjectsFromExternalLayout: (scene: gdjs.RuntimeInstanceContainer, externalLayout: string, xPos: float, yPos: float, zPos: float) => void;
+            /**
+             * Check if the game has just resumed from being hidden
+             */
+            const hasGameJustResumed: (instanceContainer: gdjs.RuntimeInstanceContainer) => boolean;
+            /**
+             * Check if a scene exists.
+             */
+            const doesSceneExist: (runtimeScene: gdjs.RuntimeScene, sceneName: string) => boolean;
+            /**
+             * Preload a scene assets as soon as possible in background.
+             */
+            const prioritizeLoadingOfScene: (runtimeScene: gdjs.RuntimeScene, sceneName: string) => void;
+            /**
+             * @return The progress of assets loading in background for a scene (between 0 and 1).
+             */
+            const getSceneLoadingProgress: (runtimeScene: gdjs.RuntimeScene, sceneName: string) => float;
+            /**
+             * Check if scene assets have finished to load in background.
+             */
+            const areSceneAssetsLoaded: (runtimeScene: gdjs.RuntimeScene, sceneName: string) => boolean;
         }
     }
 }

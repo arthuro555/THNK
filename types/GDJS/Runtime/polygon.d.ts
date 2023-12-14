@@ -40,19 +40,25 @@ declare namespace gdjs {
          * Do a collision test between two polygons.
          * Please note that polygons must *convexes*!
          *
+         * You can read the result but do not keep a reference to it as it's a static object
+         * reused between function calls. If you need to keep the results, use `copyCollisionTestResult`.
+         *
          * Uses <a href="http://en.wikipedia.org/wiki/Hyperplane_separation_theorem">Separating Axis Theorem </a>.<br>
          * Based on <a href="http://www.codeproject.com/Articles/15573/2D-Polygon-Collision-Detection">this</a>
          * and <a href="http://stackoverflow.com/questions/5742329/problem-with-collision-response-sat">this</a> article.
          *
-         * @return returnValue.collision is equal to true if polygons are overlapping
+         * @return A collision result. `collision` property is equal to true if polygons are overlapping. Do NOT keep a reference to this.
          * @param p1 The first polygon
          * @param p2 The second polygon
          * @param ignoreTouchingEdges If true, then edges that are touching each other, without the polygons actually overlapping, won't be considered in collision.
          */
         static collisionTest(p1: gdjs.Polygon, p2: gdjs.Polygon, ignoreTouchingEdges: boolean): CollisionTestResult;
         /**
-         * Do a raycast test.<br>
-         * Please note that the polygon must be <b>convex</b>!
+         * Do a raycast test.
+         * Please note that the polygon must be **convex**!
+         *
+         * You can read the result but do not keep a reference to it as it's a static object
+         * reused between function calls. If you need to keep the results, use `copyRaycastTestResult`.
          *
          * For some theory, check <a href="https://www.codeproject.com/Tips/862988/Find-the-Intersection-Point-of-Two-Line-Segments">Find the Intersection Point of Two Line Segments</a>.
          *
@@ -61,7 +67,7 @@ declare namespace gdjs {
          * @param startY The raycast start point Y
          * @param endX The raycast end point X
          * @param endY The raycast end point Y
-         * @return A raycast result with the contact points and distances
+         * @return A raycast result with the contact points and distances. Do NOT keep a reference to this.
          */
         static raycastTest(poly: gdjs.Polygon, startX: float, startY: float, endX: float, endY: float): RaycastTestResult;
         static normalise(v: FloatPoint): void;
@@ -80,7 +86,19 @@ declare namespace gdjs {
          * @return true if the point is inside the polygon
          */
         static isPointInside(poly: gdjs.Polygon, x: float, y: float): boolean;
-        private static collisionTestStatics;
-        private static raycastTestStatics;
+        /**
+         * Copy a `CollisionTestResult` into another one.
+         * Use `gdjs.Polygon.makeNewCollisionTestResult()` to build a new
+         * destination before copying the existing source inside it.
+         */
+        static copyCollisionTestResult(source: CollisionTestResult, dest: CollisionTestResult): void;
+        static makeNewCollisionTestResult: () => CollisionTestResult;
+        /**
+         * Copy a `RaycastTestResult` into another one.
+         * Use `gdjs.Polygon.makeNewRaycastTestResult()` to build a new
+         * destination before copying the existing source inside it.
+         */
+        static copyRaycastTestResult(source: RaycastTestResult, dest: RaycastTestResult): void;
+        static makeNewRaycastTestResult: () => RaycastTestResult;
     }
 }

@@ -10,23 +10,26 @@ declare namespace gdjs {
          */
         _draggedByDraggableManager: DraggableManager | null;
         _checkCollisionMask: boolean;
-        constructor(runtimeScene: any, behaviorData: any, owner: any);
+        _justDropped: boolean;
+        constructor(instanceContainer: gdjs.RuntimeInstanceContainer, behaviorData: any, owner: any);
         updateFromBehaviorData(oldBehaviorData: any, newBehaviorData: any): boolean;
         onDeActivate(): void;
         onDestroy(): void;
         _endDrag(): void;
         _dismissDrag(): void;
-        _tryBeginDrag(runtimeScene: any): boolean;
-        _shouldEndDrag(runtimeScene: any): boolean;
-        _updateObjectPosition(runtimeScene: any): boolean;
-        doStepPreEvents(runtimeScene: any): void;
-        doStepPostEvents(runtimeScene: any): void;
-        isDragged(runtimeScene: any): boolean;
+        _tryBeginDrag(instanceContainer: gdjs.RuntimeInstanceContainer): boolean;
+        _shouldEndDrag(instanceContainer: gdjs.RuntimeInstanceContainer): boolean;
+        _updateObjectPosition(instanceContainer: gdjs.RuntimeInstanceContainer): boolean;
+        doStepPreEvents(instanceContainer: gdjs.RuntimeInstanceContainer): void;
+        doStepPostEvents(instanceContainer: gdjs.RuntimeInstanceContainer): void;
+        isDragged(): boolean;
+        wasJustDropped(): boolean;
     }
     /**
      * Handle the dragging
      */
-    abstract class DraggableManager {
+    class DraggableManager {
+        private _touchId;
         /**
          * The object has left its original position.
          * When true, the search for the best object to drag has ended.
@@ -38,32 +41,17 @@ declare namespace gdjs {
         protected _draggableBehavior: gdjs.DraggableRuntimeBehavior | null;
         protected _xOffset: number;
         protected _yOffset: number;
-        constructor(runtimeScene: gdjs.RuntimeScene);
+        constructor(instanceContainer: gdjs.RuntimeInstanceContainer, touchId: integer);
         /**
-         * Get the platforms manager of a scene.
+         * Get the platforms manager of an instance container.
          */
-        static getMouseManager(runtimeScene: gdjs.RuntimeScene): MouseDraggableManager;
-        /**
-         * Get the platforms manager of a scene.
-         */
-        static getTouchManager(runtimeScene: gdjs.RuntimeScene, touchId: integer): DraggableManager;
-        tryAndTakeDragging(runtimeScene: gdjs.RuntimeScene, draggableRuntimeBehavior: DraggableRuntimeBehavior): boolean;
-        updateObjectPosition(runtimeScene: gdjs.RuntimeScene, draggableRuntimeBehavior: DraggableRuntimeBehavior): void;
+        static getTouchManager(instanceContainer: gdjs.RuntimeInstanceContainer, touchId: integer): DraggableManager;
+        tryAndTakeDragging(instanceContainer: gdjs.RuntimeInstanceContainer, draggableRuntimeBehavior: DraggableRuntimeBehavior): boolean;
+        updateObjectPosition(instanceContainer: gdjs.RuntimeInstanceContainer, draggableRuntimeBehavior: DraggableRuntimeBehavior): void;
         endDrag(): void;
-        abstract isDragging(draggableRuntimeBehavior: DraggableRuntimeBehavior): boolean;
-        abstract shouldEndDrag(runtimeScene: gdjs.RuntimeScene, draggableRuntimeBehavior: DraggableRuntimeBehavior): boolean;
-        abstract getPosition(runtimeScene: gdjs.RuntimeScene, draggableRuntimeBehavior: DraggableRuntimeBehavior): FloatPoint;
-    }
-    /**
-     * Handle the dragging by mouse
-     */
-    class MouseDraggableManager extends DraggableManager {
-        /** Used to only start dragging when clicking. */
-        leftPressedLastFrame: boolean;
-        constructor(runtimeScene: gdjs.RuntimeScene);
         isDragging(draggableRuntimeBehavior: DraggableRuntimeBehavior): boolean;
-        getPosition(runtimeScene: gdjs.RuntimeScene, draggableRuntimeBehavior: DraggableRuntimeBehavior): FloatPoint;
-        shouldEndDrag(runtimeScene: gdjs.RuntimeScene, draggableRuntimeBehavior: DraggableRuntimeBehavior): boolean;
+        getPosition(instanceContainer: gdjs.RuntimeInstanceContainer, draggableRuntimeBehavior: DraggableRuntimeBehavior): FloatPoint;
+        shouldEndDrag(instanceContainer: gdjs.RuntimeInstanceContainer, draggableRuntimeBehavior: DraggableRuntimeBehavior): boolean;
     }
     export {};
 }

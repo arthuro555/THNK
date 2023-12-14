@@ -1,3 +1,4 @@
+/// <reference types="extensions/tilemap/helper/tilemaphelper" />
 declare namespace gdjs {
     namespace TileMap {
         /**
@@ -74,7 +75,7 @@ declare namespace gdjs {
              * @param tileId The tile identifier
              * @returns The tile definition form the tile set.
              */
-            getTileDefinition(tileId: integer): TileMapHelper.TileDefinition | undefined;
+            getTileDefinition(tileId: integer): import("../helper/dts").TileDefinition | undefined;
             /**
              * @param layerId The layer identifier.
              * @returns the layer

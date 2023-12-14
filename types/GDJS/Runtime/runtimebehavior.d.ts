@@ -25,11 +25,11 @@ declare namespace gdjs {
         _nameId: integer;
         _activated: boolean;
         /**
-         * @param runtimeScene The scene owning the object of the behavior
+         * @param instanceContainer The container owning the object of the behavior
          * @param behaviorData The properties used to setup the behavior
          * @param owner The object owning the behavior
          */
-        constructor(runtimeScene: gdjs.RuntimeScene, behaviorData: BehaviorData, owner: gdjs.RuntimeObject);
+        constructor(instanceContainer: gdjs.RuntimeInstanceContainer, behaviorData: BehaviorData, owner: gdjs.RuntimeObject);
         /**
          * Called when the behavior must be updated using the specified behaviorData. This is the
          * case during hot-reload, and is only called if the behavior was modified.
@@ -54,15 +54,15 @@ declare namespace gdjs {
         /**
          * Called at each frame before events. Call doStepPreEvents.<br>
          * Behaviors writers: Please do not redefine this method. Redefine doStepPreEvents instead.
-         * @param runtimeScene The runtimeScene owning the object
+         * @param instanceContainer The instanceContainer owning the object
          */
-        stepPreEvents(runtimeScene: gdjs.RuntimeScene): void;
+        stepPreEvents(instanceContainer: gdjs.RuntimeInstanceContainer): void;
         /**
          * Called at each frame after events. Call doStepPostEvents.<br>
          * Behaviors writers: Please do not redefine this method. Redefine doStepPreEvents instead.
-         * @param runtimeScene The runtimeScene owning the object
+         * @param instanceContainer The instanceContainer owning the object
          */
-        stepPostEvents(runtimeScene: gdjs.RuntimeScene): void;
+        stepPostEvents(instanceContainer: gdjs.RuntimeInstanceContainer): void;
         /**
          * De/Activate the behavior
          * @param enable true to enable the behavior, false to disable it
@@ -89,14 +89,14 @@ declare namespace gdjs {
         onDeActivate(): void;
         /**
          * This method is called each tick before events are done.
-         * @param runtimeScene The runtimeScene owning the object
+         * @param instanceContainer The instanceContainer owning the object
          */
-        doStepPreEvents(runtimeScene: gdjs.RuntimeScene): void;
+        doStepPreEvents(instanceContainer: gdjs.RuntimeInstanceContainer): void;
         /**
          * This method is called each tick after events are done.
-         * @param runtimeScene The runtimeScene owning the object
+         * @param instanceContainer The instanceContainer owning the object
          */
-        doStepPostEvents(runtimeScene: gdjs.RuntimeScene): void;
+        doStepPostEvents(instanceContainer: gdjs.RuntimeInstanceContainer): void;
         /**
          * This method is called when the owner of the behavior
          * is being removed from the scene and is about to be destroyed/reused later
@@ -111,5 +111,15 @@ declare namespace gdjs {
          * of events.
          */
         onObjectHotReloaded(): void;
+        /**
+         * Should return `false` if the behavior does not need any lifecycle function to
+         * be called.
+         * Default, hidden, "capability" behaviors set it to `false`.
+         * This avoids useless calls to empty lifecycle functions, which would waste CPU
+         * time (and have a sizeable impact for example when lots of static instances
+         * are living in the scene).
+         * @returns
+         */
+        usesLifecycleFunction(): boolean;
     }
 }

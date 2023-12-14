@@ -12,6 +12,9 @@ declare namespace gdjs {
         static MOUSE_LEFT_BUTTON: integer;
         static MOUSE_RIGHT_BUTTON: integer;
         static MOUSE_MIDDLE_BUTTON: integer;
+        static MOUSE_BACK_BUTTON: integer;
+        static MOUSE_FORWARD_BUTTON: integer;
+        static MOUSE_TOUCH_ID: integer;
         /**
          * Holds the raw keyCodes of the keys which only have left/right
          * variants and should default to their left variant values
@@ -23,11 +26,28 @@ declare namespace gdjs {
         _lastPressedKey: float;
         _pressedMouseButtons: Array<boolean>;
         _releasedMouseButtons: Array<boolean>;
+        /**
+         * The cursor X position (moved by mouse and touch events).
+         */
+        _cursorX: float;
+        /**
+         * The cursor Y position (moved by mouse and touch events).
+         */
+        _cursorY: float;
+        /**
+         * The mouse X position (only moved by mouse events).
+         */
         _mouseX: float;
+        /**
+         * The mouse Y position (only moved by mouse events).
+         */
         _mouseY: float;
         _isMouseInsideCanvas: boolean;
         _mouseWheelDelta: float;
-        _touches: Hashtable<Touch>;
+        _touches: {
+            firstKey: () => string | number | null;
+        };
+        _mouseOrTouches: Hashtable<Touch>;
         _startedTouches: Array<integer>;
         _endedTouches: Array<integer>;
         _touchSimulateMouse: boolean;
@@ -100,6 +120,21 @@ declare namespace gdjs {
          * @param y The mouse new Y position
          */
         onMouseMove(x: float, y: float): void;
+        _setCursorPosition(x: float, y: float): void;
+        /**
+         * Get the cursor X position.
+         * The cursor is moved by mouse and touch events.
+         *
+         * @return the cursor X position, relative to the game view.
+         */
+        getCursorX(): float;
+        /**
+         * Get the cursor Y position.
+         * The cursor is moved by mouse and touch events.
+         *
+         * @return the cursor Y position, relative to the game view.
+         */
+        getCursorY(): float;
         /**
          * Get the mouse X position.
          *
@@ -130,11 +165,13 @@ declare namespace gdjs {
          * See InputManager.MOUSE_LEFT_BUTTON, InputManager.MOUSE_RIGHT_BUTTON, InputManager.MOUSE_MIDDLE_BUTTON
          */
         onMouseButtonPressed(buttonCode: number): void;
+        _setMouseButtonPressed(buttonCode: number): void;
         /**
          * Should be called whenever a mouse button is released.
          * @param buttonCode The mouse button code associated to the event. (see onMouseButtonPressed)
          */
         onMouseButtonReleased(buttonCode: number): void;
+        _setMouseButtonReleased(buttonCode: number): void;
         /**
          * Return true if the mouse button corresponding to buttonCode is pressed.
          * @param buttonCode The mouse button code (0: Left button, 1: Right button).
@@ -176,11 +213,15 @@ declare namespace gdjs {
          */
         getAllTouchIdentifiers(): Array<integer>;
         onTouchStart(rawIdentifier: integer, x: float, y: float): void;
+        _addTouch(publicIdentifier: integer, x: float, y: float): void;
         onTouchMove(rawIdentifier: integer, x: float, y: float): void;
+        _moveTouch(publicIdentifier: integer, x: float, y: float): void;
         onTouchEnd(rawIdentifier: number): void;
+        onTouchCancel(rawIdentifier: number): void;
+        _removeTouch(publicIdentifier: number): void;
         /**
-         * Add 1 to the identifier to avoid identifiers taking
-         * the GDevelop default variable value which is 0.
+         * Add 2 to the identifier to avoid identifiers taking the GDevelop default
+         * variable value which is 0 and reserve 1 for the mouse.
          * @param rawIdentifier The identifier given by the browser.
          * @returns The identifier used in events.
          */

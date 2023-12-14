@@ -48,7 +48,7 @@ declare namespace gdjs {
              * This shortcut function is needed for events code generation.
              * @private
              */
-            const globalVariableExists: (runtimeScene: gdjs.RuntimeScene, variableName: string) => boolean;
+            const globalVariableExists: (instanceContainer: gdjs.RuntimeInstanceContainer, variableName: string) => boolean;
             /**
              * Check if a child exists in a variable.
              * This shortcut function is needed for events code generation.
@@ -91,6 +91,22 @@ declare namespace gdjs {
              * @private
              */
             const getVariableChildCount: (variable: gdjs.Variable) => number;
+            /**
+             * Shortcut to get the first value of an array variable as a number.
+             */
+            const getFirstVariableNumber: (array: gdjs.Variable) => number;
+            /**
+             * Shortcut to get the last value of an array variable as a string.
+             */
+            const getFirstVariableString: (array: gdjs.Variable) => string;
+            /**
+             * Shortcut to get the last value of an array variable as a number.
+             */
+            const getLastVariableNumber: (array: gdjs.Variable) => number;
+            /**
+             * Shortcut to get the last value of an array variable as a string.
+             */
+            const getLastVariableString: (array: gdjs.Variable) => string;
         }
         namespace common {
             /** @deprecated */
@@ -106,7 +122,7 @@ declare namespace gdjs {
             /** @deprecated */
             const sceneVariableExists: (runtimeScene: RuntimeScene, variableName: string) => boolean;
             /** @deprecated */
-            const globalVariableExists: (runtimeScene: RuntimeScene, variableName: string) => boolean;
+            const globalVariableExists: (instanceContainer: RuntimeInstanceContainer, variableName: string) => boolean;
             /** @deprecated */
             const variableChildExists: (variable: Variable, childName: string) => boolean;
             /** @deprecated */

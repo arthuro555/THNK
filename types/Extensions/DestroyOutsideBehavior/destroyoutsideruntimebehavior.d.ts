@@ -5,9 +5,9 @@ declare namespace gdjs {
      */
     class DestroyOutsideRuntimeBehavior extends gdjs.RuntimeBehavior {
         _extraBorder: any;
-        constructor(runtimeScene: any, behaviorData: any, owner: any);
+        constructor(instanceContainer: gdjs.RuntimeInstanceContainer, behaviorData: any, owner: any);
         updateFromBehaviorData(oldBehaviorData: any, newBehaviorData: any): boolean;
-        doStepPostEvents(runtimeScene: any): void;
+        doStepPostEvents(instanceContainer: gdjs.RuntimeInstanceContainer): void;
         /**
          * Set an additional border to the camera viewport as a buffer before the object gets destroyed.
          * @param val Border in pixels.

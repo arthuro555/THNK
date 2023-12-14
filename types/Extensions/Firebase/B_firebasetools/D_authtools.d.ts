@@ -10,7 +10,7 @@ declare namespace gdjs {
                 /**
                  * The current authentication status.
                  */
-                export let authentified: boolean;
+                export let authenticated: boolean;
                 /**
                  * The logged-in users data.
                  */
@@ -125,7 +125,7 @@ declare namespace gdjs {
                      */
                     const setPhotoURL: (newPhotoURL: string) => Promise<void>;
                     /**
-                     * Send an email to the users email adress to verify it.
+                     * Send an email to the users email address to verify it.
                      * @note Even though this function is redundant, we keep it for consistency.
                      * @see currentUser.sendEmailVerification
                      */
@@ -137,9 +137,11 @@ declare namespace gdjs {
                  */
                 export const token: () => string;
                 /**
-                 * Returns true if the user is currently authentified.
-                 * @see authentified
+                 * Returns true if the user is currently authenticated.
+                 * @see authenticated
                  */
+                export const isAuthenticated: () => boolean;
+                /** @deprecated Use isAuthenticated instead. */
                 export const isAuthentified: () => boolean;
                 /**
                  * Signs the user in with basic email-password authentication.

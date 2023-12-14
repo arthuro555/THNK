@@ -1,5 +1,6 @@
+/// <reference types="extensions/tilemap/helper/tilemaphelper" />
 declare namespace gdjs {
-    interface RuntimeScene {
+    interface RuntimeInstanceContainer {
         tileMapCollisionMaskManager: gdjs.TileMap.TileMapRuntimeManager;
     }
     namespace TileMap {
@@ -21,7 +22,7 @@ declare namespace gdjs {
          * @see {@link TileMapManager}
          */
         class TileMapRuntimeManager {
-            private _runtimeScene;
+            private _instanceContainer;
             /**
              * Delegate that actually manage the caches without anything specific to
              * GDJS.
@@ -29,33 +30,35 @@ declare namespace gdjs {
              */
             private _manager;
             /**
-             * @param runtimeScene The scene.
+             * @param instanceContainer The instance container.
              */
             private constructor();
             /**
-             * @param runtimeScene Where to set the manager instance.
+             * @param instanceContainer Where to set the manager instance.
              * @returns The shared manager.
              */
-            static getManager(runtimeScene: gdjs.RuntimeScene): TileMapRuntimeManager;
+            static getManager(instanceContainer: gdjs.RuntimeInstanceContainer): TileMapRuntimeManager;
             /**
              * @param tileMapJsonResourceName The resource name of the tile map.
              * @param tileSetJsonResourceName The resource name of the tile set.
+             * @param levelIndex The level of the tile map.
              * @param callback A function called when the tile map is parsed.
              */
-            getOrLoadTileMap(tileMapJsonResourceName: string, tileSetJsonResourceName: string, callback: (tileMap: TileMapHelper.EditableTileMap | null) => void): void;
+            getOrLoadTileMap(tileMapJsonResourceName: string, tileSetJsonResourceName: string, levelIndex: number, callback: (tileMapFileContent: TileMapHelper.EditableTileMap | null) => void): void;
             /**
              * @param getTexture The method that loads the atlas image file in memory.
              * @param atlasImageResourceName The resource name of the atlas image.
              * @param tileMapJsonResourceName The resource name of the tile map.
              * @param tileSetJsonResourceName The resource name of the tile set.
+             * @param levelIndex The level of the tile map.
              * @param callback A function called when the tiles textures are split.
              */
-            getOrLoadTextureCache(getTexture: (textureName: string) => PIXI.BaseTexture<PIXI.Resource>, atlasImageResourceName: string, tileMapJsonResourceName: string, tileSetJsonResourceName: string, callback: (textureCache: TileMapHelper.TileTextureCache | null) => void): void;
+            getOrLoadTextureCache(getTexture: (textureName: string) => PIXI.BaseTexture<PIXI.Resource>, atlasImageResourceName: string, tileMapJsonResourceName: string, tileSetJsonResourceName: string, levelIndex: number, callback: (textureCache: TileMapHelper.TileTextureCache | null) => void): void;
             /**
              * Parse both JSON and set the content of the tile set in the right
              * attribute in the tile map to merge both parsed data.
              */
-            private _loadTiledMap;
+            private _loadTileMap;
         }
     }
 }

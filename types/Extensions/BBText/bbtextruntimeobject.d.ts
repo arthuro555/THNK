@@ -25,7 +25,7 @@ declare namespace gdjs {
     /**
      * Displays a rich text using BBCode markup (allowing to set parts of the text as bold, italic, use different colors and shadows).
      */
-    class BBTextRuntimeObject extends gdjs.RuntimeObject {
+    class BBTextRuntimeObject extends gdjs.RuntimeObject implements gdjs.OpacityHandler {
         _opacity: float;
         _text: string;
         /** color in format [r, g, b], where each component is in the range [0, 255] */
@@ -38,17 +38,17 @@ declare namespace gdjs {
         _renderer: gdjs.BBTextRuntimeObjectRenderer;
         hidden: boolean;
         /**
-         * @param runtimeScene The scene the object belongs to.
+         * @param instanceContainer The container the object belongs to.
          * @param objectData The object data used to initialize the object
          */
-        constructor(runtimeScene: gdjs.RuntimeScene, objectData: BBTextObjectData);
-        getRendererObject(): any;
+        constructor(instanceContainer: gdjs.RuntimeInstanceContainer, objectData: BBTextObjectData);
+        getRendererObject(): MultiStyleText;
         updateFromObjectData(oldObjectData: BBTextObjectDataType, newObjectData: BBTextObjectDataType): boolean;
         /**
          * Initialize the extra parameters that could be set for an instance.
          */
         extraInitializationFromInitialInstance(initialInstanceData: InstanceData): void;
-        onDestroyFromScene(runtimeScene: any): void;
+        onDestroyed(): void;
         /**
          * Set the markup text to display.
          */

@@ -33,6 +33,9 @@ declare namespace gdjs {
          * @param y The new Y component
          */
         setY(y: float): void;
+        clear(): void;
+        addForce(force: Force): void;
+        add(x: float, y: float): void;
         /**
          * Set the angle of the force.
          * @param angle The new angle

@@ -1,10 +1,10 @@
 declare namespace gdjs {
     class TextEntryRuntimeObjectPixiRenderer {
-        _object: any;
+        _object: gdjs.TextEntryRuntimeObject;
         _pressHandler: any;
         _upHandler: any;
         _downHandler: any;
-        constructor(runtimeObject: any);
+        constructor(runtimeObject: gdjs.TextEntryRuntimeObject);
         onDestroy(): void;
         updateString(): void;
         activate(enable: any): void;

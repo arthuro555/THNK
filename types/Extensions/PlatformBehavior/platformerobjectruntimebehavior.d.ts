@@ -85,10 +85,10 @@ declare namespace gdjs {
         /** @deprecated use _hasReallyMoved instead */
         private _hasMovedAtLeastOnePixel;
         private _manager;
-        constructor(runtimeScene: gdjs.RuntimeScene, behaviorData: any, owner: gdjs.RuntimeObject);
+        constructor(instanceContainer: gdjs.RuntimeInstanceContainer, behaviorData: any, owner: gdjs.RuntimeObject);
         updateFromBehaviorData(oldBehaviorData: any, newBehaviorData: any): boolean;
-        doStepPreEvents(runtimeScene: gdjs.RuntimeScene): void;
-        doStepPostEvents(runtimeScene: gdjs.RuntimeScene): void;
+        doStepPreEvents(instanceContainer: gdjs.RuntimeInstanceContainer): void;
+        doStepPostEvents(instanceContainer: gdjs.RuntimeInstanceContainer): void;
         private _updateSpeed;
         /**
          * Also see {@link ./README.md}
@@ -199,6 +199,11 @@ declare namespace gdjs {
          * @returns The current gravity.
          */
         getGravity(): float;
+        /**
+         * Get maximum angle of a slope for the Platformer Object to run on it as a floor.
+         * @returns the slope maximum angle, in degrees.
+         */
+        getSlopeMaxAngle(): float;
         /**
          * Get the maximum falling speed of the Platformer Object.
          * @returns The maximum falling speed.

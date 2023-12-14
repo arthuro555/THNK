@@ -6,16 +6,16 @@ declare namespace gdjs {
         _object: gdjs.SpriteRuntimeObject;
         _spriteDirty: boolean;
         _textureDirty: boolean;
-        _sprite: any;
+        _sprite: PIXI.Sprite;
         _cachedWidth: float;
         _cachedHeight: float;
         /**
          * @param runtimeObject The object
-         * @param runtimeScene The scene
+         * @param instanceContainer The scene
          */
-        constructor(runtimeObject: gdjs.SpriteRuntimeObject, runtimeScene: gdjs.RuntimeScene);
-        reinitialize(runtimeObject: any, runtimeScene: any): void;
-        getRendererObject(): any;
+        constructor(runtimeObject: gdjs.SpriteRuntimeObject, instanceContainer: gdjs.RuntimeInstanceContainer);
+        reinitialize(runtimeObject: gdjs.SpriteRuntimeObject, instanceContainer: gdjs.RuntimeInstanceContainer): void;
+        getRendererObject(): import("pixi.js").Sprite;
         /**
          * Update the internal PIXI.Sprite position, angle...
          */
@@ -40,9 +40,9 @@ declare namespace gdjs {
         getHeight(): float;
         getUnscaledWidth(): float;
         getUnscaledHeight(): float;
-        static getAnimationFrame(imageManager: any, imageName: any): any;
-        static getAnimationFrameWidth(pixiTexture: any): any;
-        static getAnimationFrameHeight(pixiTexture: any): any;
+        static getAnimationFrame(imageManager: gdjs.PixiImageManager, imageName: string): import("pixi.js").Texture<import("pixi.js").Resource>;
+        static getAnimationFrameWidth(pixiTexture: PIXI.Texture): number;
+        static getAnimationFrameHeight(pixiTexture: PIXI.Texture): number;
     }
     const SpriteRuntimeObjectRenderer: typeof SpriteRuntimeObjectPixiRenderer;
     type SpriteRuntimeObjectRenderer = SpriteRuntimeObjectPixiRenderer;

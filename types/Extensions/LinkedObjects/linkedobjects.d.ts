@@ -7,7 +7,7 @@ declare namespace gdjs {
         /**
          * Get the links manager of a scene.
          */
-        static getManager(runtimeScene: gdjs.RuntimeScene): gdjs.LinksManager;
+        static getManager(instanceContainer: gdjs.RuntimeInstanceContainer): gdjs.LinksManager;
         /**
          * This function is for internal use and could disappear in next versions.
          * Prefer using:
@@ -33,10 +33,10 @@ declare namespace gdjs {
     }
     namespace evtTools {
         namespace linkedObjects {
-            const linkObjects: (runtimeScene: gdjs.RuntimeScene, objA: gdjs.RuntimeObject, objB: gdjs.RuntimeObject) => void;
-            const removeLinkBetween: (runtimeScene: gdjs.RuntimeScene, objA: gdjs.RuntimeObject, objB: gdjs.RuntimeObject) => void;
-            const removeAllLinksOf: (runtimeScene: gdjs.RuntimeScene, objA: gdjs.RuntimeObject) => void;
-            const pickObjectsLinkedTo: (runtimeScene: gdjs.RuntimeScene, objectsLists: Hashtable<gdjs.RuntimeObject[]>, obj: gdjs.RuntimeObject, eventsFunctionContext: EventsFunctionContext | undefined) => boolean;
+            const linkObjects: (instanceContainer: gdjs.RuntimeInstanceContainer, objA: gdjs.RuntimeObject | null, objB: gdjs.RuntimeObject | null) => void;
+            const removeLinkBetween: (instanceContainer: gdjs.RuntimeInstanceContainer, objA: gdjs.RuntimeObject | null, objB: gdjs.RuntimeObject | null) => void;
+            const removeAllLinksOf: (instanceContainer: gdjs.RuntimeInstanceContainer, objA: gdjs.RuntimeObject) => void;
+            const pickObjectsLinkedTo: (instanceContainer: gdjs.RuntimeInstanceContainer, objectsLists: Hashtable<gdjs.RuntimeObject[]>, obj: gdjs.RuntimeObject | null, eventsFunctionContext: EventsFunctionContext | undefined) => boolean;
         }
     }
 }

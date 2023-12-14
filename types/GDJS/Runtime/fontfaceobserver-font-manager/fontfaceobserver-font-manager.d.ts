@@ -4,27 +4,16 @@ declare namespace gdjs {
      * from the game resources (see `loadFonts`), and allow to access to
      * the font families of the loaded fonts during the game (see `getFontFamily`).
      */
-    class FontFaceObserverFontManager {
-        _resources: any;
-        _loadedFontFamily: {
-            [key: string]: string;
-        };
-        _loadedFonts: {
-            [key: string]: ResourceData;
-        };
-        _filenameToFontFamily: {
-            [key: string]: string;
-        };
+    class FontFaceObserverFontManager implements gdjs.ResourceManager {
+        _resourceLoader: gdjs.ResourceLoader;
+        _loadedFontFamily: ResourceCache<string>;
+        _loadedFontFamilySet: Set<string>;
         /**
          * @param resources The resources data of the game.
+         * @param resourceLoader The resources loader of the game.
          */
-        constructor(resources: ResourceData[]);
-        /**
-         * Update the resources data of the game. Useful for hot-reloading, should not be used otherwise.
-         *
-         * @param resources The resources data of the game.
-         */
-        setResources(resources: ResourceData[]): void;
+        constructor(resourceLoader: gdjs.ResourceLoader);
+        getResourceKinds(): ResourceKind[];
         /**
          * Return the font family associated to the specified font resource name.
          * The font resource must have been loaded before. If that's not the case,
@@ -57,7 +46,7 @@ declare namespace gdjs {
          * @param filename The filename of the font.
          * @returns The font family to be used for this font resource.
          */
-        _getFontFamilyFromFilename(filename: string): string;
+        _getFontFamilyFromFilename(resource: ResourceData): string;
         /**
          * Load the font at the given `src` location (relative to the project), giving
          * it the specified `fontFamily` name.
@@ -68,14 +57,14 @@ declare namespace gdjs {
          * @param fontFamily The font
          * @returns The font family to be used for this font resource.
          */
-        static _loadFont(fontFamily: string, src: any): Promise<void>;
+        private _loadFont;
+        processResource(resourceName: string): Promise<void>;
         /**
          * Load the specified resources, so that fonts are loaded and can then be
          * used by using the font family returned by getFontFamily.
          * @param onProgress Callback called each time a new file is loaded.
-         * @param onComplete Callback called when loading is done.
          */
-        loadFonts(onProgress: any, onComplete: any): any;
+        loadResource(resourceName: string): Promise<void>;
     }
     type FontManager = FontFaceObserverFontManager;
     const FontManager: typeof FontFaceObserverFontManager;

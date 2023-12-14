@@ -3,17 +3,18 @@ declare namespace gdjs {
      * The PIXI.js renderer for the VideoRuntimeObject.
      */
     class VideoRuntimeObjectPixiRenderer {
-        _object: any;
+        _object: gdjs.VideoRuntimeObject;
         _pixiObject: any;
         _textureWasValid: boolean;
         /**
          * @param runtimeObject The object to render
-         * @param runtimeScene The gdjs.RuntimeScene in which the object is
+         * @param instanceContainer The gdjs.RuntimeScene in which the object is
          */
-        constructor(runtimeObject: gdjs.VideoRuntimeObject, runtimeScene: gdjs.RuntimeScene);
+        constructor(runtimeObject: gdjs.VideoRuntimeObject, instanceContainer: gdjs.RuntimeInstanceContainer);
         getRendererObject(): any;
         /**
-         * To be called when the object is removed from the scene: will pause the video.
+         * To be called when the object is removed from the scene: will stop the video
+         * (goes back to beginning).
          */
         onDestroy(): void;
         ensureUpToDate(): void;
@@ -47,6 +48,10 @@ declare namespace gdjs {
          * Pause the video
          */
         pause(): void;
+        /**
+         * Stops the video and comes back to first frame.
+         */
+        stop(): void;
         /**
          * Set the loop on video in renderer
          * @param enable true to loop the video

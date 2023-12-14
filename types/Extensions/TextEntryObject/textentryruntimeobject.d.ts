@@ -7,13 +7,13 @@ declare namespace gdjs {
         _activated: boolean;
         _renderer: gdjs.TextEntryRuntimeObjectRenderer;
         /**
-         * @param runtimeScene The scene the object belongs to.
+         * @param instanceContainer The container the object belongs to.
          * @param textEntryObjectData The initial properties of the object
          */
-        constructor(runtimeScene: gdjs.RuntimeScene, textEntryObjectData: ObjectData);
+        constructor(instanceContainer: gdjs.RuntimeInstanceContainer, textEntryObjectData: ObjectData);
         updateFromObjectData(oldObjectData: any, newObjectData: any): boolean;
-        onDestroyFromScene(runtimeScene: any): void;
-        update(runtimeScene: gdjs.RuntimeScene): void;
+        onDestroyed(): void;
+        update(instanceContainer: gdjs.RuntimeInstanceContainer): void;
         getString(): string;
         setString(str: string): void;
         isActivated(): boolean;

@@ -7,6 +7,13 @@ declare namespace gdjs {
          */
         namespace p2p {
             /**
+             * The type of the data that is sent across peerjs.
+             */
+            type NetworkEvent = {
+                eventName: string;
+                data: string;
+            };
+            /**
              * The data bound to an event that got triggered.
              */
             class EventData {
@@ -24,7 +31,7 @@ declare namespace gdjs {
              * An event that can be listened to.
              */
             class Event {
-                private data;
+                private readonly data;
                 dataloss: boolean;
                 /**
                  * Returns true if the event is triggered.
@@ -35,7 +42,7 @@ declare namespace gdjs {
                  */
                 pushData(newData: EventData): void;
                 /**
-                 * Deleted the last event data, to be called when it is sure the event was processed throughly.
+                 * Deleted the last event data, to be called when it is sure the event was processed thoroughly.
                  */
                 popData(): void;
                 /**
@@ -48,7 +55,7 @@ declare namespace gdjs {
                 getSender(): string;
             }
             /**
-             * Get an event or creates it if it doesn't exist.
+             * Get an event, and creates it if it doesn't exist.
              */
             export const getEvent: (name: string) => Event;
             /**
@@ -187,9 +194,10 @@ declare namespace gdjs {
             /**
              * A JavaScript-only function to get the raw P2P DataConnection.
              * This can be useful for example when you want to use a binary protocol
-             * instead if GDevelop variables for high-performance networking.
+             * instead of GDevelop variables for high-performance networking.
              */
-            export const getConnectionInstance: (peerID: string) => Peer.DataConnection<NetworkEvent> | undefined;
+            export const getConnectionInstance: (peerID: string) => Peer.DataConnection<ArrayBuffer> | undefined;
+            export {};
         }
     }
 }

@@ -1,17 +1,16 @@
-declare var MultiStyleText: any;
 declare namespace gdjs {
     /**
      * The PIXI.js renderer for the BBCode Text runtime object.
      */
     class BBTextRuntimeObjectPixiRenderer {
         _object: gdjs.BBTextRuntimeObject;
-        _pixiObject: any;
+        _pixiObject: MultiStyleText;
         /**
          * @param runtimeObject The object to render
-         * @param runtimeScene The gdjs.RuntimeScene in which the object is
+         * @param instanceContainer The gdjs.RuntimeInstanceContainer in which the object is
          */
-        constructor(runtimeObject: gdjs.BBTextRuntimeObject, runtimeScene: gdjs.RuntimeScene);
-        getRendererObject(): any;
+        constructor(runtimeObject: gdjs.BBTextRuntimeObject, instanceContainer: gdjs.RuntimeInstanceContainer);
+        getRendererObject(): MultiStyleText;
         updateWordWrap(): void;
         updateWrappingWidth(): void;
         updateText(): void;
@@ -24,6 +23,7 @@ declare namespace gdjs {
         updateOpacity(): void;
         getWidth(): float;
         getHeight(): float;
+        destroy(): void;
     }
     const BBTextRuntimeObjectRenderer: typeof BBTextRuntimeObjectPixiRenderer;
     type BBTextRuntimeObjectRenderer = BBTextRuntimeObjectPixiRenderer;

@@ -113,10 +113,6 @@ declare namespace gdjs {
          */
         flipY(anchorY: float): void;
         /**
-         * Concatenate a flip between X and Y.
-         */
-        flipDiagonally(): void;
-        /**
          * Concatenate a transformation after this one.
          * @param other The transformation to concatenate.
          */

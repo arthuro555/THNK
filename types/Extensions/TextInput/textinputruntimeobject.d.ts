@@ -23,7 +23,7 @@ declare namespace gdjs {
     /**
      * Shows a text input on the screen the player can type text into.
      */
-    export class TextInputRuntimeObject extends gdjs.RuntimeObject {
+    export class TextInputRuntimeObject extends gdjs.RuntimeObject implements gdjs.TextContainer, gdjs.Resizable, gdjs.OpacityHandler {
         private _string;
         private _placeholder;
         private opacity;
@@ -41,34 +41,21 @@ declare namespace gdjs {
         private _disabled;
         private _readOnly;
         _renderer: TextInputRuntimeObjectRenderer;
-        constructor(runtimeScene: gdjs.RuntimeScene, objectData: TextInputObjectData);
+        constructor(instanceContainer: gdjs.RuntimeInstanceContainer, objectData: TextInputObjectData);
         getRendererObject(): null;
         updateFromObjectData(oldObjectData: TextInputObjectData, newObjectData: TextInputObjectData): boolean;
-        updatePreRender(runtimeScene: RuntimeScene): void;
+        updatePreRender(instanceContainer: RuntimeInstanceContainer): void;
         /**
          * Initialize the extra parameters that could be set for an instance.
          */
         extraInitializationFromInitialInstance(initialInstanceData: InstanceData): void;
         onScenePaused(runtimeScene: gdjs.RuntimeScene): void;
         onSceneResumed(runtimeScene: gdjs.RuntimeScene): void;
-        onDestroyFromScene(runtimeScene: gdjs.RuntimeScene): void;
-        /**
-         * Set object opacity.
-         */
-        setOpacity(opacity: any): void;
-        /**
-         * Get object opacity.
-         */
-        getOpacity(): number;
-        /**
-         * Set the width of the object, if applicable.
-         * @param width The new width in pixels.
-         */
+        onDestroyed(): void;
+        setOpacity(opacity: float): void;
+        getOpacity(): float;
+        setSize(width: number, height: number): void;
         setWidth(width: float): void;
-        /**
-         * Set the height of the object, if applicable.
-         * @param height The new height in pixels.
-         */
         setHeight(height: float): void;
         /**
          * Return the width of the object.
@@ -82,12 +69,16 @@ declare namespace gdjs {
         getHeight(): float;
         /**
          * Get the text entered in the text input.
+         * @deprecated use `getText` instead
          */
         getString(): string;
         /**
          * Replace the text inside the text input.
+         * @deprecated use `setText` instead
          */
-        setString(newString: string): void;
+        setString(text: string): void;
+        getText(): string;
+        setText(newString: string): void;
         /**
          * Called by the renderer when the value of the input shown on the screen
          * was changed (because the user typed something).
@@ -137,6 +128,7 @@ declare namespace gdjs {
         setReadOnly(value: boolean): void;
         isReadOnly(): boolean;
         isFocused(): boolean;
+        focus(): void;
     }
     export {};
 }

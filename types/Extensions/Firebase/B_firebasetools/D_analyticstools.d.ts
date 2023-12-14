@@ -13,7 +13,7 @@ declare namespace gdjs {
                  */
                 const log: (eventName: string, eventData: string) => void;
                 /**
-                 * Sets the User ID (the name under wich the user will appear on the analytics).
+                 * Sets the User ID (the name under which the user will appear on the analytics).
                  * Should be unique if possible.
                  * @param newUID The new User ID.
                  */

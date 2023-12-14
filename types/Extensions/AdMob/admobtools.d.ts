@@ -1,13 +1,5 @@
 declare namespace gdjs {
     namespace adMob {
-        enum AdSizeType {
-            BANNER = 0,
-            LARGE_BANNER = 1,
-            MEDIUM_RECTANGLE = 2,
-            FULL_BANNER = 3,
-            LEADERBOARD = 4,
-            SMART_BANNER = 5
-        }
         /**
          * Activate or deactivate the test mode ("development" mode).
          * When activated, tests ads will be served instead of real ones.
@@ -17,54 +9,61 @@ declare namespace gdjs {
          * account being flagged for invalid activity.
          */
         const setTestMode: (enable: boolean) => void;
-        /** Check if a banner is loading. */
-        const isBannerLoading: () => boolean;
-        /** Check if a banner is being shown on screen. */
+        const isAppOpenLoading: () => boolean;
+        const isAppOpenReady: () => boolean;
+        const isAppOpenShowing: () => boolean;
+        const isAppOpenErrored: () => boolean;
+        /** Load an AppOpen. */
+        const loadAppOpen: (androidAdUnitId: any, iosAdUnitId: any, displayLandscape: any, displayWhenLoaded: any) => Promise<void>;
+        /** Show the loaded appOpen. */
+        const showAppOpen: () => Promise<void>;
+        const isBannerConfigured: () => boolean;
+        const isBannerLoaded: () => boolean;
         const isBannerShowing: () => boolean;
-        /** Check if the banner had an error while loading it. */
         const isBannerErrored: () => boolean;
-        /**
-         * Set up a banner that can then be displayed by calling `showBanner`.
-         */
-        const setupBanner: (androidID: any, iosID: any, atTop: any) => void;
-        /**
-         * Set the size of the banner to be shown when `showBanner` is called.
-         * @param bannerAdSizeType The type of the banner to displayed
-         */
         const setBannerAdSizeType: (bannerAdSizeType: 'BANNER' | 'LARGE_BANNER' | 'MEDIUM_RECTANGLE' | 'FULL_BANNER' | 'LEADERBOARD' | 'SMART_BANNER') => void;
         /**
-         * Display the banner that was set up with `loadBanner` (and `setBannerAdSizeType`).
+         * Set up a banner that can then be displayed by calling `showBanner`.
+         * If a banner is already set up, it will be hidden and replaced by the new one.
          */
-        const showBanner: () => void;
+        const setupBanner: (androidAdUnitId: any, iosAdUnitId: any, atTop: any) => Promise<void>;
+        /**
+         * Display a banner that was set up with `setupBanner` (and `setBannerAdSizeType`).
+         */
+        const showBanner: () => Promise<void>;
         /** Hide the banner shown on screen. */
-        const hideBanner: () => void;
-        /** Check if the interstitial is loading. */
+        const hideBanner: () => Promise<void>;
         const isInterstitialLoading: () => boolean;
-        /** Check if the interstitial is ready to display. */
         const isInterstitialReady: () => boolean;
-        /** Check if the interstitial is shown on screen. */
         const isInterstitialShowing: () => boolean;
-        /** Check if the interstitial had an error while loading it. */
         const isInterstitialErrored: () => boolean;
         /** Load an interstitial. */
-        const loadInterstitial: (androidID: any, iosID: any, displayWhenLoaded: any) => void;
+        const loadInterstitial: (androidAdUnitId: any, iosAdUnitId: any, displayWhenLoaded: any) => Promise<void>;
         /** Show the loaded interstitial. */
-        const showInterstitial: () => void;
-        /** Check if the video is loading. */
-        const isVideoLoading: () => boolean;
-        /** Check if the video is ready to display. */
-        const isVideoReady: () => boolean;
-        /** Check if the video is shown on screen. */
-        const isVideoShowing: () => boolean;
-        /** Check if the video had an error while loading it. */
-        const isVideoErrored: () => boolean;
-        /** Check if the reward of the video was received. */
-        const wasVideoRewardReceived: (markAsClaimed: any) => boolean;
-        /** Load a reward video. */
-        const loadVideo: (androidID: any, iosID: any, displayWhenLoaded: any) => void;
+        const showInterstitial: () => Promise<void>;
+        const isRewardedInterstitialLoading: () => boolean;
+        const isRewardedInterstitialReady: () => boolean;
+        const isRewardedInterstitialShowing: () => boolean;
+        const isRewardedInterstitialErrored: () => boolean;
+        /** Check if the reward of the rewarded interstitial was received. */
+        const wasRewardedInterstitialRewardReceived: (markAsClaimed: any) => boolean;
+        /** Load a rewarded interstitial. */
+        const loadRewardedInterstitial: (androidAdUnitID: any, iosAdUnitID: any, displayWhenLoaded: any) => Promise<void>;
+        /** Show the loaded reward interstitial. */
+        const showRewardedInterstitial: () => Promise<void>;
+        /** Mark the reward of the interstitial as claimed. */
+        const markRewardedInterstitialRewardAsClaimed: () => void;
+        const isRewardedVideoLoading: () => boolean;
+        const isRewardedVideoReady: () => boolean;
+        const isRewardedVideoShowing: () => boolean;
+        const isRewardedVideoErrored: () => boolean;
+        /** Check if the reward of the rewarded video was received. */
+        const wasRewardedVideoRewardReceived: (markAsClaimed: any) => boolean;
+        /** Load a rewarded video. */
+        const loadRewardedVideo: (androidAdUnitID: any, iosAdUnitID: any, displayWhenLoaded: any) => Promise<void>;
         /** Show the loaded reward video. */
-        const showVideo: () => void;
+        const showRewardedVideo: () => Promise<void>;
         /** Mark the reward of the video as claimed. */
-        const markVideoRewardAsClaimed: () => void;
+        const markRewardedVideoRewardAsClaimed: () => void;
     }
 }

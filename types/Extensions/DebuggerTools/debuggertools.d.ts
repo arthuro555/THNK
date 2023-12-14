@@ -7,9 +7,9 @@ declare namespace gdjs {
         namespace debuggerTools {
             /**
              * Stop the game execution.
-             * @param runtimeScene - The current scene.
+             * @param instanceContainer - The current container.
              */
-            const pause: (runtimeScene: gdjs.RuntimeScene) => void;
+            const pause: (instanceContainer: gdjs.RuntimeInstanceContainer) => void;
             /**
              * Logs a message to the console.
              * @param message - The message to log.
@@ -19,13 +19,13 @@ declare namespace gdjs {
             const log: (message: string, type: 'info' | 'warning' | 'error', group: string) => void;
             /**
              * Enable or disable the debug draw.
-             * @param runtimeScene - The current scene.
+             * @param instanceContainer - The current container.
              * @param enableDebugDraw - true to enable the debug draw, false to disable it.
              * @param showHiddenInstances - true to apply the debug draw to hidden objects.
              * @param showPointsNames - true to show point names.
              * @param showCustomPoints - true to show custom points of Sprite objects.
              */
-            const enableDebugDraw: (runtimeScene: gdjs.RuntimeScene, enableDebugDraw: boolean, showHiddenInstances: boolean, showPointsNames: boolean, showCustomPoints: boolean) => void;
+            const enableDebugDraw: (instanceContainer: gdjs.RuntimeInstanceContainer, enableDebugDraw: boolean, showHiddenInstances: boolean, showPointsNames: boolean, showCustomPoints: boolean) => void;
         }
     }
 }

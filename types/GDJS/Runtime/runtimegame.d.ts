@@ -32,19 +32,33 @@ declare namespace gdjs {
          * `@electron/remote` in the game engine and extensions.
          */
         electronRemoteRequirePath?: string;
+        /**
+         * the token to use by the game engine when requiring any resource stored on
+         * GDevelop Cloud buckets. Note that this is only useful during previews.
+         */
+        gdevelopResourceToken?: string;
+        /**
+         * Check if, in some exceptional cases, we allow authentication
+         * to be done through a iframe.
+         * This is usually discouraged as the user can't verify that the authentication
+         * window is a genuine one. It's only to be used in trusted contexts.
+         */
+        allowAuthenticationUsingIframeForPreview?: boolean;
+        /**
+         * If set, the game should use the specified environment for making calls
+         * to GDevelop APIs ("dev" = development APIs).
+         */
+        environment?: 'dev';
     };
     /**
      * Represents a game being played.
      */
     class RuntimeGame {
+        _resourcesLoader: gdjs.ResourceLoader;
         _variables: VariablesContainer;
         _data: ProjectData;
-        _imageManager: ImageManager;
-        _soundManager: SoundManager;
-        _fontManager: FontManager;
-        _jsonManager: JsonManager;
+        _eventsBasedObjectDatas: Map<String, EventsBasedObjectData>;
         _effectsManager: EffectsManager;
-        _bitmapFontManager: BitmapFontManager;
         _maxFPS: integer;
         _minFPS: integer;
         _gameResolutionWidth: integer;
@@ -55,15 +69,39 @@ declare namespace gdjs {
         _adaptGameResolutionAtRuntime: boolean;
         _scaleMode: 'linear' | 'nearest';
         _pixelsRounding: boolean;
+        _antialiasingMode: 'none' | 'MSAA';
+        _isAntialisingEnabledOnMobile: boolean;
+        /**
+         * Game loop management (see startGameLoop method)
+         */
         _renderer: RuntimeGameRenderer;
         _sessionId: string | null;
         _playerId: string | null;
+        _watermark: watermark.RuntimeWatermark;
         _sceneStack: SceneStack;
+        /**
+         * When set to true, the scenes are notified that game resolution size changed.
+         */
         _notifyScenesForGameResolutionResize: boolean;
+        /**
+         * When paused, the game won't step and will be freezed. Useful for debugging.
+         */
         _paused: boolean;
+        /**
+         * True during the first frame the game is back from being hidden.
+         * This has nothing to do with `_paused`.
+         */
+        _hasJustResumed: boolean;
         _inputManager: InputManager;
+        /**
+         * Allow to specify an external layout to insert in the first scene.
+         */
         _injectExternalLayout: any;
         _options: RuntimeGameOptions;
+        /**
+         * The mappings for embedded resources
+         */
+        _embeddedResourcesMappings: Map<string, Record<string, string>>;
         /**
          * Optional client to connect to a debugger server.
          */
@@ -114,17 +152,23 @@ declare namespace gdjs {
          */
         getBitmapFontManager(): gdjs.BitmapFontManager;
         /**
-         * Get the input manager of the game, storing mouse, keyboard
-         * and touches states.
-         * @return The input manager owned by the game
-         */
-        getInputManager(): gdjs.InputManager;
-        /**
          * Get the JSON manager of the game, used to load JSON from game
          * resources.
          * @return The json manager for the game
          */
         getJsonManager(): gdjs.JsonManager;
+        /**
+         * Get the 3D model manager of the game, used to load 3D model from game
+         * resources.
+         * @return The 3D model manager for the game
+         */
+        getModel3DManager(): gdjs.Model3DManager;
+        /**
+         * Get the input manager of the game, storing mouse, keyboard
+         * and touches states.
+         * @return The input manager owned by the game
+         */
+        getInputManager(): gdjs.InputManager;
         /**
          * Get the effects manager of the game, which allows to manage
          * effects on runtime objects or runtime layers.
@@ -136,6 +180,7 @@ declare namespace gdjs {
          * @return The object associated to the game.
          */
         getGameData(): ProjectData;
+        getEventsBasedObjectData(type: string): EventsBasedObjectData | null;
         /**
          * Get the data associated to a scene.
          *
@@ -237,15 +282,65 @@ declare namespace gdjs {
          */
         getPixelsRounding(): boolean;
         /**
+         * Return the antialiasing mode used by the game ("none" or "MSAA").
+         */
+        getAntialiasingMode(): 'none' | 'MSAA';
+        /**
+         * Return true if antialising is enabled on mobiles.
+         */
+        isAntialisingEnabledOnMobile(): boolean;
+        /**
          * Set or unset the game as paused.
          * When paused, the game won't step and will be freezed. Useful for debugging.
          * @param enable true to pause the game, false to unpause
          */
         pause(enable: boolean): void;
         /**
-         * Load all assets, displaying progress in renderer.
+         * @returns true during the first frame the game is back from being hidden.
+         * This has nothing to do with `_paused`.
          */
-        loadAllAssets(callback: () => void, progressCallback?: (float: any) => void): void;
+        hasJustResumed(): boolean;
+        /**
+         * Preload a scene assets as soon as possible in background.
+         */
+        prioritizeLoadingOfScene(sceneName: string): void;
+        /**
+         * @return The progress of assets loading in background for a scene
+         * (between 0 and 1).
+         */
+        getSceneLoadingProgress(sceneName: string): number;
+        /**
+         * @returns true when all the resources of the given scene are loaded
+         * (but maybe not parsed).
+         */
+        areSceneAssetsLoaded(sceneName: string): boolean;
+        /**
+         * @returns true when all the resources of the given scene are loaded and
+         * parsed.
+         */
+        areSceneAssetsReady(sceneName: string): boolean;
+        /**
+         * Load all assets needed to display the 1st scene, displaying progress in
+         * renderer.
+         */
+        loadAllAssets(callback: () => void, progressCallback?: (progress: float) => void): void;
+        /**
+         * Load all assets needed to display the 1st scene, displaying progress in
+         * renderer.
+         *
+         * When a game is hot-reload, this method can be called with the current
+         * scene.
+         */
+        loadFirstAssetsAndStartBackgroundLoading(firstSceneName: string, progressCallback?: (progress: float) => void): Promise<void>;
+        /**
+         * Load all assets for a given scene, displaying progress in renderer.
+         */
+        loadSceneAssets(sceneName: string, progressCallback?: (progress: float) => void): Promise<void>;
+        /**
+         * Load assets, displaying progress in renderer.
+         */
+        private _loadAssetsWithLoadingScreen;
+        private _getFirstSceneName;
         /**
          * Start the game loop, to be called once assets are loaded.
          */
@@ -254,6 +349,7 @@ declare namespace gdjs {
          * Set if the session should be registered.
          */
         enableMetrics(enable: boolean): void;
+        _setupGameVisibilityEvents(): void;
         /**
          * Register a new session for the game, and set up listeners to follow the session
          * time.
@@ -299,11 +395,24 @@ declare namespace gdjs {
          */
         isPreview(): boolean;
         /**
+         * Check if the game should call GDevelop development APIs or not.
+         *
+         * Unless you are contributing to GDevelop, avoid using this.
+         */
+        isUsingGDevelopDevelopmentEnvironment(): boolean;
+        /**
          * Gets an extension property from the project data.
          * @param extensionName The extension name.
          * @param propertyName The property name.
          * @return The property value.
          */
         getExtensionProperty(extensionName: string, propertyName: string): string | null;
+        /**
+         * Resolves the name of an embedded resource.
+         * @param mainResourceName The name of the resource containing the embedded resource.
+         * @param embeddedResourceName The name of the embedded resource.
+         * @return The resource name.
+         */
+        resolveEmbeddedResource(mainResourceName: string, embeddedResourceName: string): string;
     }
 }

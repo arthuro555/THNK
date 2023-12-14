@@ -170,9 +170,8 @@ declare namespace gdjs {
      * of all sounds being played.
      */
     class HowlerSoundManager {
-        _loadedMusics: Record<string, Howl>;
-        _loadedSounds: Record<string, Howl>;
-        _resources: ResourceData[];
+        _loadedMusics: ResourceCache<Howl>;
+        _loadedSounds: ResourceCache<Howl>;
         _availableResources: Record<string, ResourceData>;
         _globalVolume: float;
         _sounds: Record<integer, HowlerSound>;
@@ -182,13 +181,13 @@ declare namespace gdjs {
         /** Paused sounds or musics that should be played once the game is resumed.  */
         _pausedSounds: HowlerSound[];
         _paused: boolean;
-        constructor(resources: ResourceData[]);
+        _resourceLoader: gdjs.ResourceLoader;
         /**
-         * Update the resources data of the game. Useful for hot-reloading, should not be used otherwise.
-         *
          * @param resources The resources data of the game.
+         * @param resourceLoader The resources loader of the game.
          */
-        setResources(resources: ResourceData[]): void;
+        constructor(resourceLoader: gdjs.ResourceLoader);
+        getResourceKinds(): ResourceKind[];
         /**
          * Ensure rate is in a range valid for Howler.js
          * @return The clamped rate
@@ -201,9 +200,9 @@ declare namespace gdjs {
          * file is associated to the given name, then the name will be considered as a
          * filename and will be returned.
          *
-         * @return The associated filename
+         * @return The associated resource
          */
-        private _getFileFromSoundName;
+        private _getAudioResource;
         /**
          * Store the sound in the specified array, put it at the first index that
          * is free, or add it at the end if no element is free
@@ -250,7 +249,8 @@ declare namespace gdjs {
         setGlobalVolume(volume: float): void;
         getGlobalVolume(): float;
         clearAll(): void;
-        preloadAudio(onProgress: (loadedCount: integer, totalCount: integer) => void, onComplete: (totalCount: integer) => void, resources?: ResourceData[]): void;
+        processResource(resourceName: string): Promise<void>;
+        loadResource(resourceName: string): Promise<void>;
     }
     const SoundManager: typeof HowlerSoundManager;
     type SoundManager = HowlerSoundManager;

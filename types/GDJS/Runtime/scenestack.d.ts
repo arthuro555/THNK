@@ -6,6 +6,7 @@ declare namespace gdjs {
         _runtimeGame: gdjs.RuntimeGame;
         _stack: gdjs.RuntimeScene[];
         _wasFirstSceneLoaded: boolean;
+        _isNextLayoutLoading: boolean;
         /**
          * @param runtimeGame The runtime game that is using the scene stack
          */
@@ -23,12 +24,13 @@ declare namespace gdjs {
          * Pause the scene currently being played and start the new scene that is specified.
          * If `externalLayoutName` is set, also instantiate the objects from this external layout.
          */
-        push(newSceneName: string, externalLayoutName?: string): gdjs.RuntimeScene;
+        push(newSceneName: string, externalLayoutName?: string): gdjs.RuntimeScene | null;
+        private _loadNewScene;
         /**
          * Start the specified scene, replacing the one currently being played.
          * If `clear` is set to true, all running scenes are also removed from the stack of scenes.
          */
-        replace(newSceneName: string, clear?: boolean): gdjs.RuntimeScene;
+        replace(newSceneName: string, clear?: boolean): gdjs.RuntimeScene | null;
         /**
          * Return the current gdjs.RuntimeScene being played, or null if none is run.
          */

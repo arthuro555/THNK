@@ -14,7 +14,7 @@ declare namespace gdjs {
     export const objectsTypes: Hashtable<typeof RuntimeObject>;
     export const behaviorsTypes: Hashtable<typeof RuntimeBehavior>;
     type RuntimeSceneCallback = (runtimeScene: gdjs.RuntimeScene) => void;
-    type RuntimeSceneRuntimeObjectCallback = (runtimeScene: gdjs.RuntimeScene, runtimeObject: gdjs.RuntimeObject) => void;
+    type RuntimeSceneRuntimeObjectCallback = (instanceContainer: gdjs.RuntimeInstanceContainer, runtimeObject: gdjs.RuntimeObject) => void;
     export const callbacksFirstRuntimeSceneLoaded: Array<RuntimeSceneCallback>;
     export const callbacksRuntimeSceneLoaded: Array<RuntimeSceneCallback>;
     export const callbacksRuntimeScenePreEvents: Array<RuntimeSceneCallback>;
@@ -59,7 +59,7 @@ declare namespace gdjs {
      */
     export const rgbToHexNumber: (r: integer, g: integer, b: integer) => integer;
     /**
-     * Convert a Hex number to a RGB color array([r,g,b] with each component going from 0 to 255).
+     * Convert a Hex number to a RGB color object ({r,g,b,a} with each component going from 0 to 255 and alpha set to 255).
      * @param hex Hex color
      */
     export const hexNumberToRGB: (hexNumber: number) => {
@@ -68,6 +68,11 @@ declare namespace gdjs {
         b: integer;
         a: integer;
     };
+    /**
+     * Convert a Hex number to a RGB color array([r,g,b] with each component going from 0 to 255).
+     * @param hex Hex color
+     */
+    export const hexNumberToRGBArray: (hexNumber: number) => [integer, integer, integer];
     /**
      * Get a random integer between 0 and max.
      * @param max The maximum value (inclusive).
@@ -262,5 +267,18 @@ declare namespace gdjs {
      * @returns true when a and b are within a relative margin error.
      */
     export const nearlyEqual: (a: float, b: float, epsilon: float) => boolean;
+    /**
+     * Register a promise which will be resolved when a third party library has
+     * finished loading (and is required to load before launching the game).
+     *
+     * This method must be called by any library that loads asynchronously.
+     */
+    export const registerAsynchronouslyLoadingLibraryPromise: (promise: Promise<any>) => void;
+    /**
+     * @returns a promise resolved when all all third party libraries, which need
+     * to be loaded before the game startup, are loaded. If a library fails
+     * loading, this will be rejected.
+     */
+    export const getAllAsynchronouslyLoadingLibraryPromise: () => Promise<any[]>;
     export {};
 }

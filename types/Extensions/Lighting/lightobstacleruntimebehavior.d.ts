@@ -1,11 +1,11 @@
 declare namespace gdjs {
     class LightObstaclesManager {
         _obstacleRBush: any;
-        constructor(runtimeScene: gdjs.RuntimeScene);
+        constructor(instanceContainer: gdjs.RuntimeInstanceContainer);
         /**
-         * Get the light obstacles manager of a scene.
+         * Get the light obstacles manager of an instance container.
          */
-        static getManager(runtimeScene: gdjs.RuntimeScene): gdjs.LightObstaclesManager;
+        static getManager(instanceContainer: gdjs.RuntimeInstanceContainer): gdjs.LightObstaclesManager;
         /**
          * Add a light obstacle to the list of existing obstacles.
          */
@@ -31,8 +31,8 @@ declare namespace gdjs {
         currentRBushAABB: gdjs.BehaviorRBushAABB<LightObstacleRuntimeBehavior> | null;
         _manager: any;
         _registeredInManager: boolean;
-        constructor(runtimeScene: gdjs.RuntimeScene, behaviorData: any, owner: gdjs.RuntimeObject);
-        doStepPreEvents(runtimeScene: gdjs.RuntimeScene): void;
+        constructor(instanceContainer: gdjs.RuntimeInstanceContainer, behaviorData: any, owner: gdjs.RuntimeObject);
+        doStepPreEvents(instanceContainer: gdjs.RuntimeInstanceContainer): void;
         onDestroy(): void;
         onActivate(): void;
         onDeActivate(): void;

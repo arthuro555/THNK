@@ -20,7 +20,7 @@ declare namespace gdjs {
              * @deprecated
              */
             const sendDeprecatedSynchronousRequest: (host: any, uri: any, body: any, method: any, contentType: any, responseVar: any) => void;
-            const enableMetrics: (runtimeScene: gdjs.RuntimeScene, enable: boolean) => void;
+            const enableMetrics: (instanceContainer: gdjs.RuntimeInstanceContainer, enable: boolean) => void;
             /**
              * Convert a variable to JSON.
              * @param variable The variable to convert to JSON
@@ -32,7 +32,7 @@ declare namespace gdjs {
             /**
              * @deprecated Use `JSON.stringify(variable.toJSObject())` instead.
              */
-            const objectVariableStructureToJSON: (object: gdjs.RuntimeObject, variable: gdjs.Variable) => string;
+            const objectVariableStructureToJSON: (object: gdjs.RuntimeObject | null, variable: gdjs.Variable) => string;
             /**
              * @deprecated Use `variable.fromJSObject` instead.
              */
@@ -50,7 +50,7 @@ declare namespace gdjs {
             /**
              * @deprecated Use `variable.fromJSON` instead.
              */
-            const jsonToObjectVariableStructure: (jsonStr: string, object: gdjs.RuntimeObject, variable: gdjs.Variable) => void;
+            const jsonToObjectVariableStructure: (jsonStr: string, object: gdjs.RuntimeObject | null, variable: gdjs.Variable) => void;
         }
     }
 }

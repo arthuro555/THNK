@@ -15,51 +15,61 @@ declare namespace gdjs {
             /**
              * Return the uppercased version of the string.
              */
-            const toUpperCase: (str: any) => any;
+            const toUpperCase: (str: string) => string;
             /**
              * Return the lowercased version of the string.
              */
-            const toLowerCase: (str: any) => any;
+            const toLowerCase: (str: string) => string;
             /**
              * Return a new string containing the substring of the original string.
              */
-            const subStr: (str: any, start: any, len: any) => any;
+            const subStr: (str: string, start: integer, len: integer) => string;
             /**
              * Return a new string containing the character at the specified position.
              */
-            const strAt: (str: any, start: any) => any;
+            const strAt: (str: string, start: integer) => string;
             /**
              * Return the string repeated.
              */
-            const strRepeat: (str: any, count: any) => string;
+            const strRepeat: (str: string, count: integer) => string;
             /**
              * Return the length of the string
              */
-            const strLen: (str: any) => any;
+            const strLen: (str: string) => number;
             /**
-             * Search the first occurence in a string (return the position of the result, from the beginning of the string, or -1 if not found)
+             * Search the first occurrence in a string (return the position of the result, from the beginning of the string, or -1 if not found)
              */
-            const strFind: (str: any, what: any) => any;
+            const strFind: (str: string, what: string) => number;
             /**
-             * Search the last occurence in a string (return the position of the result, from the beginning of the string, or -1 if not found)
+             * Search the last occurrence in a string (return the position of the result, from the beginning of the string, or -1 if not found)
              */
-            const strFindLast: (str: any, what: any) => any;
-            /**
-             * @deprecated
-             */
-            const strRFind: (str: any, what: any) => any;
-            /**
-             * Search the first occurence in a string, starting from a specified position (return the position of the result, from the beginning of the string, or -1 if not found)
-             */
-            const strFindFrom: (str: any, what: any, pos: any) => any;
-            /**
-             * Search the last occurence in a string, starting from a specified position (return the position of the result, from the beginning of the string, or -1 if not found)
-             */
-            const strFindLastFrom: (str: any, what: any, pos: any) => any;
+            const strFindLast: (str: string, what: string) => number;
             /**
              * @deprecated
              */
-            const strRFindFrom: (str: any, what: any, pos: any) => any;
+            const strRFind: (str: string, what: string) => number;
+            /**
+             * Search the first occurrence in a string, starting from a specified position (return the position of the result, from the beginning of the string, or -1 if not found)
+             */
+            const strFindFrom: (str: string, what: string, pos: integer) => number;
+            /**
+             * Search the last occurrence in a string, starting from a specified position (return the position of the result, from the beginning of the string, or -1 if not found)
+             */
+            const strFindLastFrom: (str: string, what: string, pos: integer) => number;
+            /**
+             * Return a new string with the content of `str` where the first occurrence of `pattern`
+             * is replaced by `replacement`.
+             */
+            const strReplaceOne: (str: string, pattern: string, replacement: string) => string;
+            /**
+             * Return a new string with the content of `str` where all occurrences of `pattern`
+             * are replaced by `replacement`.
+             */
+            const strReplaceAll: (str: string, pattern: string, replacement: string) => string;
+            /**
+             * @deprecated
+             */
+            const strRFindFrom: (str: string, what: string, pos: integer) => number;
         }
     }
 }
