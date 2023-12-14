@@ -7,11 +7,13 @@ import {
 import { applyGameStateSnapshotToScene } from "client/ApplyGameStateSnapshot";
 import { applySceneUpdateToScene } from "client/ApplySceneUpdate";
 import { THNKClientContext } from "./THNKClientContext";
+import { loadScene, pauseScene } from "utils/LoadScene";
 
 const logger = new gdjs.Logger("THNK - Client");
-const runClientTickPreEvent = (runtimeScene: gdjs.RuntimeScene) => {
+const runClientTickPreEvent = async (runtimeScene: gdjs.RuntimeScene) => {
   if (!runtimeScene.thnkClient) return;
   const { adapter } = runtimeScene.thnkClient;
+  const game = runtimeScene.getGame();
   for (const message of adapter.getPendingMessages()) {
     const messageType = message.contentType();
     switch (messageType) {
@@ -38,9 +40,10 @@ const runClientTickPreEvent = (runtimeScene: gdjs.RuntimeScene) => {
           );
           continue;
         }
-        const newScene = sceneSwitchMessage.isPause()
-          ? runtimeScene.getGame().getSceneStack().push(sceneName)
-          : runtimeScene.getGame().getSceneStack().replace(sceneName, true);
+
+        const newScene = await (sceneSwitchMessage.isPause()
+          ? pauseScene(game, sceneName)
+          : loadScene(game, sceneName));
 
         //newScene.thnkClient = runtimeScene.thnkClient; //runtimeScene.thnkClient holds the old scene
         newScene.thnkClient = new THNKClientContext(
@@ -58,18 +61,9 @@ const runClientTickPreEvent = (runtimeScene: gdjs.RuntimeScene) => {
         ) as ResumePreviousSceneMessage;
 
         const resumedSceneName = resumedSceneMessage.name();
-
-        let resumedScene: gdjs.RuntimeScene | null = null;
-        try {
-          resumedScene = resumedSceneName
-            ? runtimeScene
-                .getGame()
-                .getSceneStack()
-                .replace(resumedSceneName, true)
-            : runtimeScene.getGame().getSceneStack().pop();
-        } catch (e) {
-          console.info("Error spotted!");
-        }
+        const resumedScene = resumedSceneName
+          ? await loadScene(game, resumedSceneName)
+          : game.getSceneStack().pop();
 
         if (!resumedScene) continue;
 
@@ -79,7 +73,6 @@ const runClientTickPreEvent = (runtimeScene: gdjs.RuntimeScene) => {
         }
 
         // In the case the scene was just created it is necessary to keep it in client mode.
-        //resumedScene.thnkClient = runtimeScene.thnkClient; //runtimeScene.thnkClient holds the old scene
         resumedScene.thnkClient = new THNKClientContext(
           runtimeScene.thnkClient!.adapter,
           resumedScene

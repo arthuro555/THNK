@@ -8,6 +8,7 @@ import { applyGameStateSnapshotToScene } from "client/ApplyGameStateSnapshot";
 import { sendConnectionRequest } from "client/ClientMessageSender";
 import { setConnectionState } from "client/ClientConnectionState";
 import { THNKClientContext } from "client/THNKClientContext";
+import { loadScene } from "utils/LoadScene";
 
 const logger = new gdjs.Logger("THNK - Client");
 const fail = (reason: string) => {
@@ -32,7 +33,7 @@ export const startClient = async (
   setConnectionState("loading");
   sendConnectionRequest(adapter);
 
-  const intervalID = setInterval(() => {
+  const intervalID = setInterval(async () => {
     const message = (adapter.getPendingMessages() as ServerMessage[]).shift();
     if (!message) return;
     const messageType = message.contentType();
@@ -51,12 +52,12 @@ export const startClient = async (
         return;
       }
 
-      const newScene = sceneStack.replace(sceneName, true);
+      const newScene = await loadScene(runtimeScene.getGame(), sceneName);
       newScene.thnkClient = new THNKClientContext(adapter, newScene);
 
       applyGameStateSnapshotToScene(sceneSnapshot, newScene);
 
       setConnectionState("connected");
     }
-  }, 200);
+  }, 100);
 };

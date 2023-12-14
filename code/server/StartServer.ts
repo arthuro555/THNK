@@ -1,5 +1,6 @@
 import { type ServerAdapter } from "adapters/Adapter";
 import { setupSceneAsServer } from "server/SetupServerScene";
+import { loadScene } from "utils/LoadScene";
 
 const logger = new gdjs.Logger("THNK - Server");
 /**
@@ -21,8 +22,9 @@ export const startServer = async (
     return;
   }
 
+  const game = runtimeScene.getGame();
   const scene = sceneName
-    ? runtimeScene.getGame().getSceneStack().replace(sceneName, true)
+    ? await loadScene(game, sceneName)
     : runtimeScene;
 
   // The scene setup will allow for the adapter to be bound to it and the server lifetime events to apply to it.
