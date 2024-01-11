@@ -158,7 +158,7 @@ Nous avons ces événements jusqu'à présent:
 
 Ils peuvent techniquement fonctionner, mais... ils sont imparfaits.
 
-La réception d'événements dans un événement normal est plus lisible, mais cela ne permet de traiter qu'un message par tick du serveur, étant donné que la condition n'est vérifiée qu'une seule fois. Laisser des messages non gérés et être traités lors du prochain tick risque de causer des problèmes si de nombreux joueurs envoient beaucoup de messages. Pour traiter tous les messages reçus en un seul tick du serveur, utilisez un événement "tant que" pour gérer les événements alors que certains sont disponibles pour être traités:
+La réception d'événements par un événement standard est plus lisible, mais cela ne permet de traiter qu'un message par tick du serveur, étant donné que la condition n'est vérifiée qu'une seule fois. Laisser des messages non gérés et être traités lors du prochain tick risque de causer des problèmes si de nombreux joueurs envoient beaucoup de messages. Pour traiter tous les messages reçus en un seul tick du serveur, utilisez un événement "tant que" pour gérer les événements alors que certains sont disponibles pour être traités:
 
 <video title="While event underrated smh" width="100%" muted loop controls>
   <source src="/webm/platformer/while.webm" type="video/webm" />

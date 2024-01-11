@@ -1,29 +1,29 @@
 ---
 slug: website-released
-title: The THNK website has been released!
-description: I am happy to announce the opening of the THNK website!
+title: O site do THNK foi lançado!
+description: Tenho o prazer de anunciar a abertura do site THNK!
 image: /img/THNK-thumbnail.png
 authors:
   - arthuro555
 tags:
-  - website
-  - docs
-  - announcement
+  - site
+  - documentação
+  - anúncio
 keywords:
   - thnk
-  - release
-  - docs
-  - website
+  - lançamento
+  - documentação
+  - site
   - gdevelop
   - p2p
   - multiplayer
-  - network
+  - rede
   - beta
-  - preview
+  - pré-visualização
 ---
 
-THNK now has a website!
+THNK agora tem um site!
 
-It is built upon Docusaurus 2.0, and will be home to the documentation and the blog/devlog of THNK. You can submit modifications to it via GitHub, and are welcome to help. I hope to achieve to build together a quality resource for understanding THNK.
+Ele é construido sobre Docusaurus 2.0, e será o local da documentação e blog/devlog do THNK. Você pode enviar modificações via GitHub, e você é bem-vindo a ajudar. Eu espero alcançar e construir juntos um recurso de qualidade para o entendimento do THNK.
 
-That's it for now, there is not much to say yet. See you later for more 😉!
+Isso é tudo por agora. Vejo você mais tarde para mais 😉!

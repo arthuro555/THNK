@@ -159,7 +159,7 @@ We have those events so far:
 
 They may technically work, but... they are flawed.
 
-Receiving events in a normal event is more readable, but it only allows to process one message per server tick, aas the condition is only called once. Letting messages go unhandled and to be handled on the next tick likely will cause problem if many players send this messages a lot. To handle all messages received in a single server tick, use a while event to handle events while some are available to be processed:
+Receiving events in a normal event is more readable, but it only allows to process one message per server tick, as the condition is only called once. Letting messages go unhandled and to be handled on the next tick likely will cause problem if many players send this messages a lot. To handle all messages received in a single server tick, use a while event to handle events while some are available to be processed:
 
 <video title="While event underrated smh" width="100%" muted loop controls>
   <source src="/webm/platformer/while.webm" type="video/webm" />

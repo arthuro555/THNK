@@ -1,0 +1,30 @@
+{
+  "version.label": {
+    "message": "التالي",
+    "description": "The label for version current"
+  },
+  "sidebar.tutorialSidebar.category.Getting started - Platformer tutorial": {
+    "message": "الاستعداد للبدء - برنامج تعليمي لتطوير لعبة منصات",
+    "description": "The label for category Getting started - Platformer tutorial in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Getting started - Platformer tutorial.link.generated-index.description": {
+    "message": "مقدمة شاملة لـ THNK، حيث نقوم ببناء لعبة منصات باستخدام THNK. هذه هي الطريقة الموصى بها لتعلم THNK.",
+    "description": "The generated-index page description for category Getting started - Platformer tutorial in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.THNK concepts in-depth": {
+    "message": "مفاهيم THNK المتقدمة",
+    "description": "The label for category THNK concepts in-depth in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.THNK concepts in-depth.link.generated-index.description": {
+    "message": "تعلم أهم مفاهيم THNK بتعمق هنا!",
+    "description": "The generated-index page description for category THNK concepts in-depth in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Misc. ": {
+    "message": "منوعات ",
+    "description": "The label for category Misc.  in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Misc. .link.generated-index.description": {
+    "message": "صفحات متنوعة من الوثائق.",
+    "description": "The generated-index page description for category Misc.  in sidebar tutorialSidebar"
+  }
+}

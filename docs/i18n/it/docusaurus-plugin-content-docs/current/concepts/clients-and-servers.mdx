@@ -1,0 +1,42 @@
+---
+description: Scoprite tutto sui server e sui client THNK e come funzionano insieme!
+sidebar_position: 1
+---
+
+import Diagram from "./THNK-Server-Client-Diagram.svg";
+
+# Client e server
+
+Una gioco THNK è sempre diviso in due parti: il server e il client. Si tratta di diverse modalità in cui THNK può eseguire il gioco:
+
+## Server
+
+THNK è autorevole, il che significa che solo un'istanza del gioco esegue la logica di gioco. Questa istanza è il server. Quindi il server invierà ad ogni client le nuove posizioni degli oggetti, le variabili, ecc. Tutti questi dati sono chiamati stato di gioco.
+
+Il server può essere fornito come diverse entità: può essere il PC locale in modalità singolo giocatore, un’istanza di gioco di un giocatore, un server di gioco dedicato di un giocatore, i server di gioco che fornisci ai tuoi giocatori...
+
+A meno che il server non sia anche un client (ad esempio, se si avvia una scena come server THNK su una build normale del gioco), il server non eseguirà il codice del client. Il codice server viene sempre eseguito sul server.
+
+## Client
+
+Un client è un'istanza di gioco collegata ad un server. Non esegue mai il codice del server, ma esegue sempre il codice del client. Le responsabilità del client includono:
+
+1.  Eventi legati all'aspetto (animazioni, camera, succo, HUD, menù...)
+2.  Input del giocatore (pressione dei tasti per muovere il personaggio, azioni nei menu, invio di un messaggio in chat...)
+
+Un client non può falsificare lo stato di gioco con cui interagiscono gli altri giocatori, poiché tutte le azioni e la sincronizzazione dello stato di gioco sono eseguite sempre dal server. Questo rende difficile e improbabile l'imbroglio per il vostro gioco. Naturalmente, se il server dà un controllo eccessivo sull'input del giocatore, la protezione crolla! Mantieni i comandi del client semplici e il più possibile controllati dal server.
+
+## Interazione tra server e client
+
+Il client e il server comunicano in maniera diversa. Il client comunica con il server inviandogli _commands_, e il server risponde con _gamestate_.
+
+Il flusso tipico assomiglia a questo:
+
+<Diagram />
+
+Il giocatore, interagendo con il gioco, produce comandi. Il server regolarmente
+esegue gli eventi del server, un tick del server. Al suo interno possono essere elaborati tutti i comandi dei client.
+Alla fine del tick, il server THNK crea una patch che descrive le differenze nello stato del gioco tra prima e dopo il tick del server, e la invia a tutti i client.
+Il client applica la patch alla sua copia locale dello stato di gioco, modificando così le posizioni degli oggetti e i valori delle variabili come ordinato dal codice del server.
+
+Il server non ha comandi che può inviare al giocatore, solo lo stato. Quindi, se vuoi rendere alcuni dati disponibili solo su richiesta perché sono abbastanza grandi, puoi utilizzare un sistema di richiesta-risposta inviando un comando al server e poi attendere che risponda con le informazioni richieste con l’aggiornamento dello stato di gioco successivo come variabile di stato solo per il giocatore.

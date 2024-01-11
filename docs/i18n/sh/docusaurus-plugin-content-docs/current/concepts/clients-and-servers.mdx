@@ -1,0 +1,44 @@
+---
+description: Naučite sve o THNK serverima i klijentima, i kako oni rade zajedno!
+sidebar_position: 1
+---
+
+import Diagram from "./THNK-Server-Client-Diagram.svg";
+
+# Klijenti i serveri
+
+THNK igrica je uvek podeljena na dva dela: server i client. Ima različitih modova THNK može pokrenuti vašu igricu:
+
+## Serveri
+
+THNK je merodavan, što znači da samo jedna instanca igre pokreće logiku igre. Ova instanca je server. Server će onda slati svakom client-u novu poziciju objekta, varijable, itd. Svi ovi podaci se zovu stanje igre ("game state").
+
+Server može poslužiti kao različiti entiteti: može biti lokalan PC u single-player-u, instanca igračeve igre...
+
+Osim ako je server takođe client (npr. ako pokrenete scenu kao THNK server na normalnoj verziji igre), server neće pokrenuti client kod. Server kod će se uvek izvoditi na serveru.
+
+## Klijenti
+
+Client je instanca igre povezana sa poslužiteljem. Nikad ne pokreće kod servera, ali uvek pokreće kod client-a. Odgovornosti client-a uključuju:
+
+1.  Event-ovi povezani sa izgledom (animacije, kamera, juice, HUD, menu...)
+2.  Unos igrača (kliknuti dugme da se pomeri karakter, akcije u menu, slanje poruka u chat...)
+
+Client ne može krivotvoriti stanje igre s kojim drugi igrači komuniciraju, budući da sve radnje i sinkronizaciju stanja igre zapravo izvodi server. Ovo pravi da varanje bude lako i vrlo retko za vašu igru. Naravno, ako server da mnogo kontrole nad unosu igrača, zaštita se raspada! Morate napraviti komande client-a jednostavne i kontrolisane od strane servera što više moguće.
+
+## Interakcije između servera i client-a
+
+Client i server komuniciraju drugačije. Client komunikacira sa serverom tako što mu šalje _commands_, a server mu odgovara sa _game state_.
+
+Tipični tok izgleda ovako:
+
+<Diagram />
+
+Igrač, koji interakcijom sa igrom, proizvodi komande. Server redovno 
+pokreće eventove servera, server tick. Unutar njega, mogu se obrađivati ​​bilo koji client eventovi.
+Na kraju tick-a, THNK server pravi zakrpu koja opisuje razlike
+u stanju igre između pre i posle server tick-a, i šalje ga svim client-ima.
+Client primenjuje zakrpu na lokalnoj kopiji stanja igre, čime se menja
+pozicija objekta i vrijednosti varijabla prema kodu servera.
+
+Server nema komande koje može poslati nazad igraču, samo stanje. Tako da, ako želite da neki podaci budu dostupni samo na zahtev jer su ogromni, možete uraditi request-response sistem tako što će te slati komandu serveru, i onda čekati da odgovori sa traženim informacijama sa sledećim stanjem igre kao varijablu stanja (state variable) za igrača.

@@ -1,0 +1,9 @@
+{
+  "label": "Per iniziare - Tutorial platform",
+  "position": 2,
+  "link": {
+    "type": "generated-index",
+    "slug": "getting-started",
+    "description": "Un'introduzione approfondita a THNK, dove costruiamo un gioco platform con THNK. Questo è il miglior modo per imparare ad usare e conoscere THNK."
+  }
+}

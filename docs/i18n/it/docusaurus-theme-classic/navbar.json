@@ -1,0 +1,42 @@
+{
+  "title": {
+    "message": "THNK",
+    "description": "The title in the navbar"
+  },
+  "item.label.Docs": {
+    "message": "Documentazione",
+    "description": "Navbar item with label Docs"
+  },
+  "item.label.Blog": {
+    "message": "Blog",
+    "description": "Navbar item with label Blog"
+  },
+  "item.label.More": {
+    "message": "Altro",
+    "description": "Navbar item with label More"
+  },
+  "item.label.💬 Discord (Chat and support)": {
+    "message": "💬 Discord (Chat e supporto)",
+    "description": "Navbar item with label 💬 Discord (Chat and support)"
+  },
+  "item.label.👨‍💻 GitHub": {
+    "message": "👨‍💻 GitHub",
+    "description": "Navbar item with label 👨‍💻 GitHub"
+  },
+  "item.label.📅 Roadmap": {
+    "message": "📅 Roadmap",
+    "description": "Navbar item with label 📅 Roadmap"
+  },
+  "item.label.☕ Gift a coffee": {
+    "message": "☕ Offri un caffè",
+    "description": "Navbar item with label ☕ Gift a coffee"
+  },
+  "item.label.🐦 Twitter": {
+    "message": "🐦 Twitter",
+    "description": "Navbar item with label 🐦 Twitter"
+  },
+  "logo.alt": {
+    "message": "Logo THNK",
+    "description": "The alt text of navbar logo"
+  }
+}

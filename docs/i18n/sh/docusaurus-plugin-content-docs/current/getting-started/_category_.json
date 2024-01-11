@@ -1,0 +1,9 @@
+{
+  "label": "Introdukcije - Platformer tutorial",
+  "position": 2,
+  "link": {
+    "type": "generated-index",
+    "slug": "getting-started",
+    "description": "Detaljna introdukcija u THNK, gde pravimo platformer igricu sa THNK. Ovo je preporučen način učenja THNK."
+  }
+}

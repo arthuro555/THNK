@@ -2,20 +2,20 @@
 sidebar_position: 2
 description: Nesta segunda parte do tutorial de começamento, nós damos uma olhada como fazer uma cena GDevelop do jeito THNK.
 keywords:
-  - get started
-  - scene
-  - setup
-  - create
-  - rules
+  - introdução
+  - cenário
+  - configuração
+  - criar
+  - regras
   - THNK
   - p2p
-  - multiplayer
+  - multijogador
   - GDevelop
 ---
 
 # Criando uma cena THNK
 
-THNK doesn't have a lot of requirements for you to create a scene it can work with; All you got to do is separate client code from server code.
+THNK não tem muitos requisitos para você criar uma cena com a qual pode trabalhar; Tudo o que precisa fazer é separar o código do cliente do código do servidor.
 
 :::tip Remember!
 

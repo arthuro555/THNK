@@ -1,0 +1,203 @@
+---
+sidebar_position: 3
+description: U trećem delu introdukcije, pogledaćemo kako da napravite vašu igru na THNK način.
+keywords:
+  - introdukcija
+  - platformer
+  - nauči
+  - animacija
+  - poruke
+  - eventovi
+  - klijent
+  - igrač
+  - kontrole
+  - THNK
+  - p2p
+  - multiplayer
+  - GDevelop
+---
+
+# Korišćenje THNK za platformer
+
+## THNK nije multiplayer framework za igre.
+
+THNK je u svojoj osnovi framework za video igre koji ima autoritativni pristup. To je _način izrade igara_ koje koriste autoritativnu client-server arhitekturu. Igra napravljena sa THNK je spremna da postane multiplayer pomoću adapter extension, ali nije inherentno igra za više igrača.
+
+Stoga, pregled bez ikakvog adaptera će raditi, a igra će se izvršavati kao singleplayer igra bez ikakvih problema. Kada pravite nešto sa THNK, počećete tako što ćete prvo napraviti igru u singleplayer-u, pa tek onda dodati multiplayer pomoću adapter extension-e.
+
+Krenimo da pravimo u singleplayer-u!
+
+## Napravimo platformer igru!
+
+First, we'll add a platformer character (with the default controls on) and a few platforms using GDevelop's default behaviors. This is akin to how you would do it in GDevelop - nothing new so far!
+
+<video
+  title="well you probably already know how that works lol"
+  width="100%"
+  muted
+  loop
+  controls
+>
+  <source src="/webm/platformer/behaviors.webm" type="video/webm" />
+  <p>
+    A video of a GDevelop scene with objects that have the platformer character
+    and platform behaviors attached
+  </p>
+</video>
+
+If you start a preview, you should be able to jump around on your platforms.
+
+## Adding animations to the player
+
+Let's add animations to the player! This is a fairly basic task in GDevelop. But remember, in THNK, events must be in one of two categories: Server or Client. Before adding animations, we need to decide in which section it belongs.
+
+When you add events to your game, you must always ask yourself a few questions:
+
+-   Does it require information that the client should not know?
+-   Is it something that affects other players?
+
+Here, player animations:
+
+-   Uses the position of players visible on-screen (to determine if they are moving or not), information that the client has anyway
+-   Only affects how the local game looks like, not the games of other players
+
+Therefore, it should be in the client section!
+
+<video
+  title="IS THIS A MFing HARRY POTTER REFFERENCE?!?"
+  width="100%"
+  muted
+  loop
+  controls
+>
+  <source src="/webm/platformer/animations.webm" type="video/webm" />
+  <p>
+    A video of a Harry Potter's sorting hat declaring those events should be put
+    in client events.
+  </p>
+</video>
+
+:::note Why can't I just put it in server events?
+
+Technically, you do not _need_ to have animations as client events, but it is in practice often a better idea. If it was on the server, it would need to be synchronized with the clients. This is problematic for two reasons:
+
+1.  This is bad for bandwidth - each time an animation would change, the change would have to be sent to the clients. With a lot of objects and clients, this can quickly overload the network over transmitting something that the client in a way already knows, as it can infer it from the movement of other objects already. You should always try to reduce the communication between client and server to the minimum to avoid issues on lower speed connections.
+
+2.  This might make animations not match what is displayed. Since the server would handle the animations, the animations would only be updated on server ticks, which may be set at a lower rate than the rendering frame rate. For a few frames, the animation might not match what you would expect until the server sends an update.
+
+:::
+
+## Adapting the platformer for multiplayer
+
+### Giving each client a player object
+
+We now have a simple singleplayer platformer with animations. Let's add in some multiplayer!
+First, we'll need to tell THNK what to do when another player connects. We want each player to have their own player character. Therefore, on a player connection, we need to create an object for that player, and delete it when the player disconnects. We will _link the object to the player_: That will allow us to know what instance belongs to which player. That way, we will know which instance of the platformer character to delete when a player leaves.
+
+:::tip Player picking
+
+You might have noticed that you do not specify to which player you link the object to. That is because THNK has player picking: the "On Connection" event picks the player that connected to be used by the next actions.
+
+If you wish to link an object (or generally use any THNK action that uses the picked player) on a specific other player or outside of a player-picking condition, you can use the action "Pick player" action to specify the player to affect.
+
+:::
+
+:::info
+
+If you had an initial instance of the player on the scene, you should remove it! This instance would just be a "zombie" - since it is not linked to any player, none will be able to control it...
+
+:::
+
+Connections and disconnections are, obviously, a server concern, therefore we need to handle them within the server events.
+
+<video title="ooo that's pretty easy" width="100%" muted loop controls>
+  <source src="/webm/platformer/connections.webm" type="video/webm" />
+  <p>A video of adding the events described above to the events sheet.</p>
+</video>
+
+Since we want the clients to be able to see the player objects, we need that object to be synchronized from the server to all clients. To do so, it's very simple - simply add the synchronize behavior (from THNK) to your player object!
+
+<video title="well that was surprisingly fast" width="100%" muted loop controls>
+  <source src="/webm/platformer/add-sync-behavior.webm" type="video/webm" />
+  <p>A video of adding the synchronize behavior to an object.</p>
+</video>
+
+### Adding player controls for the clients
+
+While the player might be controlling fine in single-player, as it stands, the movement would not synchronize to other clients in multiplayer, despite the synchronize behavior. _Why is that?_
+
+The reason is that the behaviors run on both the client, and on the server. Since the server cannot read a player's input though, as that is a client task. The platformer behavior will not receive any inputs as far as the server is concerned, and therefore other clients will not see any movement.
+
+Clients still can move their own character as the client code, which does have access to player inputs, also runs the platformer behavior. Only the server can move objects for all players, hence this movement will not be synchornized.
+
+In THNK, all player interactions with the game state, from player movement to using an item in the inventory, needs to be sent as a command from the client to the server. It is then the server's job to validate and process the command, updating the game state accordingly for everyone to see.
+
+In this case, all we need to do is send the inputs from the clients and feed them to the platformer behavior. The platformer behavior will process the way the object should move and update the position automatically, taking care of the "validation and updating game state" part of message handling.
+
+#### The naive way
+
+Sending a command from the client and receiving it on the server can be done with the corresponding action and conditions:
+
+<video
+  title="This is the naive way, don't do this at home, kids!"
+  width="100%"
+  muted
+  loop
+  controls
+>
+  <source src="/webm/platformer/messages.webm" type="video/webm" />
+  <p>
+    A video of adding a message sending and receiving event to the events sheet.
+  </p>
+</video>
+
+#### The smart way
+
+We have those events so far:
+
+![The events we have so far](./img/platformer/messages.png "Our events so far 😎")
+
+They may technically work, but... they are flawed.
+
+Receiving events in a normal event is more readable, but it only allows to process one message per server tick, as the condition is only called once. Letting messages go unhandled and to be handled on the next tick likely will cause problem if many players send this messages a lot. To handle all messages received in a single server tick, use a while event to handle events while some are available to be processed:
+
+<video title="While event underrated smh" width="100%" muted loop controls>
+  <source src="/webm/platformer/while.webm" type="video/webm" />
+  <p>
+    A video of transferring the conditions and action from a standard event into
+    a while event.
+  </p>
+</video>
+
+The second issue is the kind of message we are sending. When sending messages, you should always keep a few things in mind:
+
+1.  The connection may be unstable, causing messages to be sometimes delayed
+2.  The traffic between server and client should be as minimal as possible, as to not use more bandwidth than available
+
+Those events are being sent every frame where a key is pressed. That is a lot of messages, and this takes a lot of bandwidth!
+If for some reason a message is not received by the server before each tick, e.g. because of short disconnects due to connection instability, then as far as the server is concerned, it is as if the player keeps on pressing and unpressing the button, where, in fact, they are still holding it.
+
+To fix that, let's take another approach: We'll only send 1 message when pressing and 1 when releasing the button. That way, we can send way less messages, and if the connection is or becomes unstable, the server will assume the client is continueing to do what they were doing instead of assuming they stopped doing anything.
+
+import smartInput1 from "./img/platformer/smart-input-1.png";
+import smartInput2 from "./img/platformer/smart-input-2.png";
+import smartInput3 from "./img/platformer/smart-input-3.png";
+import smartInput4 from "./img/platformer/smart-input-4.png";
+
+<div>
+  {/* prettier-ignore */}
+  <div style={{ display: "flex", flexWrap: "wrap", gap: "1vh", justifyContent: "center" }}>
+    <img src={smartInput1} width="50%" style={{ alignSelf: "center", minWidth: "300px" }} />
+    <img src={smartInput2} width="50%" style={{ alignSelf: "center", minWidth: "300px" }} />
+    <img src={smartInput3} width="50%" style={{ alignSelf: "center", minWidth: "300px" }} />
+    <img src={smartInput4} width="50%" style={{ alignSelf: "center", minWidth: "300px" }} />
+  </div>
+</div>
+
+This solution is more complex, but will provide a much better experience for players.
+
+:::caution
+
+Of course, we only do this here because it makes sense for this continuous input player movement requires. For example, using a potion in an RPG should be processed only once when requested, in contrast - continuously consuming potions every server tick as long as the client doesn't ask to stop is not good game design :p
+
+:::

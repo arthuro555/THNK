@@ -34,5 +34,9 @@
   "item.label.🐦 Twitter": {
     "message": "🐦 Twitter",
     "description": "Navbar item with label 🐦 Twitter"
+  },
+  "logo.alt": {
+    "message": "Logo de THNK",
+    "description": "The alt text of navbar logo"
   }
 }
