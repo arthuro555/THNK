@@ -35,8 +35,14 @@ export function createClientMessage(
   staticArbitrarySizeMessage.set(originalClientMessage);
 
   // Set the message type and client ID
-  staticArbitrarySizeMessage[originalClientMessage.byteLength] =
-    MessagesForServer.ClientMessage;
-  staticArbitrarySizeMessage[originalClientMessage.byteLength - 1] = fromUserID;
-  return staticArbitrarySizeMessage;
+  staticArbitrarySizeMessage.set(
+    [fromUserID, MessagesForServer.ClientMessage],
+    originalClientMessage.byteLength
+  );
+
+  // return a slice of message which cover originalClientMessage and additional 2 bytes for userID and message type
+  return staticArbitrarySizeMessage.slice(
+    0,
+    originalClientMessage.byteLength + 2
+  );
 }
