@@ -170,8 +170,7 @@
             "textG": 0,
             "textR": 0
           },
-          "comment": "UNIMPLEMENTED",
-          "comment2": ""
+          "comment": "UNIMPLEMENTED"
         }
       ],
       "parameters": [],
@@ -196,8 +195,7 @@
             "textG": 0,
             "textR": 0
           },
-          "comment": "UNIMPLEMENTED",
-          "comment2": ""
+          "comment": "UNIMPLEMENTED"
         }
       ],
       "expressionType": {
@@ -277,6 +275,31 @@
             "    ? runtimeScene.thnkServer.runServerCode ",
             "    // The server is innactive. Only run the server code if client mode is innactive too, as that'd mean singleplayer.",
             "    : !runtimeScene.thnkClient;",
+            ""
+          ],
+          "parameterObjects": "",
+          "useStrict": true,
+          "eventsSheetExpanded": false
+        }
+      ],
+      "parameters": [],
+      "objectGroups": []
+    },
+    {
+      "description": "Ends the current server",
+      "fullName": "Stop server",
+      "functionType": "Condition",
+      "group": "Server only",
+      "name": "StopServer",
+      "sentence": "Stop THNK server",
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::JsCode",
+          "inlineCode": [
+            "if (runtimeScene.thnkServer) {",
+            "    runtimeScene.thnkServer.adapter.close();",
+            "    delete runtimeScene.thnkServer;",
+            "}",
             ""
           ],
           "parameterObjects": "",
@@ -485,8 +508,7 @@
             "textG": 0,
             "textR": 0
           },
-          "comment": "In singleplayer, there is only one player. Trigger their connection event one at the start and that's it.",
-          "comment2": ""
+          "comment": "In singleplayer, there is only one player. Trigger their connection event one at the start and that's it."
         },
         {
           "type": "BuiltinCommonInstructions::Standard",
