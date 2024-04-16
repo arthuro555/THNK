@@ -32,6 +32,6 @@ Before implementing an adapter to connect your players together, it's useful to 
 
 ## Setup the local adapter
 
-Simply install the [local adapter extension](https://raw.githubusercontent.com/arthuro555/THNK/master/extensions/THNK_Local.json), create a new scene (I like to call it something aalong the lines of `MultiplayerQuickStart`), and put the action from the local adapter to start a server with 2 clients at thee beginning of the scene.
+Simply install the [local adapter extension](https://raw.githubusercontent.com/arthuro555/THNK/master/extensions/THNK_Local.json), create a new scene (I like to call it something along the lines of `MultiplayerQuickStart`), and put the action from the local adapter to start a server with 2 clients at the beginning of the scene.
 
 That's it! Now, previewing this scene will start a server with the scene and the amount of clients you requested, each in a separate window, for you to test out the game in multiplayer mode.
