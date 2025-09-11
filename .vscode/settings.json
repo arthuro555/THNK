@@ -1,5 +1,8 @@
 {
   "[mdx]": {
     "editor.wordWrap": "on"
-  }
+  },
+  "rust-analyzer.linkedProjects": [
+    "./v2/proto/Cargo.toml"
+  ]
 }
